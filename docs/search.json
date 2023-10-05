@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "analysis of teaching",
+    "section": "",
+    "text": "this site looks at teaching loads in VCU engineering over the past several semesters"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "This site was creating in quarto."
+  },
+  {
+    "objectID": "clean.html",
+    "href": "clean.html",
+    "title": "Data and Data Cleaning",
+    "section": "",
+    "text": "This script describes the data and walks through a process of data cleaning. At completion of this script all the individual semester data files will be combined into a single dataframe for analysis."
+  },
+  {
+    "objectID": "clean.html#sources-of-data",
+    "href": "clean.html#sources-of-data",
+    "title": "Data and Data Cleaning",
+    "section": "Sources of data",
+    "text": "Sources of data\nData were pulled from the VCU Reporting Center in the Staff | Course Schedule Report as shown below:\nReports are run by semester for the College of Engineering and stored in separate files. Care should be taken to open each file after it’s been saved and RESAVE the file into XLSX format.\n\n\n\n\n\n\n\n\n\n\nThe files are named appropriately and stored in the data folder in this repository.\n\n\n\n\n\nFile name\nTerm Code\nAcad Year\nPeriod Code\nPeriod Name\n\n\n\n\nVCU-SOC-202110-FA2020.xlsx\n202110\nAY20-21\nFA2020\nFall 2020\n\n\nVCU-SOC-202120-SP2021.xlsx\n202120\nAY20-21\nSP2021\nSpring 2021\n\n\nVCU-SOC-202130-SU2021.xlsx\n202130\nAY20-21\nSU2021\nSummer 2021\n\n\nVCU-SOC-202210-FA2021.xlsx\n202210\nAY21-22\nFA2021\nFall 2021\n\n\nVCU-SOC-202220-SP2022.xlsx\n202220\nAY21-22\nSP2022\nSpring 2022\n\n\nVCU-SOC-202230-SU2022.xlsx\n202230\nAY21-22\nSU2022\nSummer 2022\n\n\nVCU-SOC-202310-FA2022.xlsx\n202310\nAY22-23\nFA2022\nFall 2022\n\n\nVCU-SOC-202320-SP2023.xlsx\n202320\nAY22-23\nSP2023\nSpring 2023\n\n\nVCU-SOC-202330-SU2023.xlsx\n202330\nAY22-23\nSU2023\nSummer 2023\n\n\nVCU-SOC-202410-FA2023.xlsx\n202410\nAY23-24\nFA2023\nFall 2023"
+  },
+  {
+    "objectID": "clean.html#combining-to-single-data-frame",
+    "href": "clean.html#combining-to-single-data-frame",
+    "title": "Data and Data Cleaning",
+    "section": "Combining to single data frame",
+    "text": "Combining to single data frame\nThe following section combines each XLSX into a single data frame. The contents of the files are variable in length depending on the number of sections taught during any given semester.\nThe appropriate block starts one row after the row with the keyword TERM in the first column, denoting the header row. The appropriate block ends with the row prior to the row with the keyword N =.\nWe’re assuming that all xlsx workbooks share the same columns and names.\nThe dataframe is stored to a CSV file named ‘final_df.csv’.\n\n# Initialize an empty list to store trimmed DataFrames\ntrimmed_dfs = []\n\n# Iterate through the list of XLSX file names\nfor file_name in xlsx_df['file_name']:\n    # Load the XLSX file into a DataFrame\n    full_path = os.path.join(directory_path, file_name)\n    df = pd.read_excel(full_path)\n    \n    # Find the row index where \"TERM\" is in the first column\n    term_index = df.index[df.iloc[:, 0] == \"TERM\"].tolist()[0]\n    \n    # Find the row index where \"N=\" is in the first column\n    n_index = df.index[df.iloc[:, 0].str.startswith(\"N =\").fillna(False)].tolist()[0]\n\n    # Clip the desired block and add column names\n    trimmed_df = df.loc[term_index + 1 : n_index - 1]\n    trimmed_df.columns = df.iloc[term_index].values\n\n    # Append the trimmed DataFrame to the list\n    trimmed_dfs.append(trimmed_df)\n\n# Combine the individual dataframes into one big one.\nsections_df = pd.concat(trimmed_dfs, ignore_index=True)\n\n# Merge in the term and period data from the xlsx_df dataframe\n\nsections_df['TERM'] = sections_df['TERM'].astype(str)\nxlsx_df['term_code'] = xlsx_df['term_code'].astype(str)\nsections_df = pd.merge(sections_df,xlsx_df,left_on='TERM', right_on='term_code', how='left')\n\n# Store as CSV file\nsections_df.to_csv('sections_df.csv', index=False)"
+  }
+]

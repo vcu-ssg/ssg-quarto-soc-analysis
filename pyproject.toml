@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "ssg-quarto-soc-analysis"
+version = "0.1.0"
+description = ""
+authors = ["John Leonard <jdleonard@vcu.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+jupyter = "^1.0.0"
+matplotlib = "^3.8.0"
+plotly = "^5.17.0"
+tabulate = "^0.9.0"
+markdown = "^3.4.4"
+numpy = {version = "^1.26.0", python = "3.11"}
+pandas = "^2.1.1"
+openpyxl = "^3.1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
