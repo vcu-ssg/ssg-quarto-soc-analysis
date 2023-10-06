@@ -201,7 +201,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>The files are named appropriately and stored in the <em>data</em> folder in this repository.</p>
 <div class="cell" data-execution_count="1">
-<div class="cell-output cell-output-display" data-execution_count="52">
+<div class="cell-output cell-output-display" data-execution_count="57">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -401,7 +401,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="college-wide-measures-over-time">College-wide measures over time</h3>
 <p>This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.</p>
 <div class="cell" data-execution_count="8">
-<div class="cell-output cell-output-display" data-execution_count="59">
+<div class="cell-output cell-output-display" data-execution_count="64">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -507,7 +507,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="students-taught-for-fall-2023-by-department" class="level3">
 <h3 class="anchored" data-anchor-id="students-taught-for-fall-2023-by-department">Students taught for Fall 2023 by department</h3>
 <div class="cell" data-execution_count="10">
-<div class="cell-output cell-output-display" data-execution_count="61">
+<div class="cell-output cell-output-display" data-execution_count="66">
 <table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -574,7 +574,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="fall-2023-teaching-for-cmsc" class="level3">
 <h3 class="anchored" data-anchor-id="fall-2023-teaching-for-cmsc">Fall 2023 Teaching for CMSC</h3>
 <div class="cell" data-execution_count="12">
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div class="cell-output cell-output-display" data-execution_count="68">
 <table class="table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -1745,7 +1745,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  showindex<span class="op">=</span><span class="va">False</span>,</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  floatfmt<span class="op">=</span><span class="st">".0f"</span>  <span class="co"># Format numbers without decimals</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="64">
+<div class="cell-output cell-output-display" data-execution_count="69">
 <table class="table table-sm table-striped small">
 <tbody>
 <tr class="odd">
@@ -2430,269 +2430,336 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="fall-2023" class="level3">
 <h3 class="anchored" data-anchor-id="fall-2023">Fall 2023</h3>
+<p>The table below shows credit hours by type of course for faculty in CMSC.</p>
+<ul>
+<li><a href="https://bulletin.vcu.edu/academic-regs/university/course-info/">Credit hour definitions</a></li>
+<li><a href="https://bulletin.vcu.edu/academic-regs/ugrad/ugrad-degree-reqs/">UG degree requirements</a></li>
+</ul>
 <div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>pivot_df <span class="op">=</span> pd.pivot_table(summary_df,index<span class="op">=</span><span class="st">'instructor'</span>,values<span class="op">=</span><span class="st">'sum_term_crse_crn_hours'</span>,columns<span class="op">=</span><span class="st">'TYPE'</span>,aggfunc<span class="op">=</span><span class="st">'sum'</span> )</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pivot_df <span class="op">=</span> pivot_df[ [<span class="st">'LEC'</span>,<span class="st">'LAB'</span>,<span class="st">'SEM'</span>,<span class="st">'RES'</span>,<span class="st">'IND'</span>]]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>pivot_df.fillna(<span class="st">''</span>,inplace<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>pivot_df <span class="op">=</span> pivot_df.sort_values(by<span class="op">=</span>[<span class="st">'LEC'</span>,<span class="st">'LAB'</span>],ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>  pivot_df, </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  headers=['Dept','Course Sum','CRN Sum','Student Sum'],</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  numalign<span class="op">=</span><span class="st">"right"</span>,stralign<span class="op">=</span><span class="st">"left"</span>,</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>  showindex<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  floatfmt<span class="op">=</span><span class="st">".0f"</span>  <span class="co"># Format numbers without decimals</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="65">
+<div class="cell-output cell-output-display" data-execution_count="70">
 <table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">CRN</th>
+<th style="text-align: right;">STDNT</th>
+<th style="text-align: right;">LEC</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">SEM</th>
+<th style="text-align: right;">RES</th>
+<th style="text-align: right;">IND</th>
+</tr>
+</thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Gill,Satinder</td>
-<td></td>
-<td>24.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Duke,Debra</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">411</td>
+<td style="text-align: right;">1347</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Duke,Debra</td>
-<td>1347.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Chaitankar,Vijender</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">444</td>
+<td style="text-align: right;">1332</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Chaitankar,Vijender</td>
-<td>1332.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Sparks,Claire</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">813</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Sparks,Claire</td>
-<td>813.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Sonmez,Ahmet</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Sonmez,Ahmet</td>
-<td>700.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Gusukuma,Luke</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">179</td>
+<td style="text-align: right;">624</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Gusukuma,Luke</td>
-<td>624.0</td>
-<td>6.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Budwell,Caroline</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">559</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Budwell,Caroline</td>
-<td>559.0</td>
-<td>8.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Bulut,Eyuphan</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">471</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Bulut,Eyuphan</td>
-<td>471.0</td>
-<td>10.0</td>
-<td></td>
-<td>36.0</td>
-<td></td>
+<td>Leonard,John</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">173</td>
+<td style="text-align: right;">459</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Leonard,John</td>
-<td>459.0</td>
-<td>40.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Cranston,Daniel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">357</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Cranston,Daniel</td>
-<td>357.0</td>
-<td>12.0</td>
-<td></td>
-<td>8.0</td>
-<td></td>
+<td>Damevski,Kostadin</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">282</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Damevski,Kostadin</td>
-<td>282.0</td>
-<td>16.0</td>
-<td></td>
-<td>7.0</td>
-<td></td>
+<td>Spinola,Rodrigo</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Spinola,Rodrigo</td>
-<td>261.0</td>
-<td>18.0</td>
-<td></td>
-<td>9.0</td>
-<td></td>
+<td>Grove,Ralph</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Grove,Ralph</td>
-<td>184.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Arodz,Tomasz</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Arodz,Tomasz</td>
-<td>165.0</td>
-<td>12.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Dahlberg,Robert</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Dahlberg,Robert</td>
-<td>161.0</td>
-<td>26.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Sands,Allison</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Sands,Allison</td>
-<td>156.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Traub,Adam</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Traub,Adam</td>
-<td>156.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Kurgan,Lukasz</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Kurgan,Lukasz</td>
-<td>141.0</td>
-<td>14.0</td>
-<td></td>
-<td>3.0</td>
-<td></td>
+<td>Nishi,Manziba</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Nishi,Manziba</td>
-<td>126.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Buffkin,Jonathan</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">111</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Buffkin,Jonathan</td>
-<td>111.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Byram,Abigail</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Byram,Abigail</td>
-<td>87.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Manic,Milos</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Manic,Milos</td>
-<td>81.0</td>
-<td>16.0</td>
-<td></td>
-<td>13.0</td>
-<td></td>
+<td>Luo,Changqing</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Luo,Changqing</td>
-<td>75.0</td>
-<td>8.0</td>
-<td></td>
-<td>23.0</td>
-<td></td>
+<td>Dinh,Thang</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Lee,Aaron</td>
-<td>66.0</td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
+<td>Lee,Aaron</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Dinh,Thang</td>
-<td>66.0</td>
-<td>18.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Cano Rojas,Alberto</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Cano Rojas,Alberto</td>
-<td>60.0</td>
-<td>10.0</td>
-<td></td>
-<td>2.0</td>
-<td></td>
+<td>Zhou,Hongsheng</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Zhou,Hongsheng</td>
-<td>48.0</td>
-<td>8.0</td>
-<td></td>
-<td></td>
-<td></td>
+<td>Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Thomson-McInnes,Bridget</td>
-<td>45.0</td>
-<td>14.0</td>
-<td>18.0</td>
-<td>9.0</td>
-<td>3.0</td>
+<td>Ahmed,Irfan</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Ahmed,Irfan</td>
-<td>39.0</td>
-<td>8.0</td>
-<td></td>
-<td>39.0</td>
-<td></td>
+<td>Ghosh,Preetam</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Ghosh,Preetam</td>
-<td>33.0</td>
-<td>16.0</td>
-<td></td>
-<td>19.0</td>
-<td></td>
+<td>Nadeem,Tamer</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Nadeem,Tamer</td>
-<td>27.0</td>
-<td>38.0</td>
-<td></td>
-<td>10.0</td>
-<td></td>
+<td>Gill,Satinder</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
 </tr>
 </tbody>
 </table>
