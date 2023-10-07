@@ -235,7 +235,7 @@ broken down by type of course (e.g., LEC, LAB, etc.)
 Values are split 50/50 between the primary and secondary instructors if there is a secondary instructor.
 
 ```{python}
-#| echo: false
+#| echo: true
 cols = ['LEC','LAB','SEM','RES','IND']
 
 instructors = list(stacked_df[
