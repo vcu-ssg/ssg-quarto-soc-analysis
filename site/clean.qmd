@@ -192,13 +192,11 @@ These measures are used in later calculations for numbers of courses, sections, 
 ```{python}
 
 # Create various aggregate columns
+stacked_df['sum_term'] = 1.0 / stacked_df.groupby(['TERM'])['TERM'].transform('count')
+stacked_df['sum_term_crse'] = 1.0 / stacked_df.groupby(['TERM','COURSE'])['COURSE'].transform('count')
 stacked_df['sum_term_crse_crn'] = 1.0 / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
 stacked_df['sum_term_crse_crn_students'] = stacked_df['ACTUAL ENROLLMENT'] * stacked_df['sum_term_crse_crn']
 stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'] * stacked_df['MAX CREDITS']
-
-stacked_df['sum_term_crse'] = 1.0 / stacked_df.groupby(['TERM','COURSE'])['CRN'].transform('count')
-stacked_df['sum_term'] = 1.0 / stacked_df.groupby(['TERM'])['CRN'].transform('count')
-
 ```
 
 

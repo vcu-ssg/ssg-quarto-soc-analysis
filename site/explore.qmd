@@ -61,7 +61,7 @@ plt.show()
 ```
 
 
-## Students taught for Fall 2023 by department
+## Teaching for Fall 2023 by department
 
 ```{python}
 #| echo: false
@@ -105,8 +105,8 @@ plt.show()
 #| echo: false
 
 factors = ['COURSE','CRN','TITLE','TYPE','instructor','MODALITY TEXT']
-measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
-mnames = ['CRN sum','STDNTS sum','HRS sum']
+measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+mnames = ['CRSE sum','CRN sum','STDNTS sum','HRS sum']
 
 cols = [factor for factor in factors]+list(measures.keys())
 cnames = list(factors)+list(mnames)
@@ -136,14 +136,23 @@ This table aggregates teaching by instructor and course. The table is sorted by 
 ```{python}
 #| echo: false
 factors = ['COURSE','TITLE','TYPE','instructor']
-measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
-mnames = ['CRN sum','STDNTS sum','HRS sum']
+measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+mnames = ['CRSE sum','CRN sum','STDNTS sum','HRS sum']
+
+# get list of instructors teaching CMSC courses
+
+instructors = list(stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['DEPT'] == 'CMSC')
+]["instructor"].unique())
+
+# select all courses taught by instructors.  Some faculty teach ENGR courses!
 
 cols = [factor for factor in factors]+list(measures.keys())
 cnames = list(factors)+list(mnames)
 df = stacked_df[
     (stacked_df['TERM'] == '202410')
-    & (stacked_df['DEPT'] == 'CMSC')
+    & (stacked_df['instructor'].isin(instructors))
 ]
 
 summary_df = df.groupby(factors).agg(measures).reset_index()
@@ -175,9 +184,15 @@ Values are split 50/50 between the primary and secondary instructors if there is
 #| echo: false
 cols = ['LEC','LAB','SEM','RES','IND']
 
-df = stacked_df[
+instructors = list(stacked_df[
     (stacked_df['TERM'] == '202410')
     & (stacked_df['DEPT'] == 'CMSC')
+]["instructor"].unique())
+
+
+df = stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['instructor'].isin( instructors ))
 ]
 
 pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns='TYPE',aggfunc='sum' )
@@ -188,16 +203,16 @@ def format_no_decimal(val):
 # Apply the lambda function to all columns
 pivot_df = pivot_df.map(format_no_decimal)
 
-measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
 courses_df = df.groupby('instructor').agg(measures).reset_index()
 
-courses_df.columns = ['instructor','CRN','STDNT','HRS']
+courses_df.columns = ['instructor','CRSE','CRN','STDNT','HRS']
 
 pivot_df = pd.merge( courses_df,pivot_df,right_index=True,left_on='instructor',how='right')
 pivot_df = pivot_df.set_index('instructor')
 pivot_df = pivot_df.sort_values(by=['HRS'],ascending=False)
 
-cols =  ['CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
+cols =  ['CRSE sum','CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
 
 Markdown(tabulate(
   pivot_df, 
@@ -223,9 +238,15 @@ Values are split 50/50 between the primary and secondary instructors if there is
 #| echo: false
 cols = ['LEC','LAB','SEM','RES','IND']
 
+instructors = list(stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['DEPT'] == 'CMSC')
+]["instructor"].unique())
+
+
 df = stacked_df[
     (stacked_df['TERM'].isin(['202320','202410']))
-    & (stacked_df['DEPT'] == 'CMSC')
+    & (stacked_df['instructor'].isin(instructors))
 ]
 
 pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns='TYPE',aggfunc='sum' )
@@ -236,16 +257,16 @@ def format_no_decimal(val):
 # Apply the lambda function to all columns
 pivot_df = pivot_df.map(format_no_decimal)
 
-measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
 courses_df = df.groupby('instructor').agg(measures).reset_index()
 
-courses_df.columns = ['instructor','CRN','STDNT','HRS']
+courses_df.columns = ['instructor','CRSE','CRN','STDNT','HRS']
 
 pivot_df = pd.merge( courses_df,pivot_df,right_index=True,left_on='instructor',how='right')
 pivot_df = pivot_df.set_index('instructor')
 pivot_df = pivot_df.sort_values(by=['HRS'],ascending=False)
 
-cols =  ['CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
+cols =  ['CRSE sum','CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
 
 Markdown(tabulate(
   pivot_df, 
