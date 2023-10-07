@@ -1,0 +1,3218 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analysis of Teaching - Exploring the data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Analysis of Teaching</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./download.html" rel="" target="">
+ <span class="menu-text">Download</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./clean.html" rel="" target="">
+ <span class="menu-text">Clean</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./explore.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Explore</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#columns-in-the-dataframe" id="toc-columns-in-the-dataframe" class="nav-link active" data-scroll-target="#columns-in-the-dataframe">Columns in the dataframe</a></li>
+  <li><a href="#college-wide-measures-over-time" id="toc-college-wide-measures-over-time" class="nav-link" data-scroll-target="#college-wide-measures-over-time">College-wide measures over time</a></li>
+  <li><a href="#students-taught-for-fall-2023-by-department" id="toc-students-taught-for-fall-2023-by-department" class="nav-link" data-scroll-target="#students-taught-for-fall-2023-by-department">Students taught for Fall 2023 by department</a></li>
+  <li><a href="#fall-2023-cmsc-courses" id="toc-fall-2023-cmsc-courses" class="nav-link" data-scroll-target="#fall-2023-cmsc-courses">Fall 2023 CMSC Courses</a></li>
+  <li><a href="#fall-2023-cmsc-instructors" id="toc-fall-2023-cmsc-instructors" class="nav-link" data-scroll-target="#fall-2023-cmsc-instructors">Fall 2023 CMSC Instructors</a></li>
+  <li><a href="#fall-2023-cmsc-teaching-loads" id="toc-fall-2023-cmsc-teaching-loads" class="nav-link" data-scroll-target="#fall-2023-cmsc-teaching-loads">Fall 2023 CMSC Teaching loads</a></li>
+  <li><a href="#cmsc-teaching-loads---last-2-terms" id="toc-cmsc-teaching-loads---last-2-terms" class="nav-link" data-scroll-target="#cmsc-teaching-loads---last-2-terms">CMSC Teaching loads - last 2 terms</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploring the data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<p>For this analysis we’ll be using the <em>stacked_df</em> data frame from the cleaning process.</p>
+<section id="columns-in-the-dataframe" class="level2">
+<h2 class="anchored" data-anchor-id="columns-in-the-dataframe">Columns in the dataframe</h2>
+<div class="cell" data-execution_count="1">
+<div class="cell-output cell-output-stdout">
+<pre><code>Index(['TERM', 'PART_OF_TERM', 'COLLEGE', 'DEPT', 'COURSE', 'SECT', 'CRN',
+       'TYPE', 'MIN CREDITS', 'MAX CREDITS', 'TITLE', 'CROSS-LIST', 'MAX SIZE',
+       'ACTUAL ENROLLMENT', 'WAITLIST MAX', 'WAITLIST ACTUAL', 'START DATE',
+       'END DATE', 'MON-IND', 'TUE-IND', 'WED-IND', 'THU-IND', 'FRI-IND',
+       'SAT-IND', 'SUN-IND', 'BEGIN TIME', 'END TIME', 'BUILDING', 'ROOM',
+       'MODALITY CODE', 'MODALITY TEXT', 'CROSS_LIST_MAXIMUM_ENROLLMENT',
+       'CROSS_LIST_ENROLLMENT', 'file_name', 'term_code', 'academic_year',
+       'period_code', 'period_name', 'instructor source', 'instructor',
+       'sum_term_crse_crn', 'sum_term_crse_crn_students',
+       'sum_term_crse_crn_hours', 'sum_term_crse', 'sum_term'],
+      dtype='object')</code></pre>
+</div>
+</div>
+</section>
+<section id="college-wide-measures-over-time" class="level2">
+<h2 class="anchored" data-anchor-id="college-wide-measures-over-time">College-wide measures over time</h2>
+<p>This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.</p>
+<div class="cell" data-execution_count="2">
+<div class="cell-output cell-output-display" data-execution_count="2">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: right;">Term</th>
+<th style="text-align: left;">Term Name</th>
+<th style="text-align: right;">Course Sum</th>
+<th style="text-align: right;">CRN Sum</th>
+<th style="text-align: right;">Student Sum</th>
+<th style="text-align: right;">Hours Sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">202110</td>
+<td style="text-align: left;">Fall 2020</td>
+<td style="text-align: right;">149</td>
+<td style="text-align: right;">419</td>
+<td style="text-align: right;">5713</td>
+<td style="text-align: right;">16353</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">202120</td>
+<td style="text-align: left;">Spring 2021</td>
+<td style="text-align: right;">137</td>
+<td style="text-align: right;">445</td>
+<td style="text-align: right;">5639</td>
+<td style="text-align: right;">16518</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">202130</td>
+<td style="text-align: left;">Summer 2021</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">112</td>
+<td style="text-align: right;">578</td>
+<td style="text-align: right;">1444</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">202210</td>
+<td style="text-align: left;">Fall 2021</td>
+<td style="text-align: right;">154</td>
+<td style="text-align: right;">425</td>
+<td style="text-align: right;">5883</td>
+<td style="text-align: right;">16689</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">202220</td>
+<td style="text-align: left;">Spring 2022</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">449</td>
+<td style="text-align: right;">5762</td>
+<td style="text-align: right;">16801</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">202230</td>
+<td style="text-align: left;">Summer 2022</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">564</td>
+<td style="text-align: right;">1343</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">202310</td>
+<td style="text-align: left;">Fall 2022</td>
+<td style="text-align: right;">159</td>
+<td style="text-align: right;">438</td>
+<td style="text-align: right;">6564</td>
+<td style="text-align: right;">18396</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">202320</td>
+<td style="text-align: left;">Spring 2023</td>
+<td style="text-align: right;">146</td>
+<td style="text-align: right;">458</td>
+<td style="text-align: right;">6233</td>
+<td style="text-align: right;">17790</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">202330</td>
+<td style="text-align: left;">Summer 2023</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">512</td>
+<td style="text-align: right;">1213</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">202410</td>
+<td style="text-align: left;">Fall 2023</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">452</td>
+<td style="text-align: right;">7545</td>
+<td style="text-align: right;">21298</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<p><img src="explore_files/figure-html/cell-4-output-1.png" width="601" height="513"></p>
+</div>
+</div>
+</section>
+<section id="students-taught-for-fall-2023-by-department" class="level2">
+<h2 class="anchored" data-anchor-id="students-taught-for-fall-2023-by-department">Students taught for Fall 2023 by department</h2>
+<div class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display" data-execution_count="4">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Dept</th>
+<th style="text-align: right;">Course Sum</th>
+<th style="text-align: right;">CRN Sum</th>
+<th style="text-align: right;">Student Sum</th>
+<th style="text-align: right;">Hours Sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSC</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">95</td>
+<td style="text-align: right;">3017</td>
+<td style="text-align: right;">9235</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EGRB</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">707</td>
+<td style="text-align: right;">2287</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EGRC</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">341</td>
+<td style="text-align: right;">1021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">EGRE</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">794</td>
+<td style="text-align: right;">2803</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">EGRM</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">1870</td>
+<td style="text-align: right;">4925</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ENGR</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">79</td>
+<td style="text-align: right;">816</td>
+<td style="text-align: right;">1027</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+<p><img src="explore_files/figure-html/cell-6-output-1.png" width="602" height="474"></p>
+</div>
+</div>
+</section>
+<section id="fall-2023-cmsc-courses" class="level2">
+<h2 class="anchored" data-anchor-id="fall-2023-cmsc-courses">Fall 2023 CMSC Courses</h2>
+<div class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display" data-execution_count="6">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">COURSE</th>
+<th style="text-align: right;">CRN</th>
+<th style="text-align: left;">TITLE</th>
+<th style="text-align: left;">TYPE</th>
+<th style="text-align: left;">instructor</th>
+<th style="text-align: left;">MODALITY TEXT</th>
+<th style="text-align: right;">CRN sum</th>
+<th style="text-align: right;">STDNTS sum</th>
+<th style="text-align: right;">HRS sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSC210</td>
+<td style="text-align: right;">40552</td>
+<td style="text-align: left;">COMPUTERS AND PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">99</td>
+<td style="text-align: right;">297</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC210</td>
+<td style="text-align: right;">42083</td>
+<td style="text-align: left;">COMPUTERS AND PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">234</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC235</td>
+<td style="text-align: right;">46194</td>
+<td style="text-align: left;">COMPUTING AND DATA ETHICS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Chaitankar,Vijender</td>
+<td style="text-align: left;">Online-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">1170</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">43736</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">44838</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sands,Allison</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">46793</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">46878</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Traub,Adam</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">37573</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Grove,Ralph</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">41688</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">100</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">43404</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">45869</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">320</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: right;">36067</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">83</td>
+<td style="text-align: right;">332</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: right;">41689</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">124</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: right;">34519</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">37</td>
+<td style="text-align: right;">148</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: right;">41690</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">376</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: right;">44806</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;">176</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC302</td>
+<td style="text-align: right;">23252</td>
+<td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">225</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC302</td>
+<td style="text-align: right;">39169</td>
+<td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">174</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC303</td>
+<td style="text-align: right;">36127</td>
+<td style="text-align: left;">INTRO TO THEORY OF CMPUTATION</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">357</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC311</td>
+<td style="text-align: right;">36126</td>
+<td style="text-align: left;">COMPUTER ORGANIZATION</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">393</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC312</td>
+<td style="text-align: right;">11731</td>
+<td style="text-align: left;">INTRO TO OPERATING SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Nishi,Manziba</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">126</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC320</td>
+<td style="text-align: right;">40553</td>
+<td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Buffkin,Jonathan</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC320</td>
+<td style="text-align: right;">40553</td>
+<td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC330</td>
+<td style="text-align: right;">40554</td>
+<td style="text-align: left;">DATA SCIENCE SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Byram,Abigail</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">43.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC330</td>
+<td style="text-align: right;">40554</td>
+<td style="text-align: left;">DATA SCIENCE SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">43.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC340</td>
+<td style="text-align: right;">40555</td>
+<td style="text-align: left;">CYBERSECURITY SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Chaitankar,Vijender</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC340</td>
+<td style="text-align: right;">40555</td>
+<td style="text-align: left;">CYBERSECURITY SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC355</td>
+<td style="text-align: right;">11732</td>
+<td style="text-align: left;">FUNDAMENTALS SOFTWARE ENGINEER</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">261</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC391</td>
+<td style="text-align: right;">46263</td>
+<td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Bennett,Jason</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC391</td>
+<td style="text-align: right;">46263</td>
+<td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC401</td>
+<td style="text-align: right;">34456</td>
+<td style="text-align: left;">ALGORITHM ANL W/ADV DATA STRUC</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">471</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC403</td>
+<td style="text-align: right;">36700</td>
+<td style="text-align: left;">PROGRAMMING LANGUAGES</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">240</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC409</td>
+<td style="text-align: right;">27851</td>
+<td style="text-align: left;">ARTIFICIAL INTELLIGENCE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC413</td>
+<td style="text-align: right;">39167</td>
+<td style="text-align: left;">INTRO TO CYBERSECURITY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC415</td>
+<td style="text-align: right;">34458</td>
+<td style="text-align: left;">INTRO TO CRYPTOGRAPHY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Zhou,Hongsheng</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC435</td>
+<td style="text-align: right;">36116</td>
+<td style="text-align: left;">INTRODUCTION TO DATA SCIENCE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">141</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC440</td>
+<td style="text-align: right;">46652</td>
+<td style="text-align: left;">DATA COMMUNCATION &amp; NETWORKING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Lee,Aaron</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43748</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43749</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43750</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43751</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gill,Satinder</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43758</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43760</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43761</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43762</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43764</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43766</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43769</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Dinh,Thang</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43770</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43771</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43773</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43780</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43782</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43783</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Zhou,Hongsheng</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43784</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">43786</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: right;">44349</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Dahlberg,Robert</td>
+<td style="text-align: left;">Online-asynchronous instruct</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC451</td>
+<td style="text-align: right;">43785</td>
+<td style="text-align: left;">SENIOR PROJECT I</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Dahlberg,Robert</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">161</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC455</td>
+<td style="text-align: right;">40828</td>
+<td style="text-align: left;">SOFTWARE AS A SERVICE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">282</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC491</td>
+<td style="text-align: right;">45897</td>
+<td style="text-align: left;">SP: MACHINE LEARNING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC492</td>
+<td style="text-align: right;">47095</td>
+<td style="text-align: left;">INDEPENDENT STUDY</td>
+<td style="text-align: left;">IND</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC501</td>
+<td style="text-align: right;">39781</td>
+<td style="text-align: left;">ADVANCED ALGORITHMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Dinh,Thang</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC502</td>
+<td style="text-align: right;">37708</td>
+<td style="text-align: left;">PARALLEL ALGORITHMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC502</td>
+<td style="text-align: right;">37709</td>
+<td style="text-align: left;">PARALLEL ALGORITHMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Online-synchronous instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC508</td>
+<td style="text-align: right;">36125</td>
+<td style="text-align: left;">DATA BASE THEORY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC603</td>
+<td style="text-align: right;">36113</td>
+<td style="text-align: left;">HIGH PERF. DISTRIB. SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC654</td>
+<td style="text-align: right;">42291</td>
+<td style="text-align: left;">MEMORY AND MALWARE FORENSICS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: right;">45416</td>
+<td style="text-align: left;">ST: INTRO TO MACHINE LEARNING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: right;">45871</td>
+<td style="text-align: left;">SP:EMERGE TRENDS NAT LANG PROC</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: right;">46851</td>
+<td style="text-align: left;">SP TOP:AI FOR NETWRK &amp;EDGE SYS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37336</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37337</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37338</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37339</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37341</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37361</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37384</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37385</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37386</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37403</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37407</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37409</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37410</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37411</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37414</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">37415</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">38685</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">38686</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">38688</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">38693</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">38695</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">45106</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">45197</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">46781</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">46807</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">46810</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">46864</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: right;">46976</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: left;">Directed Instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC702</td>
+<td style="text-align: right;">40185</td>
+<td style="text-align: left;">COMPUTER SCIENCE SEMINAR</td>
+<td style="text-align: left;">SEM</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="fall-2023-cmsc-instructors" class="level2">
+<h2 class="anchored" data-anchor-id="fall-2023-cmsc-instructors">Fall 2023 CMSC Instructors</h2>
+<p>This table aggregates teaching by instructor and course. The table is sorted by instructor and course.</p>
+<div class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display" data-execution_count="7">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">COURSE</th>
+<th style="text-align: left;">TITLE</th>
+<th style="text-align: left;">TYPE</th>
+<th style="text-align: left;">instructor</th>
+<th style="text-align: right;">CRN sum</th>
+<th style="text-align: right;">STDNTS sum</th>
+<th style="text-align: right;">HRS sum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC654</td>
+<td style="text-align: left;">MEMORY AND MALWARE FORENSICS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ahmed,Irfan</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">39</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC491</td>
+<td style="text-align: left;">SP: MACHINE LEARNING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: left;">ST: INTRO TO MACHINE LEARNING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Arodz,Tomasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">120</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC391</td>
+<td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Bennett,Jason</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC302</td>
+<td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC320</td>
+<td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Buffkin,Jonathan</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC401</td>
+<td style="text-align: left;">ALGORITHM ANL W/ADV DATA STRUC</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">157</td>
+<td style="text-align: right;">471</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Bulut,Eyuphan</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">36</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC330</td>
+<td style="text-align: left;">DATA SCIENCE SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Byram,Abigail</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">43.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC603</td>
+<td style="text-align: left;">HIGH PERF. DISTRIB. SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">60</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Cano Rojas,Alberto</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC235</td>
+<td style="text-align: left;">COMPUTING AND DATA ETHICS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Chaitankar,Vijender</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">1170</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC340</td>
+<td style="text-align: left;">CYBERSECURITY SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Chaitankar,Vijender</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC303</td>
+<td style="text-align: left;">INTRO TO THEORY OF CMPUTATION</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">119</td>
+<td style="text-align: right;">357</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Cranston,Daniel</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Dahlberg,Robert</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC451</td>
+<td style="text-align: left;">SENIOR PROJECT I</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Dahlberg,Robert</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">161</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC455</td>
+<td style="text-align: left;">SOFTWARE AS A SERVICE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">282</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Damevski,Kostadin</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Dinh,Thang</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC501</td>
+<td style="text-align: left;">ADVANCED ALGORITHMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Dinh,Thang</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC210</td>
+<td style="text-align: left;">COMPUTERS AND PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">531</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">114</td>
+<td style="text-align: right;">456</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC320</td>
+<td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55.5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC330</td>
+<td style="text-align: left;">DATA SCIENCE SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">43.5</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC340</td>
+<td style="text-align: left;">CYBERSECURITY SKILLS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC502</td>
+<td style="text-align: left;">PARALLEL ALGORITHMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">33</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Ghosh,Preetam</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gill,Satinder</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Grove,Ralph</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">184</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">224</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC403</td>
+<td style="text-align: left;">PROGRAMMING LANGUAGES</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">240</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC435</td>
+<td style="text-align: left;">INTRODUCTION TO DATA SCIENCE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">47</td>
+<td style="text-align: right;">141</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Kurgan,Lukasz</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC440</td>
+<td style="text-align: left;">DATA COMMUNCATION &amp; NETWORKING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Lee,Aaron</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC391</td>
+<td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC508</td>
+<td style="text-align: left;">DATA BASE THEORY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Leonard,John</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">133</td>
+<td style="text-align: right;">399</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC413</td>
+<td style="text-align: left;">INTRO TO CYBERSECURITY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">75</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Luo,Changqing</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC409</td>
+<td style="text-align: left;">ARTIFICIAL INTELLIGENCE</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">81</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Manic,Milos</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">38</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: left;">SP TOP:AI FOR NETWRK &amp;EDGE SYS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">27</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Nadeem,Tamer</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC312</td>
+<td style="text-align: left;">INTRO TO OPERATING SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Nishi,Manziba</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">126</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sands,Allison</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">700</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">420</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC311</td>
+<td style="text-align: left;">COMPUTER ORGANIZATION</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">131</td>
+<td style="text-align: right;">393</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC355</td>
+<td style="text-align: left;">FUNDAMENTALS SOFTWARE ENGINEER</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">87</td>
+<td style="text-align: right;">261</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Spinola,Rodrigo</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC492</td>
+<td style="text-align: left;">INDEPENDENT STUDY</td>
+<td style="text-align: left;">IND</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC691</td>
+<td style="text-align: left;">SP:EMERGE TRENDS NAT LANG PROC</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">45</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC697</td>
+<td style="text-align: left;">DIRECTED RESEARCH</td>
+<td style="text-align: left;">RES</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC702</td>
+<td style="text-align: left;">COMPUTER SCIENCE SEMINAR</td>
+<td style="text-align: left;">SEM</td>
+<td style="text-align: left;">Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Traub,Adam</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC415</td>
+<td style="text-align: left;">INTRO TO CRYPTOGRAPHY</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Zhou,Hongsheng</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC441</td>
+<td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Zhou,Hongsheng</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="fall-2023-cmsc-teaching-loads" class="level2">
+<h2 class="anchored" data-anchor-id="fall-2023-cmsc-teaching-loads">Fall 2023 CMSC Teaching loads</h2>
+<p>The table below shows credit hours by type of course for faculty in CMSC.</p>
+<ul>
+<li><a href="https://bulletin.vcu.edu/academic-regs/university/course-info/">Credit hour definitions</a></li>
+<li><a href="https://bulletin.vcu.edu/academic-regs/ugrad/ugrad-degree-reqs/">UG degree requirements</a></li>
+</ul>
+<p>The table is sorted in descending order by credit hours taught (<em>HRS sum</em>). The <em>HRS sum</em> is broken down by type of course (e.g., LEC, LAB, etc.)</p>
+<p>Values are split 50/50 between the primary and secondary instructors if there is a secondary instructor.</p>
+<div class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display" data-execution_count="8">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">CRN sum</th>
+<th style="text-align: right;">STDNT sum</th>
+<th style="text-align: right;">HRS sum</th>
+<th style="text-align: right;">LEC</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">SEM</th>
+<th style="text-align: right;">RES</th>
+<th style="text-align: right;">IND</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Chaitankar,Vijender</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">417</td>
+<td style="text-align: right;">1251</td>
+<td style="text-align: right;">1251</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Duke,Debra</td>
+<td style="text-align: right;">5.5</td>
+<td style="text-align: right;">351</td>
+<td style="text-align: right;">1167</td>
+<td style="text-align: right;">1167</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Sparks,Claire</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">236</td>
+<td style="text-align: right;">813</td>
+<td style="text-align: right;">813</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Sonmez,Ahmet</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">175</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: right;">700</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Gusukuma,Luke</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">179</td>
+<td style="text-align: right;">630</td>
+<td style="text-align: right;">624</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Budwell,Caroline</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">567</td>
+<td style="text-align: right;">559</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Bulut,Eyuphan</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">517</td>
+<td style="text-align: right;">471</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">36</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Leonard,John</td>
+<td style="text-align: right;">2.5</td>
+<td style="text-align: right;">170</td>
+<td style="text-align: right;">490</td>
+<td style="text-align: right;">450</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Cranston,Daniel</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;">377</td>
+<td style="text-align: right;">357</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Damevski,Kostadin</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">104</td>
+<td style="text-align: right;">305</td>
+<td style="text-align: right;">282</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Spinola,Rodrigo</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">97</td>
+<td style="text-align: right;">288</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Dahlberg,Robert</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">174</td>
+<td style="text-align: right;">187</td>
+<td style="text-align: right;">161</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Grove,Ralph</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;">184</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Arodz,Tomasz</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">61</td>
+<td style="text-align: right;">177</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Kurgan,Lukasz</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">158</td>
+<td style="text-align: right;">141</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Sands,Allison</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Traub,Adam</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Nishi,Manziba</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Manic,Milos</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Luo,Changqing</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td>Ahmed,Irfan</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Dinh,Thang</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">84</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Nadeem,Tamer</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">38</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Cano Rojas,Alberto</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Ghosh,Preetam</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">33</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Lee,Aaron</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Zhou,Hongsheng</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;">48</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Buffkin,Jonathan</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">55.5</td>
+<td style="text-align: right;">56</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Bennett,Jason</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Byram,Abigail</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">14.5</td>
+<td style="text-align: right;">43.5</td>
+<td style="text-align: right;">44</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Gill,Satinder</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="cmsc-teaching-loads---last-2-terms" class="level2">
+<h2 class="anchored" data-anchor-id="cmsc-teaching-loads---last-2-terms">CMSC Teaching loads - last 2 terms</h2>
+<p>The table below shows credit hours by type of course for faculty in CMSC.</p>
+<p>The data are aggregate of the past two terms (Spring 2023 and Fall 2023).</p>
+<p>The table is sorted in descending order by credit hours taught (<em>HRS sum</em>). The <em>HRS sum</em> is broken down by type of course (e.g., LEC, LAB, etc.)</p>
+<p>Values are split 50/50 between the primary and secondary instructors if there is a secondary instructor.</p>
+<div class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display" data-execution_count="9">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: right;">CRN sum</th>
+<th style="text-align: right;">STDNT sum</th>
+<th style="text-align: right;">HRS sum</th>
+<th style="text-align: right;">LEC</th>
+<th style="text-align: right;">LAB</th>
+<th style="text-align: right;">SEM</th>
+<th style="text-align: right;">RES</th>
+<th style="text-align: right;">IND</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Duke,Debra</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">654</td>
+<td style="text-align: right;">2228</td>
+<td style="text-align: right;">2228</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Sparks,Claire</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">452</td>
+<td style="text-align: right;">1573</td>
+<td style="text-align: right;">1573</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Chaitankar,Vijender</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">417</td>
+<td style="text-align: right;">1251</td>
+<td style="text-align: right;">1251</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Budwell,Caroline</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">361</td>
+<td style="text-align: right;">1111</td>
+<td style="text-align: right;">1087</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Sonmez,Ahmet</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">276</td>
+<td style="text-align: right;">1104</td>
+<td style="text-align: right;">1104</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Gusukuma,Luke</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">292</td>
+<td style="text-align: right;">1019</td>
+<td style="text-align: right;">1013</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Dahlberg,Robert</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">493</td>
+<td style="text-align: right;">864</td>
+<td style="text-align: right;">659</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">127</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Leonard,John</td>
+<td style="text-align: right;">4.5</td>
+<td style="text-align: right;">254</td>
+<td style="text-align: right;">728</td>
+<td style="text-align: right;">660</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Ghosh,Preetam</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">230</td>
+<td style="text-align: right;">689</td>
+<td style="text-align: right;">591</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Cranston,Daniel</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;">224</td>
+<td style="text-align: right;">670</td>
+<td style="text-align: right;">633</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Grove,Ralph</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">616</td>
+<td style="text-align: right;">616</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Damevski,Kostadin</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">212.5</td>
+<td style="text-align: right;">610.5</td>
+<td style="text-align: right;">555</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Bulut,Eyuphan</td>
+<td style="text-align: right;">10.5</td>
+<td style="text-align: right;">201.5</td>
+<td style="text-align: right;">599.5</td>
+<td style="text-align: right;">510</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Nadeem,Tamer</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">475</td>
+<td style="text-align: right;">390</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Spinola,Rodrigo</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">103</td>
+<td style="text-align: right;">300</td>
+<td style="text-align: right;">261</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Ahmed,Irfan</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">259</td>
+<td style="text-align: right;">165</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Thomson-McInnes,Bridget</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">233</td>
+<td style="text-align: right;">150</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">32</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td>Cano Rojas,Alberto</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">76</td>
+<td style="text-align: right;">221</td>
+<td style="text-align: right;">189</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Arodz,Tomasz</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">72</td>
+<td style="text-align: right;">207</td>
+<td style="text-align: right;">189</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Kurgan,Lukasz</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">203</td>
+<td style="text-align: right;">186</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Luo,Changqing</td>
+<td style="text-align: right;">11</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">183</td>
+<td style="text-align: right;">117</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Manic,Milos</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">58</td>
+<td style="text-align: right;">172</td>
+<td style="text-align: right;">129</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Sands,Allison</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Traub,Adam</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;">156</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Nishi,Manziba</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;">126</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Byram,Abigail</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">40.5</td>
+<td style="text-align: right;">121.5</td>
+<td style="text-align: right;">122</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Dinh,Thang</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">110</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Buffkin,Jonathan</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">35.5</td>
+<td style="text-align: right;">106.5</td>
+<td style="text-align: right;">106</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Zhou,Hongsheng</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">89</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Lee,Aaron</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;">66</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Cios,Krzysztof</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Bennett,Jason</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">17</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;">51</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Mizelle,Erika</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Krawczyk,Bartosz</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">27</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Gill,Satinder</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">24</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td>Shepherd,David</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td>Ye,Cang</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">9</td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

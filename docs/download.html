@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Analysis of Teaching - About</title>
+<title>Analysis of Teaching - Downloading the data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -86,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./download.html" rel="" target="">
+    <a class="nav-link active" href="./download.html" rel="" target="" aria-current="page">
  <span class="menu-text">Download</span></a>
   </li>  
   <li class="nav-item">
@@ -109,14 +109,20 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources">Data sources</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">About</h1>
+<h1 class="title">Downloading the data</h1>
 </div>
 
 
@@ -131,9 +137,111 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This site was creating in quarto.</p>
+<section id="data-sources" class="level2">
+<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
+<p>Data were pulled from the VCU Reporting Center in the <em>Staff | Course Schedule Report</em> as shown below:</p>
+<p>Reports are run by semester for the College of Engineering and stored in separate files. Care should be taken to open each file after it’s been saved and <strong>RESAVE</strong> the file into XLSX format.</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="assets/reporting-center-report.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="assets/reporting-center-report-download.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>The files are named appropriately and stored in the <em>data</em> folder in this repository.</p>
+<div class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="1">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">File name</th>
+<th style="text-align: left;">Term Code</th>
+<th style="text-align: left;">Acad Year</th>
+<th style="text-align: left;">Period Code</th>
+<th style="text-align: left;">Period Name</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">VCU-SOC-202110-FA2020.xlsx</td>
+<td style="text-align: left;">202110</td>
+<td style="text-align: left;">AY20-21</td>
+<td style="text-align: left;">FA2020</td>
+<td style="text-align: left;">Fall 2020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VCU-SOC-202120-SP2021.xlsx</td>
+<td style="text-align: left;">202120</td>
+<td style="text-align: left;">AY20-21</td>
+<td style="text-align: left;">SP2021</td>
+<td style="text-align: left;">Spring 2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VCU-SOC-202130-SU2021.xlsx</td>
+<td style="text-align: left;">202130</td>
+<td style="text-align: left;">AY20-21</td>
+<td style="text-align: left;">SU2021</td>
+<td style="text-align: left;">Summer 2021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VCU-SOC-202210-FA2021.xlsx</td>
+<td style="text-align: left;">202210</td>
+<td style="text-align: left;">AY21-22</td>
+<td style="text-align: left;">FA2021</td>
+<td style="text-align: left;">Fall 2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VCU-SOC-202220-SP2022.xlsx</td>
+<td style="text-align: left;">202220</td>
+<td style="text-align: left;">AY21-22</td>
+<td style="text-align: left;">SP2022</td>
+<td style="text-align: left;">Spring 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VCU-SOC-202230-SU2022.xlsx</td>
+<td style="text-align: left;">202230</td>
+<td style="text-align: left;">AY21-22</td>
+<td style="text-align: left;">SU2022</td>
+<td style="text-align: left;">Summer 2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VCU-SOC-202310-FA2022.xlsx</td>
+<td style="text-align: left;">202310</td>
+<td style="text-align: left;">AY22-23</td>
+<td style="text-align: left;">FA2022</td>
+<td style="text-align: left;">Fall 2022</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VCU-SOC-202320-SP2023.xlsx</td>
+<td style="text-align: left;">202320</td>
+<td style="text-align: left;">AY22-23</td>
+<td style="text-align: left;">SP2023</td>
+<td style="text-align: left;">Spring 2023</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VCU-SOC-202330-SU2023.xlsx</td>
+<td style="text-align: left;">202330</td>
+<td style="text-align: left;">AY22-23</td>
+<td style="text-align: left;">SU2023</td>
+<td style="text-align: left;">Summer 2023</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VCU-SOC-202410-FA2023.xlsx</td>
+<td style="text-align: left;">202410</td>
+<td style="text-align: left;">AY23-24</td>
+<td style="text-align: left;">FA2023</td>
+<td style="text-align: left;">Fall 2023</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
