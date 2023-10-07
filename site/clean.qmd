@@ -1,0 +1,214 @@
+---
+title: Cleaning the data
+---
+
+This script describes the data and walks through a process of data cleaning.
+
+At completion of this script all the individual semester data files will be combined into a single dataframe for analysis, and the dataframe will be refactored for cleaner analysis.
+
+## Data sources
+
+The files are named appropriately and stored in the *data* folder in this repository.
+
+```{python}
+#| echo: false
+import os
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+directory_path = './data'
+file_list = os.listdir(directory_path)
+xlsx_files = [file for file in file_list if file.endswith('.xlsx')]
+xlsx_df = pd.DataFrame({'file_name':xlsx_files})
+
+xlsx_df['term_code'] = xlsx_df['file_name'].str.split('-').str[2]
+
+def convert_ay(term_code):
+    year = term_code[2:4]
+    return f'AY{int(year)-1}-{year}'
+
+xlsx_df['academic_year'] = xlsx_df['term_code'].apply(convert_ay)
+
+xlsx_df['period_code'] = xlsx_df['file_name'].str.split('-').str[3]
+xlsx_df['period_code'] = xlsx_df['period_code'].str.split('.').str[0]
+
+def convert_period(period_code):
+    year = period_code[2:]
+    period_id = period_code[:2]
+    terms = {'FA': 'Fall', 'SP': 'Spring', 'SU': 'Summer'}
+    period_name = terms.get(period_id, 'Unknown')
+    return f'{period_name} {year}'
+
+xlsx_df['period_name'] = xlsx_df['period_code'].apply(convert_period)
+
+Markdown(tabulate(
+  xlsx_df, 
+  headers=['File name','Term Code','Acad Year','Period Code','Period Name'],
+  numalign="left",stralign="left",
+  showindex=False
+))
+
+```
+
+## Data Cleaning
+
+The following sections combine the individual sources of data and clean them up.
+
+### Combining to single data frame
+
+The following section combines each XLSX into a single data frame.  The contents of the files are variable in length depending on the number of sections taught
+during any given semester.
+
+The appropriate block starts one row after the row with the keyword *TERM* in the first column, denoting the header row.  The appropriate block ends with the row prior to the row with the keyword *N =*. 
+
+We're assuming that all xlsx workbooks share the same columns and names.
+
+```{python} 
+#| echo: true
+#| 
+# Initialize an empty list to store trimmed DataFrames
+trimmed_dfs = []
+
+# Iterate through the list of XLSX file names
+for file_name in xlsx_df['file_name']:
+    # Load the XLSX file into a DataFrame
+    full_path = os.path.join(directory_path, file_name)
+    df = pd.read_excel(full_path)
+    
+    # Find the row index where "TERM" is in the first column
+    term_index = df.index[df.iloc[:, 0] == "TERM"].tolist()[0]
+    
+    # Find the row index where "N=" is in the first column
+    n_index = df.index[df.iloc[:, 0].str.startswith("N =").fillna(False)].tolist()[0]
+
+    # Clip the desired block and add column names
+    trimmed_df = df.loc[term_index + 1 : n_index - 1]
+    trimmed_df.columns = df.iloc[term_index].values
+
+    # Append the trimmed DataFrame to the list
+    trimmed_dfs.append(trimmed_df)
+
+# Combine the individual dataframes into one big one.
+sections_df = pd.concat(trimmed_dfs, ignore_index=True)
+```
+
+### Merge in the term and period data from the xlsx_df dataframe
+
+The following code merges in the term and period data with the section data.
+First ensure that the key columns are strings, then merge away.
+
+```{python}
+sections_df['TERM'] = sections_df['TERM'].astype(str)
+xlsx_df['term_code'] = xlsx_df['term_code'].astype(str)
+sections_df = pd.merge(sections_df,xlsx_df,left_on='TERM', right_on='term_code', how='left')
+```
+
+### Fix known errors
+
+The data in Banner doesn't always reflect reality.  This step corrects
+known errors in the data.
+
+Note that the section data are stored one row per term-crn-meeting period.
+
+```{python}
+#| echo: false
+
+# Ensure that columns TERM and CRN are strings to help with lookup.
+
+sections_df['TERM'] = sections_df['TERM'].astype(str)
+sections_df['CRN'] = sections_df['CRN'].astype(str)
+
+# A helper function to correct data.
+
+def fix( key, data):
+    for item in data.keys():
+        sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),item]=data[item]
+
+```
+
+```{python}
+# Spring 2023: CMSC475 John Leonard taught for David Shepherd
+fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
+
+# Fall 2024: CMSC391 is cross listed with COAR463.
+# Total enrollment 34 across two instructors (Bennett and Leonard)
+# Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
+fix({'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
+
+```
+
+
+### Reshape the data
+
+The current dataframe *sections_df* contains one record per term-crn-meeting period tuple.  Within each tuple there can be up to 2 instructors.  We need to
+reshape the data with the instructors in a single column.
+
+While we're here we can combine instructor first and last name, and drop verbose columns.
+
+```{python}
+cols = sections_df.columns
+values_to_remove = ['PRIMARY INSTRUCTOR FIRST NAME','PRIMARY INSTRUCTOR LAST NAME','SECONDARY INSTRUCTOR FIRST NAME','SECONDARY INSTRUCTOR LAST NAME']
+cols = [x for x in cols if x not in values_to_remove]
+
+sections_df['ins1_last'] = sections_df['PRIMARY INSTRUCTOR LAST NAME']
+sections_df['ins1_first'] = sections_df['PRIMARY INSTRUCTOR FIRST NAME']
+sections_df['ins2_last'] = sections_df['SECONDARY INSTRUCTOR LAST NAME']
+sections_df['ins2_first'] = sections_df['SECONDARY INSTRUCTOR FIRST NAME']
+sections_df['instructor_1'] = sections_df['ins1_last']+','+sections_df['ins1_first']
+sections_df['instructor_2'] = sections_df['ins2_last']+','+sections_df['ins2_first']
+sections_df['instructor_1'].fillna('',inplace=True)
+sections_df['instructor_2'].fillna('',inplace=True)
+
+stacked_df = pd.melt(sections_df,
+    id_vars=cols,
+    value_vars=['instructor_1','instructor_2'],
+    var_name='instructor source',
+    value_name='instructor'
+)
+```
+
+### Clean up rows
+
+```{python}
+# remove rows with empty instructor 1.  Keep rows with empty instructor 1.
+stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor']=='')) ]
+
+# drop rows with zero enrollments
+stacked_df = stacked_df[stacked_df['ACTUAL ENROLLMENT']>0]
+
+# Sort the data frame so it looks pretty in the output file.
+stacked_df = stacked_df.sort_values(['TERM','DEPT','COURSE','SECT','instructor source','instructor'])
+
+```
+
+### Compute appropriate aggregate measures
+
+These measures are used in later calculations for numbers of courses, sections, instructors, etc.
+
+```{python}
+
+# Create various aggregate columns
+stacked_df['sum_term_crse_crn'] = 1.0 / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
+stacked_df['sum_term_crse_crn_students'] = stacked_df['ACTUAL ENROLLMENT'] * stacked_df['sum_term_crse_crn']
+stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'] * stacked_df['MAX CREDITS']
+
+stacked_df['sum_term_crse'] = 1.0 / stacked_df.groupby(['TERM','COURSE'])['CRN'].transform('count')
+stacked_df['sum_term'] = 1.0 / stacked_df.groupby(['TERM'])['CRN'].transform('count')
+
+```
+
+
+### Store the data for later use
+
+We're storing both the stacked and unstacked data.  Note that the
+aggregate measures are stored with the stacked data only.
+
+```{python}
+# Store as CSV files
+sections_df.to_csv('sections_df.csv', index=False)
+stacked_df.to_csv('stacked_df.csv', index=False)
+```

@@ -1,0 +1,23 @@
+project:
+  type: website
+  output-dir: ../docs
+
+website:
+  title: "Analysis of Teaching"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: download.qmd
+        text: Download
+      - href: clean.qmd
+        text: Clean
+      - href: explore.qmd
+        text: Explore
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+  

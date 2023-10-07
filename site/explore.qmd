@@ -1,0 +1,257 @@
+---
+title: Exploring the data
+---
+
+For this analysis we'll be using the *stacked_df* data frame from the cleaning process.
+
+## Columns in the dataframe
+
+```{python}
+#| echo: false
+import os
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+stacked_df = pd.read_csv('stacked_df.csv')
+
+for col in ['TERM','COURSE','SECT']:
+  stacked_df[col] = stacked_df[col].astype(str)
+
+print(stacked_df.columns)
+```
+
+## College-wide measures over time
+
+This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.
+
+```{python}
+#| echo: false
+summary_df = stacked_df.groupby(['TERM','period_name']).agg({'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}).reset_index()
+
+Markdown(tabulate(
+  summary_df, 
+  headers=['Term','Term Name','Course Sum','CRN Sum','Student Sum','Hours Sum'],
+  numalign="right",stralign="left",
+  showindex=False,
+  floatfmt=".0f"  # Format numbers without decimals
+))
+
+```
+
+```{python}
+#| echo: false
+#| 
+X_column = 'period_name'
+Y_column = 'sum_term_crse_crn_students'
+
+plt.bar(summary_df[X_column], summary_df[Y_column])
+
+plt.xticks(rotation=45, ha='right')
+
+plt.xlabel('Semester')
+plt.ylabel('Sum of Section Enrollments')
+plt.title("Students taught by semester")
+
+plt.show()
+
+```
+
+
+## Students taught for Fall 2023 by department
+
+```{python}
+#| echo: false
+
+df = stacked_df[stacked_df['TERM'] == '202410']
+
+summary_df = df.groupby(['DEPT']).agg({'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}).reset_index()
+
+Markdown(tabulate(
+  summary_df, 
+  headers=['Dept','Course Sum','CRN Sum','Student Sum','Hours Sum'],
+  numalign="right",stralign="left",
+  showindex=False,
+  floatfmt=".0f"  # Format numbers without decimals
+))
+
+```
+
+
+```{python}
+#| echo: false
+#| 
+X_column = 'DEPT'
+Y_column = 'sum_term_crse_crn_students'
+
+plt.bar(summary_df[X_column], summary_df[Y_column])
+
+plt.xticks(rotation=45, ha='right')
+
+plt.xlabel('Department')
+plt.ylabel('Sum of Section Enrollments')
+plt.title("Students taught for Fall 2023")
+
+plt.show()
+
+```
+
+## Fall 2023 CMSC Courses
+
+```{python}
+#| echo: false
+
+factors = ['COURSE','CRN','TITLE','TYPE','instructor','MODALITY TEXT']
+measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+mnames = ['CRN sum','STDNTS sum','HRS sum']
+
+cols = [factor for factor in factors]+list(measures.keys())
+cnames = list(factors)+list(mnames)
+df = stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['DEPT'] == 'CMSC')
+]
+
+summary_df = df.groupby(factors).agg(measures).reset_index()
+summary_df = summary_df.sort_values(by=factors, ascending=True)
+#summary_df = summary_df.sort_values(by='sum_term_crse_crn_students', ascending=False)
+
+Markdown(tabulate(
+  summary_df, 
+  headers=cnames,
+  numalign="right",stralign="left",
+  showindex=False
+))
+
+```
+
+## Fall 2023 CMSC Instructors
+
+This table aggregates teaching by instructor and course. The table is sorted by instructor and course.
+
+
+```{python}
+#| echo: false
+factors = ['COURSE','TITLE','TYPE','instructor']
+measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+mnames = ['CRN sum','STDNTS sum','HRS sum']
+
+cols = [factor for factor in factors]+list(measures.keys())
+cnames = list(factors)+list(mnames)
+df = stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['DEPT'] == 'CMSC')
+]
+
+summary_df = df.groupby(factors).agg(measures).reset_index()
+summary_df = summary_df.sort_values(by=['instructor','COURSE'], ascending=True)
+
+Markdown(tabulate(
+  summary_df, 
+  headers=cnames,
+  numalign="right",stralign="left",
+  showindex=False
+))
+
+```
+
+## Fall 2023 CMSC Teaching loads
+
+The table below shows credit hours by type of course for faculty in CMSC. 
+
+* [Credit hour definitions](https://bulletin.vcu.edu/academic-regs/university/course-info/)
+* [UG degree requirements](https://bulletin.vcu.edu/academic-regs/ugrad/ugrad-degree-reqs/)
+
+
+The table is sorted in descending order by credit hours taught (*HRS sum*). The *HRS sum* is
+broken down by type of course (e.g., LEC, LAB, etc.)
+
+Values are split 50/50 between the primary and secondary instructors if there is a secondary instructor.
+
+```{python}
+#| echo: false
+cols = ['LEC','LAB','SEM','RES','IND']
+
+df = stacked_df[
+    (stacked_df['TERM'] == '202410')
+    & (stacked_df['DEPT'] == 'CMSC')
+]
+
+pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns='TYPE',aggfunc='sum' )
+pivot_df = pivot_df[ cols ]
+def format_no_decimal(val):
+    return f'{val:.0f}' if not pd.isna(val) else ''
+
+# Apply the lambda function to all columns
+pivot_df = pivot_df.map(format_no_decimal)
+
+measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+courses_df = df.groupby('instructor').agg(measures).reset_index()
+
+courses_df.columns = ['instructor','CRN','STDNT','HRS']
+
+pivot_df = pd.merge( courses_df,pivot_df,right_index=True,left_on='instructor',how='right')
+pivot_df = pivot_df.set_index('instructor')
+pivot_df = pivot_df.sort_values(by=['HRS'],ascending=False)
+
+cols =  ['CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
+
+Markdown(tabulate(
+  pivot_df, 
+  headers=cols,
+  numalign="right",stralign="right",
+  showindex=True
+))
+
+```
+
+## CMSC Teaching loads - last 2 terms
+
+The table below shows credit hours by type of course for faculty in CMSC.
+
+The data are aggregate of the past two terms (Spring 2023 and Fall 2023).
+
+The table is sorted in descending order by credit hours taught (*HRS sum*). The *HRS sum* is
+broken down by type of course (e.g., LEC, LAB, etc.)
+
+Values are split 50/50 between the primary and secondary instructors if there is a secondary instructor.
+
+```{python}
+#| echo: false
+cols = ['LEC','LAB','SEM','RES','IND']
+
+df = stacked_df[
+    (stacked_df['TERM'].isin(['202320','202410']))
+    & (stacked_df['DEPT'] == 'CMSC')
+]
+
+pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns='TYPE',aggfunc='sum' )
+pivot_df = pivot_df[ cols ]
+def format_no_decimal(val):
+    return f'{val:.0f}' if not pd.isna(val) else ''
+
+# Apply the lambda function to all columns
+pivot_df = pivot_df.map(format_no_decimal)
+
+measures = {'sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
+courses_df = df.groupby('instructor').agg(measures).reset_index()
+
+courses_df.columns = ['instructor','CRN','STDNT','HRS']
+
+pivot_df = pd.merge( courses_df,pivot_df,right_index=True,left_on='instructor',how='right')
+pivot_df = pivot_df.set_index('instructor')
+pivot_df = pivot_df.sort_values(by=['HRS'],ascending=False)
+
+cols =  ['CRN sum','STDNT sum','HRS sum','LEC','LAB','SEM','RES','IND']
+
+Markdown(tabulate(
+  pivot_df, 
+  headers=cols,
+  numalign="right",stralign="right",
+  showindex=True
+))
+
+```

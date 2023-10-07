@@ -1,0 +1,6 @@
+---
+title: analysis of teaching
+---
+
+this site looks at teaching loads in VCU engineering over the past several semesters
+

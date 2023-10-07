@@ -1,0 +1,11 @@
+{
+  "hash": "42ededf85bf1e87b9754475469c6907c",
+  "result": {
+    "markdown": "---\ntitle: Downloading the data\n---\n\n## Data sources\n\nData were pulled from the VCU Reporting Center in the *Staff | Course Schedule Report* as shown below:\n\nReports are run by semester for the College of Engineering and stored in separate files.  Care should\nbe taken to open each file after it's been saved and **RESAVE** the file into XLSX format.\n\n::: {layout-ncol=2}\n![](assets/reporting-center-report.png)\n\n![](assets/reporting-center-report-download.png)\n:::\n\nThe files are named appropriately and stored in the *data* folder in this repository.\n\n::: {.cell execution_count=1}\n\n::: {.cell-output .cell-output-display execution_count=1}\nFile name                   Term Code    Acad Year    Period Code    Period Name\n--------------------------  -----------  -----------  -------------  -------------\nVCU-SOC-202110-FA2020.xlsx  202110       AY20-21      FA2020         Fall 2020\nVCU-SOC-202120-SP2021.xlsx  202120       AY20-21      SP2021         Spring 2021\nVCU-SOC-202130-SU2021.xlsx  202130       AY20-21      SU2021         Summer 2021\nVCU-SOC-202210-FA2021.xlsx  202210       AY21-22      FA2021         Fall 2021\nVCU-SOC-202220-SP2022.xlsx  202220       AY21-22      SP2022         Spring 2022\nVCU-SOC-202230-SU2022.xlsx  202230       AY21-22      SU2022         Summer 2022\nVCU-SOC-202310-FA2022.xlsx  202310       AY22-23      FA2022         Fall 2022\nVCU-SOC-202320-SP2023.xlsx  202320       AY22-23      SP2023         Spring 2023\nVCU-SOC-202330-SU2023.xlsx  202330       AY22-23      SU2023         Summer 2023\nVCU-SOC-202410-FA2023.xlsx  202410       AY23-24      FA2023         Fall 2023\n:::\n:::\n\n\n",
+    "supporting": [
+      "download_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}

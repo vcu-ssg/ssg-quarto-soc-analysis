@@ -1,0 +1,63 @@
+---
+title: Downloading the data
+---
+
+## Data sources
+
+Data were pulled from the VCU Reporting Center in the *Staff | Course Schedule Report* as shown below:
+
+Reports are run by semester for the College of Engineering and stored in separate files.  Care should
+be taken to open each file after it's been saved and **RESAVE** the file into XLSX format.
+
+::: {layout-ncol=2}
+![](assets/reporting-center-report.png)
+
+![](assets/reporting-center-report-download.png)
+:::
+
+The files are named appropriately and stored in the *data* folder in this repository.
+
+```{python}
+#| echo: false
+import os
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+directory_path = './data'
+file_list = os.listdir(directory_path)
+xlsx_files = [file for file in file_list if file.endswith('.xlsx')]
+xlsx_df = pd.DataFrame({'file_name':xlsx_files})
+
+xlsx_df['term_code'] = xlsx_df['file_name'].str.split('-').str[2]
+
+def convert_ay(term_code):
+    year = term_code[2:4]
+    return f'AY{int(year)-1}-{year}'
+
+xlsx_df['academic_year'] = xlsx_df['term_code'].apply(convert_ay)
+
+xlsx_df['period_code'] = xlsx_df['file_name'].str.split('-').str[3]
+xlsx_df['period_code'] = xlsx_df['period_code'].str.split('.').str[0]
+
+def convert_period(period_code):
+    year = period_code[2:]
+    period_id = period_code[:2]
+    terms = {'FA': 'Fall', 'SP': 'Spring', 'SU': 'Summer'}
+    period_name = terms.get(period_id, 'Unknown')
+    return f'{period_name} {year}'
+
+xlsx_df['period_name'] = xlsx_df['period_code'].apply(convert_period)
+
+Markdown(tabulate(
+  xlsx_df, 
+  headers=['File name','Term Code','Acad Year','Period Code','Period Name'],
+  numalign="left",stralign="left",
+  showindex=False
+))
+
+```
+
