@@ -155,8 +155,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#fix-known-errors" id="toc-fix-known-errors" class="nav-link" data-scroll-target="#fix-known-errors">Fix known errors</a></li>
   <li><a href="#reshape-the-data" id="toc-reshape-the-data" class="nav-link" data-scroll-target="#reshape-the-data">Reshape the data</a></li>
   <li><a href="#clean-up-rows" id="toc-clean-up-rows" class="nav-link" data-scroll-target="#clean-up-rows">Clean up rows</a></li>
+  <li><a href="#merge-persistent-instructor-data" id="toc-merge-persistent-instructor-data" class="nav-link" data-scroll-target="#merge-persistent-instructor-data">Merge persistent instructor data</a></li>
   <li><a href="#compute-appropriate-aggregate-measures" id="toc-compute-appropriate-aggregate-measures" class="nav-link" data-scroll-target="#compute-appropriate-aggregate-measures">Compute appropriate aggregate measures</a></li>
+  <li><a href="#workload-model-assignments" id="toc-workload-model-assignments" class="nav-link" data-scroll-target="#workload-model-assignments">Workload model assignments</a></li>
   <li><a href="#store-the-data-for-later-use" id="toc-store-the-data-for-later-use" class="nav-link" data-scroll-target="#store-the-data-for-later-use">Store the data for later use</a></li>
+  <li><a href="#store-the-data-in-google-sheets" id="toc-store-the-data-in-google-sheets" class="nav-link" data-scroll-target="#store-the-data-in-google-sheets">Store the data in google sheets</a></li>
+  <li><a href="#freshen-persistent-instructor-data" id="toc-freshen-persistent-instructor-data" class="nav-link" data-scroll-target="#freshen-persistent-instructor-data">Freshen persistent instructor data</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -329,7 +333,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Fall 2024: CMSC391 is cross listed with COAR463.</span></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Total enrollment 34 across two instructors (Bennett and Leonard)</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fix({<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'CRN'</span>:<span class="st">'46263'</span>},{<span class="st">'ACTUAL ENROLLMENT'</span>:<span class="dv">34</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>fix({<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'CRN'</span>:<span class="st">'46263'</span>},{<span class="st">'ACTUAL ENROLLMENT'</span>:<span class="dv">34</span>})</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="reshape-the-data" class="level3">
@@ -364,32 +370,112 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows with empty instructor 1.  Keep rows with empty instructor 1.</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[ <span class="op">~</span> ((stacked_df[<span class="st">'instructor source'</span>]<span class="op">==</span><span class="st">'instructor_2'</span>) <span class="op">&amp;</span> (stacked_df[<span class="st">'instructor'</span>]<span class="op">==</span><span class="st">''</span>)) ]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># drop rows with zero enrollments</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any missing instructors with note</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>]),<span class="st">"instructor"</span>] <span class="op">=</span> stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'COURSE'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'TERM'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'CRN'</span>]</span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data frame so it looks pretty in the output file.</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df.sort_values([<span class="st">'TERM'</span>,<span class="st">'DEPT'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>,<span class="st">'instructor source'</span>,<span class="st">'instructor'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># drop rows with zero enrollments</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data frame so it looks pretty in the output file.</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df.sort_values([<span class="st">'TERM'</span>,<span class="st">'DEPT'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>,<span class="st">'instructor source'</span>,<span class="st">'instructor'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="merge-persistent-instructor-data" class="level3">
+<h3 class="anchored" data-anchor-id="merge-persistent-instructor-data">Merge persistent instructor data</h3>
+<p>We’re storing some of the results in google sheets. Further, we’re using google sheets to store persistent data not found in the VCU course schedule report.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define scope</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> [<span class="st">'https://spreadsheets.google.com/feeds'</span>, <span class="st">'https://www.googleapis.com/auth/drive'</span>]</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create credentials object</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>credential_file <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">"~"</span>), <span class="st">".gsecrets"</span>, <span class="st">"gsheets-credentials.json"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.isfile( credential_file ):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Missing credential file:"</span>,credential_file)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  sys.exit()</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># authorize the client</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>creds <span class="op">=</span> ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> gspread.authorize(creds)</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor data"</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>instructor_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_df,left_on<span class="op">=</span><span class="st">'instructor'</span>,right_on<span class="op">=</span><span class="st">'instructor'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="compute-appropriate-aggregate-measures" class="level3">
 <h3 class="anchored" data-anchor-id="compute-appropriate-aggregate-measures">Compute appropriate aggregate measures</h3>
 <p>These measures are used in later calculations for numbers of courses, sections, instructors, etc.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create various aggregate columns</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>])[<span class="st">'TERM'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>])[<span class="st">'COURSE'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">=</span> stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>] <span class="op">*</span> stacked_df[<span class="st">'sum_term_crse_crn'</span>]</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_hours'</span>] <span class="op">=</span>  stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">*</span> stacked_df[<span class="st">'MAX CREDITS'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create various aggregate columns</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>])[<span class="st">'TERM'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>])[<span class="st">'COURSE'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">=</span> stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>] <span class="op">*</span> stacked_df[<span class="st">'sum_term_crse_crn'</span>]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_hours'</span>] <span class="op">=</span>  stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">*</span> stacked_df[<span class="st">'MAX CREDITS'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="workload-model-assignments" class="level3">
+<h3 class="anchored" data-anchor-id="workload-model-assignments">Workload model assignments</h3>
+<p>These are placeholders for any proposed workload model based on course and instructor attributes.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_a'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_b'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_c'</span>] <span class="op">=</span> <span class="fl">0.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="store-the-data-for-later-use" class="level3">
 <h3 class="anchored" data-anchor-id="store-the-data-for-later-use">Store the data for later use</h3>
 <p>We’re storing both the stacked and unstacked data. Note that the aggregate measures are stored with the stacked data only.</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="store-the-data-in-google-sheets" class="level3">
+<h3 class="anchored" data-anchor-id="store-the-data-in-google-sheets">Store the data in google sheets</h3>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="freshen-persistent-instructor-data" class="level3">
+<h3 class="anchored" data-anchor-id="freshen-persistent-instructor-data">Freshen persistent instructor data</h3>
+<p>This block identifies any instructors not found in the persistent instructor data and adds them to the list with default values.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

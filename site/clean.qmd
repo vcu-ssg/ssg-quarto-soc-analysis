@@ -13,12 +13,17 @@ The files are named appropriately and stored in the *data* folder in this reposi
 ```{python}
 #| echo: false
 import os
+import sys
+import json
+import numpy as np
+import pandas as pd
+import gspread
 import pathlib
 import matplotlib.pyplot as plt
 from IPython.display import Markdown
 from tabulate import tabulate
-import pandas as pd
-import numpy as np
+from gspread_dataframe import set_with_dataframe, get_as_dataframe
+from oauth2client.service_account import ServiceAccountCredentials
 
 directory_path = './data'
 file_list = os.listdir(directory_path)
@@ -139,8 +144,10 @@ fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRI
 # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
 fix({'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
-```
+#fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
+
+```
 
 ### Reshape the data
 
@@ -177,11 +184,42 @@ stacked_df = pd.melt(sections_df,
 # remove rows with empty instructor 1.  Keep rows with empty instructor 1.
 stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor']=='')) ]
 
+# replace any missing instructors with note
+stacked_df.loc[stacked_df["instructor"].isin(['']),"instructor"] = stacked_df[stacked_df["instructor"].isin([''])]['COURSE']+' '+stacked_df[stacked_df["instructor"].isin([''])]['TERM']+' '+stacked_df[stacked_df["instructor"].isin([''])]['CRN']
+
 # drop rows with zero enrollments
 stacked_df = stacked_df[stacked_df['ACTUAL ENROLLMENT']>0]
 
 # Sort the data frame so it looks pretty in the output file.
 stacked_df = stacked_df.sort_values(['TERM','DEPT','COURSE','SECT','instructor source','instructor'])
+
+```
+
+### Merge persistent instructor data
+
+We're storing some of the results in google sheets.  Further, we're using google
+sheets to store persistent data not found in the VCU course schedule report.
+
+```{python}
+# define scope
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+
+# create credentials object
+credential_file = os.path.join(os.path.expanduser("~"), ".gsecrets", "gsheets-credentials.json")
+if not os.path.isfile( credential_file ):
+  print("Missing credential file:",credential_file)
+  sys.exit()
+
+# authorize the client
+creds = ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)
+client = gspread.authorize(creds)
+
+spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"
+worksheet_name = "Instructor data"
+sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
+
+stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor',right_on='instructor',how='left')
 
 ```
 
@@ -199,6 +237,16 @@ stacked_df['sum_term_crse_crn_students'] = stacked_df['ACTUAL ENROLLMENT'] * sta
 stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'] * stacked_df['MAX CREDITS']
 ```
 
+### Workload model assignments
+
+These are placeholders for any proposed workload model based on course and instructor attributes.
+
+```{python}
+stacked_df['sum_term_crse_wrkld_a'] = 0.0
+stacked_df['sum_term_crse_wrkld_b'] = 0.0
+stacked_df['sum_term_crse_wrkld_c'] = 0.0
+```
+
 
 ### Store the data for later use
 
@@ -209,4 +257,55 @@ aggregate measures are stored with the stacked data only.
 # Store as CSV files
 sections_df.to_csv('sections_df.csv', index=False)
 stacked_df.to_csv('stacked_df.csv', index=False)
+```
+
+### Store the data in google sheets
+
+```{python}
+
+# Open the worksheet 
+spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"
+worksheet_name = "Source data"
+
+data_to_write = stacked_df.to_records(index=False)
+try:
+    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+except:
+    sheet = client.open_by_key(spreadsheet_key).add_worksheet( 
+        title = worksheet_name,nrows=100,ncols=10
+    )
+sheet.clear()
+set_with_dataframe(worksheet=sheet, dataframe=stacked_df, include_index=False,include_column_header=True, resize=True)
+
+```
+
+### Freshen persistent instructor data
+
+This block identifies any instructors not found in the persistent instructor data
+and adds them to the list with default values.
+
+```{python}
+#| echo: true
+
+
+#worksheet_name = "Instructor data"
+#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()
+#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])
+#data_to_write = summary_df.to_records(index=False)
+#try:
+#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+#except:
+#    nrows,ncols = summary_df.shape
+#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( 
+#        title = worksheet_name,rows=nrows+1,cols=ncols+1
+#    )
+#sheet.clear()
+#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)
+
+# Find names in df2 that are not in df1
+##names_to_add = df2[~df2['name'].isin(df1['name'])]
+
+# Add the rows with missing names from df2 to df1
+## df1 = pd.concat([df1, names_to_add], ignore_index=True)
+
 ```
