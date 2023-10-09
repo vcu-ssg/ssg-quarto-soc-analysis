@@ -2,21 +2,21 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "analysis of teaching",
+    "title": "Analysis of Teaching",
     "section": "",
     "text": "This web report looks at teaching across the College of Engineering since Fall 2020."
   },
   {
     "objectID": "index.html#report-organization",
     "href": "index.html#report-organization",
-    "title": "analysis of teaching",
+    "title": "Analysis of Teaching",
     "section": "Report organization",
-    "text": "Report organization\nThe site is organized as follow:\n\nDownload - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.\nclean - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this google sheet.\nexplore - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not as part of a real workload analysis."
+    "text": "Report organization\nThe site is organized as follow:\n\nDownload - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.\nClean - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this google sheet.\nExplore - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not as part of a real workload analysis."
   },
   {
     "objectID": "index.html#persistent-data",
     "href": "index.html#persistent-data",
-    "title": "analysis of teaching",
+    "title": "Analysis of Teaching",
     "section": "Persistent data",
     "text": "Persistent data\nThe analysis also expect that there are persistent data stored outside of the VCU report, data that is important for helping classify faculty and courses.\nInstructor data - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.\nInstructor notes - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.\nCourse notes - these data offer additional details about the courses. This table is optional to this analysis."
   },
