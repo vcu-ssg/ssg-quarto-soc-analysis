@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Analysis of Teaching",
     "section": "",
-    "text": "This web report looks at teaching across the College of Engineering since Fall 2020."
+    "text": "This web report looks at teaching across the College of Engineering since Fall 2020.\nThis is intended to be a living analysis. As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.\nThis report was developed using Quarto, an open-source scientific and technical publishing designed with reproducibility in mind. Analyses were performed using python. The source code for the pages on this site are available in a github repository."
   },
   {
     "objectID": "index.html#report-organization",
@@ -12,6 +12,13 @@
     "title": "Analysis of Teaching",
     "section": "Report organization",
     "text": "Report organization\nThe site is organized as follow:\n\nDownload - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.\nClean - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this google sheet.\nExplore - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not as part of a real workload analysis."
+  },
+  {
+    "objectID": "index.html#worksheet-sandbox",
+    "href": "index.html#worksheet-sandbox",
+    "title": "Analysis of Teaching",
+    "section": "Worksheet sandbox",
+    "text": "Worksheet sandbox\nData from the cleaning is used to support the example output in the explore document.\nThe resulting data are also uploaded to google sheets and complementary analysis is done in the google sheet:\n\nSample instructor reports highlight the use of the google sheeet QUERY command to build summaries from the raw data.\nSample workload report offers examples of how computations from a sample workload model can be used to support QUERYs in a google sheet."
   },
   {
     "objectID": "index.html#persistent-data",

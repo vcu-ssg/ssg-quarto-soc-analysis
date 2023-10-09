@@ -1,8 +1,14 @@
 ---
 title: Analysis of Teaching
+author: John Leonard
+date: last-modified
 ---
 
 This web report looks at teaching across the College of Engineering since Fall 2020.
+
+This is intended to be a living analysis.  As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.
+
+This report was developed using [Quarto](https://quarto.org/), an open-source scientific and technical publishing designed with reproducibility in mind.  Analyses were performed using python.  The source code for the pages on this site are available in a [github repository](https://github.com/vcu-ssg/ssg-quarto-soc-analysis).
 
 ## Report organization
 
@@ -15,6 +21,16 @@ are stored in this repo, and are also uploaded to this [google sheet](https://do
 
 * [Explore](./30_explore.qmd) - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not
 as part of a real workload analysis.
+
+## Worksheet sandbox
+
+Data from the [cleaning](./20_clean.qmd) is used to support the example output in the [explore](./30_explore.qmd) document.
+
+The resulting data are also [uploaded to google sheets](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1728987696) and complementary analysis is done in the google sheet:
+
+* [Sample instructor reports](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1722375566) highlight the use of the google sheeet QUERY command to build summaries from the raw data.
+
+* [Sample workload report](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377) offers examples of how computations from a [sample workload model](https://vcu-ssg.github.io/ssg-quarto-soc-analysis/20_clean.html#sample-workload-model) can be used to support QUERYs in a google sheet.
 
 ## Persistent data
 
