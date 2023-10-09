@@ -13,5 +13,14 @@
   },
   "explore.qmd": {
     "explore.html": "4f679a2b"
+  },
+  "10_download.qmd": {
+    "10_download.html": "91c5ea8a"
+  },
+  "20_clean.qmd": {
+    "20_clean.html": "e609c706"
+  },
+  "30_explore.qmd": {
+    "30_explore.html": "ed52386b"
   }
 }

@@ -120,15 +120,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./download.html" rel="" target="">
+    <a class="nav-link" href="./10_download.html" rel="" target="">
  <span class="menu-text">Download</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./clean.html" rel="" target="">
+    <a class="nav-link" href="./20_clean.html" rel="" target="">
  <span class="menu-text">Clean</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./explore.html" rel="" target="" aria-current="page">
+    <a class="nav-link active" href="./30_explore.html" rel="" target="" aria-current="page">
  <span class="menu-text">Explore</span></a>
   </li>  
 </ul>
@@ -189,11 +189,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
        'SAT-IND', 'SUN-IND', 'BEGIN TIME', 'END TIME', 'BUILDING', 'ROOM',
        'MODALITY CODE', 'MODALITY TEXT', 'CROSS_LIST_MAXIMUM_ENROLLMENT',
        'CROSS_LIST_ENROLLMENT', 'file_name', 'term_code', 'academic_year',
-       'period_code', 'period_name', 'instructor source', 'instructor',
-       'ins_college', 'ins_dept', 'ins_role', 'ins_wrkld', 'sum_term',
+       'period_code', 'period_name', 'fixes', 'fix_notes', 'instructor source',
+       'instructor', 'course_subject', 'course_number', 'ins_college',
+       'ins_dept', 'ins_role', 'ins_wrkld', 'ins_url_vcu', 'ins_url_linkedin',
+       'ins_url_google_scholar', 'ins_note1', 'crse', 'crse_with_url',
+       'crse_note', 'meeting_code', 'meeting_id', 'mtgs_per_wk', 'sum_term',
        'sum_term_crse', 'sum_term_crse_crn', 'sum_term_crse_crn_students',
-       'sum_term_crse_crn_hours', 'sum_term_crse_wrkld_a',
-       'sum_term_crse_wrkld_b', 'sum_term_crse_wrkld_c'],
+       'sum_term_crse_crn_hours', 'sum_term_crse_wrkld_sample',
+       'sum_term_crse_wrkld_a', 'sum_term_crse_wrkld_b',
+       'sum_term_crse_wrkld_c'],
       dtype='object')</code></pre>
 </div>
 </div>
@@ -301,7 +305,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display">
-<p><img src="explore_files/figure-html/cell-4-output-1.png" width="601" height="513"></p>
+<p><img src="30_explore_files/figure-html/cell-4-output-1.png" width="601" height="513"></p>
 </div>
 </div>
 </section>
@@ -368,7 +372,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <div class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
-<p><img src="explore_files/figure-html/cell-6-output-1.png" width="602" height="474"></p>
+<p><img src="30_explore_files/figure-html/cell-6-output-1.png" width="602" height="474"></p>
 </div>
 </div>
 </section>
@@ -432,13 +436,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: right;">43736</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">43736</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Gusukuma,Luke</td>
 <td style="text-align: left;">Face-to-Face instruction</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">44838</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sands,Allison</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC254</td>
@@ -447,22 +475,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sands,Allison</td>
 <td style="text-align: left;">Face-to-Face instruction</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">156</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">46793</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: right;">46793</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Budwell,Caroline</td>
 <td style="text-align: left;">Face-to-Face instruction</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: right;">46878</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Traub,Adam</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC254</td>
@@ -471,24 +523,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Traub,Adam</td>
 <td style="text-align: left;">Face-to-Face instruction</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">156</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">37573</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Grove,Ralph</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: right;">37573</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Grove,Ralph</td>
 <td style="text-align: left;">Hybrid-synchronous instruction</td>
-<td style="text-align: right;">0.285714</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">184</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">92</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: right;">41688</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
@@ -500,6 +564,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">100</td>
 </tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">43404</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: left;">Face-to-Face instruction</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">112</td>
+</tr>
 <tr class="even">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: right;">43404</td>
@@ -507,22 +583,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Gusukuma,Luke</td>
 <td style="text-align: left;">Face-to-Face instruction</td>
-<td style="text-align: right;">0.285714</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">224</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">112</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: right;">45869</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: right;">45869</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sparks,Claire</td>
 <td style="text-align: left;">Hybrid-synchronous instruction</td>
-<td style="text-align: right;">0.285714</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">80</td>
-<td style="text-align: right;">320</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: right;">36067</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">41.5</td>
+<td style="text-align: right;">166</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC256</td>
@@ -531,22 +631,46 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Duke,Debra</td>
 <td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.25</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">83</td>
-<td style="text-align: right;">332</td>
+<td style="text-align: right;">41.5</td>
+<td style="text-align: right;">166</td>
 </tr>
 <tr class="odd">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: right;">41689</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: left;">Online-synchronous instruction</td>
+<td style="text-align: right;">0.25</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="even">
 <td style="text-align: left;">CMSC256</td>
 <td style="text-align: right;">41689</td>
 <td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Duke,Debra</td>
 <td style="text-align: left;">Online-synchronous instruction</td>
+<td style="text-align: right;">0.25</td>
 <td style="text-align: right;">0.5</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">31</td>
-<td style="text-align: right;">124</td>
+<td style="text-align: right;">15.5</td>
+<td style="text-align: right;">62</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: right;">34519</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">74</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC257</td>
@@ -555,10 +679,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sonmez,Ahmet</td>
 <td style="text-align: left;">Hybrid-synchronous instruction</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">37</td>
-<td style="text-align: right;">148</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">18.5</td>
+<td style="text-align: right;">74</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC257</td>
@@ -576,15 +700,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">CMSC257</td>
 <td style="text-align: right;">44806</td>
 <td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: left;">Hybrid-synchronous instruction</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">88</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: right;">44806</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sonmez,Ahmet</td>
 <td style="text-align: left;">Hybrid-synchronous instruction</td>
-<td style="text-align: right;">0.4</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">44</td>
-<td style="text-align: right;">176</td>
+<td style="text-align: right;">0.2</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">88</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC302</td>
 <td style="text-align: right;">23252</td>
 <td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
@@ -596,7 +732,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">75</td>
 <td style="text-align: right;">225</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC302</td>
 <td style="text-align: right;">39169</td>
 <td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
@@ -608,7 +744,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">58</td>
 <td style="text-align: right;">174</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC303</td>
 <td style="text-align: right;">36127</td>
 <td style="text-align: left;">INTRO TO THEORY OF CMPUTATION</td>
@@ -620,7 +756,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">119</td>
 <td style="text-align: right;">357</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC311</td>
 <td style="text-align: right;">36126</td>
 <td style="text-align: left;">COMPUTER ORGANIZATION</td>
@@ -632,7 +768,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">131</td>
 <td style="text-align: right;">393</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC312</td>
 <td style="text-align: right;">11731</td>
 <td style="text-align: left;">INTRO TO OPERATING SYSTEMS</td>
@@ -644,7 +780,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">42</td>
 <td style="text-align: right;">126</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC320</td>
 <td style="text-align: right;">40553</td>
 <td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
@@ -656,7 +792,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18.5</td>
 <td style="text-align: right;">55.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC320</td>
 <td style="text-align: right;">40553</td>
 <td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
@@ -668,7 +804,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18.5</td>
 <td style="text-align: right;">55.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC330</td>
 <td style="text-align: right;">40554</td>
 <td style="text-align: left;">DATA SCIENCE SKILLS</td>
@@ -680,7 +816,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">14.5</td>
 <td style="text-align: right;">43.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC330</td>
 <td style="text-align: right;">40554</td>
 <td style="text-align: left;">DATA SCIENCE SKILLS</td>
@@ -692,7 +828,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">14.5</td>
 <td style="text-align: right;">43.5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC340</td>
 <td style="text-align: right;">40555</td>
 <td style="text-align: left;">CYBERSECURITY SKILLS</td>
@@ -704,7 +840,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC340</td>
 <td style="text-align: right;">40555</td>
 <td style="text-align: left;">CYBERSECURITY SKILLS</td>
@@ -716,7 +852,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">81</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC355</td>
 <td style="text-align: right;">11732</td>
 <td style="text-align: left;">FUNDAMENTALS SOFTWARE ENGINEER</td>
@@ -728,7 +864,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">87</td>
 <td style="text-align: right;">261</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC391</td>
 <td style="text-align: right;">46263</td>
 <td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
@@ -740,7 +876,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">17</td>
 <td style="text-align: right;">51</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC391</td>
 <td style="text-align: right;">46263</td>
 <td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
@@ -752,7 +888,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">17</td>
 <td style="text-align: right;">51</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC401</td>
 <td style="text-align: right;">34456</td>
 <td style="text-align: left;">ALGORITHM ANL W/ADV DATA STRUC</td>
@@ -764,7 +900,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">157</td>
 <td style="text-align: right;">471</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC403</td>
 <td style="text-align: right;">36700</td>
 <td style="text-align: left;">PROGRAMMING LANGUAGES</td>
@@ -776,7 +912,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">80</td>
 <td style="text-align: right;">240</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC409</td>
 <td style="text-align: right;">27851</td>
 <td style="text-align: left;">ARTIFICIAL INTELLIGENCE</td>
@@ -788,7 +924,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">81</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC413</td>
 <td style="text-align: right;">39167</td>
 <td style="text-align: left;">INTRO TO CYBERSECURITY</td>
@@ -800,7 +936,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">75</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC415</td>
 <td style="text-align: right;">34458</td>
 <td style="text-align: left;">INTRO TO CRYPTOGRAPHY</td>
@@ -812,7 +948,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16</td>
 <td style="text-align: right;">48</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC435</td>
 <td style="text-align: right;">36116</td>
 <td style="text-align: left;">INTRODUCTION TO DATA SCIENCE</td>
@@ -824,7 +960,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">47</td>
 <td style="text-align: right;">141</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC440</td>
 <td style="text-align: right;">46652</td>
 <td style="text-align: left;">DATA COMMUNCATION &amp; NETWORKING</td>
@@ -836,7 +972,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">22</td>
 <td style="text-align: right;">66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43748</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -848,7 +984,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43749</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -860,7 +996,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">16</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43750</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -872,7 +1008,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">16</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43751</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -884,7 +1020,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">24</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43758</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -896,7 +1032,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">14</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43760</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -908,7 +1044,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">12</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43761</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -920,7 +1056,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43762</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -932,7 +1068,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43764</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -944,7 +1080,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43766</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -956,7 +1092,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">12</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43769</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -968,7 +1104,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">18</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43770</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -980,7 +1116,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43771</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -992,7 +1128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">16</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43773</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1004,7 +1140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">14</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43780</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1016,7 +1152,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">40</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43782</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1028,7 +1164,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">38</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43783</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1040,7 +1176,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43784</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1052,7 +1188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">43786</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1064,7 +1200,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">18</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: right;">44349</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
@@ -1076,7 +1212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">13</td>
 <td style="text-align: right;">26</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC451</td>
 <td style="text-align: right;">43785</td>
 <td style="text-align: left;">SENIOR PROJECT I</td>
@@ -1088,7 +1224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">161</td>
 <td style="text-align: right;">161</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC455</td>
 <td style="text-align: right;">40828</td>
 <td style="text-align: left;">SOFTWARE AS A SERVICE</td>
@@ -1100,7 +1236,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">94</td>
 <td style="text-align: right;">282</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC491</td>
 <td style="text-align: right;">45897</td>
 <td style="text-align: left;">SP: MACHINE LEARNING</td>
@@ -1112,7 +1248,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">15</td>
 <td style="text-align: right;">45</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC492</td>
 <td style="text-align: right;">47095</td>
 <td style="text-align: left;">INDEPENDENT STUDY</td>
@@ -1124,7 +1260,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC501</td>
 <td style="text-align: right;">39781</td>
 <td style="text-align: left;">ADVANCED ALGORITHMS</td>
@@ -1136,7 +1272,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">22</td>
 <td style="text-align: right;">66</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC502</td>
 <td style="text-align: right;">37708</td>
 <td style="text-align: left;">PARALLEL ALGORITHMS</td>
@@ -1148,7 +1284,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">30</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC502</td>
 <td style="text-align: right;">37709</td>
 <td style="text-align: left;">PARALLEL ALGORITHMS</td>
@@ -1160,7 +1296,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC508</td>
 <td style="text-align: right;">36125</td>
 <td style="text-align: left;">DATA BASE THEORY</td>
@@ -1172,7 +1308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">133</td>
 <td style="text-align: right;">399</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC603</td>
 <td style="text-align: right;">36113</td>
 <td style="text-align: left;">HIGH PERF. DISTRIB. SYSTEMS</td>
@@ -1184,7 +1320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">60</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC654</td>
 <td style="text-align: right;">42291</td>
 <td style="text-align: left;">MEMORY AND MALWARE FORENSICS</td>
@@ -1196,7 +1332,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">13</td>
 <td style="text-align: right;">39</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC691</td>
 <td style="text-align: right;">45416</td>
 <td style="text-align: left;">ST: INTRO TO MACHINE LEARNING</td>
@@ -1208,7 +1344,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">40</td>
 <td style="text-align: right;">120</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC691</td>
 <td style="text-align: right;">45871</td>
 <td style="text-align: left;">SP:EMERGE TRENDS NAT LANG PROC</td>
@@ -1220,7 +1356,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">15</td>
 <td style="text-align: right;">45</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC691</td>
 <td style="text-align: right;">46851</td>
 <td style="text-align: left;">SP TOP:AI FOR NETWRK &amp;EDGE SYS</td>
@@ -1232,7 +1368,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">27</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37336</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1244,7 +1380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37337</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1256,7 +1392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37338</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1268,7 +1404,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37339</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1280,7 +1416,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">18</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37341</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1292,7 +1428,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37361</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1304,7 +1440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37384</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1316,7 +1452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37385</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1328,7 +1464,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37386</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1340,7 +1476,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">12</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37403</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1352,7 +1488,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37407</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1364,7 +1500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37409</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1376,7 +1512,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">4</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37410</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1388,7 +1524,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37411</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1400,7 +1536,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37414</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1412,7 +1548,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">37415</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1424,7 +1560,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">38685</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1436,7 +1572,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">38686</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1448,7 +1584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">38688</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1460,7 +1596,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">12</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">38693</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1472,7 +1608,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">38695</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1484,7 +1620,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">45106</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1496,7 +1632,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">45197</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1508,7 +1644,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">46781</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1520,7 +1656,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">24</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">46807</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1532,7 +1668,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">46810</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1544,7 +1680,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">46864</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1556,7 +1692,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">5</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: right;">46976</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
@@ -1568,7 +1704,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC702</td>
 <td style="text-align: right;">40185</td>
 <td style="text-align: left;">COMPUTER SCIENCE SEMINAR</td>
@@ -1687,14 +1823,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
-<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">LAB</td>
 <td style="text-align: left;">Budwell,Caroline</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Budwell,Caroline</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">CMSC302</td>
 <td style="text-align: left;">INTRO TO DISCRETE STRUCTURES</td>
 <td style="text-align: left;">LEC</td>
@@ -1704,7 +1850,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">133</td>
 <td style="text-align: right;">399</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1714,7 +1860,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC320</td>
 <td style="text-align: left;">SOFTWARE ENGINEERING &amp; WEB DEV</td>
 <td style="text-align: left;">LEC</td>
@@ -1724,7 +1870,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18.5</td>
 <td style="text-align: right;">55.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC401</td>
 <td style="text-align: left;">ALGORITHM ANL W/ADV DATA STRUC</td>
 <td style="text-align: left;">LEC</td>
@@ -1734,7 +1880,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">157</td>
 <td style="text-align: right;">471</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1744,7 +1890,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1754,7 +1900,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">36</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC330</td>
 <td style="text-align: left;">DATA SCIENCE SKILLS</td>
 <td style="text-align: left;">LEC</td>
@@ -1764,7 +1910,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">14.5</td>
 <td style="text-align: right;">43.5</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1774,7 +1920,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC603</td>
 <td style="text-align: left;">HIGH PERF. DISTRIB. SYSTEMS</td>
 <td style="text-align: left;">LEC</td>
@@ -1784,7 +1930,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">60</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1794,7 +1940,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">2</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENGR701</td>
 <td style="text-align: left;">POST-CANDIDACY DOCT RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1804,7 +1950,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC235</td>
 <td style="text-align: left;">COMPUTING AND DATA ETHICS</td>
 <td style="text-align: left;">LEC</td>
@@ -1814,7 +1960,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">390</td>
 <td style="text-align: right;">1170</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC340</td>
 <td style="text-align: left;">CYBERSECURITY SKILLS</td>
 <td style="text-align: left;">LEC</td>
@@ -1824,7 +1970,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">81</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC303</td>
 <td style="text-align: left;">INTRO TO THEORY OF CMPUTATION</td>
 <td style="text-align: left;">LEC</td>
@@ -1834,7 +1980,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">119</td>
 <td style="text-align: right;">357</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1844,7 +1990,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">12</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1854,7 +2000,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1864,7 +2010,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">13</td>
 <td style="text-align: right;">26</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC451</td>
 <td style="text-align: left;">SENIOR PROJECT I</td>
 <td style="text-align: left;">LEC</td>
@@ -1874,7 +2020,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">161</td>
 <td style="text-align: right;">161</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENGR291</td>
 <td style="text-align: left;">TOP: ELECTION SECURITY</td>
 <td style="text-align: left;">LEC</td>
@@ -1884,7 +2030,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">30</td>
 <td style="text-align: right;">30</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1894,7 +2040,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">16</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC455</td>
 <td style="text-align: left;">SOFTWARE AS A SERVICE</td>
 <td style="text-align: left;">LEC</td>
@@ -1904,7 +2050,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">94</td>
 <td style="text-align: right;">282</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1914,7 +2060,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">7</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENGR497</td>
 <td style="text-align: left;">VERTICALLY INTEGRATED PROJECTS</td>
 <td style="text-align: left;">LAB</td>
@@ -1924,7 +2070,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENGR701</td>
 <td style="text-align: left;">POST-CANDIDACY DOCT RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -1934,7 +2080,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">9</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -1944,7 +2090,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">18</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC501</td>
 <td style="text-align: left;">ADVANCED ALGORITHMS</td>
 <td style="text-align: left;">LEC</td>
@@ -1954,7 +2100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">22</td>
 <td style="text-align: right;">66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC210</td>
 <td style="text-align: left;">COMPUTERS AND PROGRAMMING</td>
 <td style="text-align: left;">LEC</td>
@@ -1964,15 +2110,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">177</td>
 <td style="text-align: right;">531</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">CMSC256</td>
+<td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">228</td>
+</tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC256</td>
 <td style="text-align: left;">DATA STRUCTURE &amp; OBJECT PROG</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Duke,Debra</td>
+<td style="text-align: right;">0.5</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">114</td>
-<td style="text-align: right;">456</td>
+<td style="text-align: right;">57</td>
+<td style="text-align: right;">228</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC320</td>
@@ -2087,34 +2243,64 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Grove,Ralph</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Grove,Ralph</td>
-<td style="text-align: right;">0.285714</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">46</td>
-<td style="text-align: right;">184</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">23</td>
+<td style="text-align: right;">92</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Gusukuma,Luke</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">160</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">80</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
-<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">LAB</td>
 <td style="text-align: left;">Gusukuma,Luke</td>
-<td style="text-align: right;">0.285714</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">56</td>
-<td style="text-align: right;">224</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">112</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Gusukuma,Luke</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">28</td>
+<td style="text-align: right;">112</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">CMSC403</td>
 <td style="text-align: left;">PROGRAMMING LANGUAGES</td>
 <td style="text-align: left;">LEC</td>
@@ -2124,7 +2310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">80</td>
 <td style="text-align: right;">240</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2134,7 +2320,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC435</td>
 <td style="text-align: left;">INTRODUCTION TO DATA SCIENCE</td>
 <td style="text-align: left;">LEC</td>
@@ -2144,7 +2330,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">47</td>
 <td style="text-align: right;">141</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2154,7 +2340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">14</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -2164,7 +2350,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">3</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC440</td>
 <td style="text-align: left;">DATA COMMUNCATION &amp; NETWORKING</td>
 <td style="text-align: left;">LEC</td>
@@ -2174,7 +2360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">22</td>
 <td style="text-align: right;">66</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC391</td>
 <td style="text-align: left;">TOP:INTRO TO GAME DEVELOPMENT</td>
 <td style="text-align: left;">LEC</td>
@@ -2184,7 +2370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">17</td>
 <td style="text-align: right;">51</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2194,7 +2380,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">40</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC508</td>
 <td style="text-align: left;">DATA BASE THEORY</td>
 <td style="text-align: left;">LEC</td>
@@ -2204,7 +2390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">133</td>
 <td style="text-align: right;">399</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">ENGR497</td>
 <td style="text-align: left;">VERTICALLY INTEGRATED PROJECTS</td>
 <td style="text-align: left;">LAB</td>
@@ -2214,7 +2400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4.5</td>
 <td style="text-align: right;">6</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC413</td>
 <td style="text-align: left;">INTRO TO CYBERSECURITY</td>
 <td style="text-align: left;">LEC</td>
@@ -2224,7 +2410,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">75</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2234,7 +2420,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -2244,7 +2430,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">23</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC409</td>
 <td style="text-align: left;">ARTIFICIAL INTELLIGENCE</td>
 <td style="text-align: left;">LEC</td>
@@ -2254,7 +2440,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">27</td>
 <td style="text-align: right;">81</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2264,7 +2450,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">16</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -2274,7 +2460,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">13</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">ENGR497</td>
 <td style="text-align: left;">VERTICALLY INTEGRATED PROJECTS</td>
 <td style="text-align: left;">LAB</td>
@@ -2284,7 +2470,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2294,7 +2480,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">19</td>
 <td style="text-align: right;">38</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC691</td>
 <td style="text-align: left;">SP TOP:AI FOR NETWRK &amp;EDGE SYS</td>
 <td style="text-align: left;">LEC</td>
@@ -2304,7 +2490,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">27</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC697</td>
 <td style="text-align: left;">DIRECTED RESEARCH</td>
 <td style="text-align: left;">RES</td>
@@ -2314,7 +2500,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">10</td>
 </tr>
-<tr class="even">
+<tr class="odd">
 <td style="text-align: left;">CMSC312</td>
 <td style="text-align: left;">INTRO TO OPERATING SYSTEMS</td>
 <td style="text-align: left;">LEC</td>
@@ -2324,35 +2510,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">42</td>
 <td style="text-align: right;">126</td>
 </tr>
+<tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sands,Allison</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
+</tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sands,Allison</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">156</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC257</td>
 <td style="text-align: left;">COMPUTER SYSTEMS</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sonmez,Ahmet</td>
+<td style="text-align: right;">0.4</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">40.5</td>
+<td style="text-align: right;">162</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">CMSC257</td>
+<td style="text-align: left;">COMPUTER SYSTEMS</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sonmez,Ahmet</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">175</td>
-<td style="text-align: right;">700</td>
+<td style="text-align: right;">0.6</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">134.5</td>
+<td style="text-align: right;">538</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMSC255</td>
+<td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
+<td style="text-align: left;">LAB</td>
+<td style="text-align: left;">Sparks,Claire</td>
+<td style="text-align: right;">0.142857</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">160</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">CMSC255</td>
 <td style="text-align: left;">INTRODUCTION TO PROGRAMMING</td>
 <td style="text-align: left;">LEC</td>
 <td style="text-align: left;">Sparks,Claire</td>
-<td style="text-align: right;">0.428571</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">105</td>
-<td style="text-align: right;">420</td>
+<td style="text-align: right;">0.285714</td>
+<td style="text-align: right;">1.5</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">260</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">CMSC311</td>
@@ -2467,14 +2683,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">CMSC254</td>
 <td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
-<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">LAB</td>
 <td style="text-align: left;">Traub,Adam</td>
-<td style="text-align: right;">0.25</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">39</td>
-<td style="text-align: right;">156</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
 </tr>
 <tr class="even">
+<td style="text-align: left;">CMSC254</td>
+<td style="text-align: left;">INTRO TO PROBLEM-SOLVING</td>
+<td style="text-align: left;">LEC</td>
+<td style="text-align: left;">Traub,Adam</td>
+<td style="text-align: right;">0.125</td>
+<td style="text-align: right;">0.5</td>
+<td style="text-align: right;">19.5</td>
+<td style="text-align: right;">78</td>
+</tr>
+<tr class="odd">
 <td style="text-align: left;">CMSC415</td>
 <td style="text-align: left;">INTRO TO CRYPTOGRAPHY</td>
 <td style="text-align: left;">LEC</td>
@@ -2484,7 +2710,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">16</td>
 <td style="text-align: right;">48</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">CMSC441</td>
 <td style="text-align: left;">SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td style="text-align: left;">LAB</td>
@@ -2544,8 +2770,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">5.5</td>
 <td style="text-align: right;">351</td>
 <td style="text-align: right;">1167</td>
-<td style="text-align: right;">1167</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">939</td>
+<td style="text-align: right;">228</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2556,8 +2782,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">236</td>
 <td style="text-align: right;">813</td>
-<td style="text-align: right;">813</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">653</td>
+<td style="text-align: right;">160</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2568,8 +2794,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">175</td>
 <td style="text-align: right;">700</td>
-<td style="text-align: right;">700</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">538</td>
+<td style="text-align: right;">162</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2580,8 +2806,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">179</td>
 <td style="text-align: right;">630</td>
-<td style="text-align: right;">624</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">432</td>
+<td style="text-align: right;">198</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2592,8 +2818,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">177</td>
 <td style="text-align: right;">567</td>
-<td style="text-align: right;">559</td>
-<td style="text-align: right;">8</td>
+<td style="text-align: right;">479</td>
+<td style="text-align: right;">88</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2676,8 +2902,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">46</td>
 <td style="text-align: right;">184</td>
-<td style="text-align: right;">184</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">92</td>
+<td style="text-align: right;">92</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2712,8 +2938,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">39</td>
 <td style="text-align: right;">156</td>
-<td style="text-align: right;">156</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">78</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2724,8 +2950,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">39</td>
 <td style="text-align: right;">156</td>
-<td style="text-align: right;">156</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">78</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2983,8 +3209,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">654</td>
 <td style="text-align: right;">2228</td>
-<td style="text-align: right;">2228</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">1696</td>
+<td style="text-align: right;">532</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -2995,8 +3221,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">452</td>
 <td style="text-align: right;">1573</td>
-<td style="text-align: right;">1573</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">1265</td>
+<td style="text-align: right;">308</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3019,8 +3245,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">361</td>
 <td style="text-align: right;">1111</td>
-<td style="text-align: right;">1087</td>
-<td style="text-align: right;">24</td>
+<td style="text-align: right;">1007</td>
+<td style="text-align: right;">104</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3031,8 +3257,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">276</td>
 <td style="text-align: right;">1104</td>
-<td style="text-align: right;">1104</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">836</td>
+<td style="text-align: right;">268</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3043,8 +3269,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">292</td>
 <td style="text-align: right;">1019</td>
-<td style="text-align: right;">1013</td>
-<td style="text-align: right;">6</td>
+<td style="text-align: right;">721</td>
+<td style="text-align: right;">298</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3115,8 +3341,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">190</td>
 <td style="text-align: right;">616</td>
-<td style="text-align: right;">616</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">524</td>
+<td style="text-align: right;">92</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3259,8 +3485,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">39</td>
 <td style="text-align: right;">156</td>
-<td style="text-align: right;">156</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">78</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -3271,8 +3497,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">39</td>
 <td style="text-align: right;">156</td>
-<td style="text-align: right;">156</td>
-<td style="text-align: right;"></td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">78</td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>

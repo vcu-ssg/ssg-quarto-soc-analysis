@@ -8,11 +8,11 @@ website:
     left:
       - href: index.qmd
         text: Home
-      - href: download.qmd
+      - href: 10_download.qmd
         text: Download
-      - href: clean.qmd
+      - href: 20_clean.qmd
         text: Clean
-      - href: explore.qmd
+      - href: 30_explore.qmd
         text: Explore
 
 format:

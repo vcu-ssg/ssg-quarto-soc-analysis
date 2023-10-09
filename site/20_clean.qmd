@@ -107,6 +107,7 @@ The following code merges in the term and period data with the section data.
 First ensure that the key columns are strings, then merge away.
 
 ```{python}
+sections_df['SECT'] = sections_df['SECT'].astype(str)
 sections_df['TERM'] = sections_df['TERM'].astype(str)
 xlsx_df['term_code'] = xlsx_df['term_code'].astype(str)
 sections_df = pd.merge(sections_df,xlsx_df,left_on='TERM', right_on='term_code', how='left')
@@ -127,22 +128,27 @@ Note that the section data are stored one row per term-crn-meeting period.
 sections_df['TERM'] = sections_df['TERM'].astype(str)
 sections_df['CRN'] = sections_df['CRN'].astype(str)
 
+sections_df["fixes"] = ""
+sections_df["fix_notes"] = ""
+
 # A helper function to correct data.
 
-def fix( key, data):
+def fix( id, note, key, data ):
     for item in data.keys():
         sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),item]=data[item]
+    sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),"fixes"] += f";FIX{id:03}"
+    sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),"fix_notes"] += ";" + note
 
 ```
 
 ```{python}
 # Spring 2023: CMSC475 John Leonard taught for David Shepherd
-fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
+fix(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
 # Fall 2024: CMSC391 is cross listed with COAR463.
 # Total enrollment 34 across two instructors (Bennett and Leonard)
 # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
-fix({'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
+fix(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
 #fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
@@ -195,6 +201,15 @@ stacked_df = stacked_df.sort_values(['TERM','DEPT','COURSE','SECT','instructor s
 
 ```
 
+### Add additional columns
+
+We may need the subject and the course number in the workload model analysis.
+
+```{python}
+stacked_df["course_subject"] = stacked_df["COURSE"].str[:4]
+stacked_df["course_number"] = stacked_df["COURSE"].str[4:]
+```
+
 ### Merge persistent instructor data
 
 We're storing some of the results in google sheets.  Further, we're using google
@@ -221,6 +236,46 @@ instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
 
 stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor',right_on='instructor',how='left')
 
+worksheet_name = "Instructor notes"
+sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+instructor_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
+
+stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor',right_on='instructor',how='left')
+
+```
+
+### Merge persistent course data
+
+```{python}
+# spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw" from above!
+worksheet_name = "Course notes"
+sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+course_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
+
+stacked_df = pd.merge( stacked_df,course_notes_df,left_on='COURSE',right_on='crse',how='left')
+
+```
+
+### Identify shared rooms
+
+Many larger courses comprise of multiple CRN sharing a single classroom period.
+We need to identify unique combinations of days of week and rooms and assign 
+store these for later aggregation.
+
+```{python}
+meeting_cols = ['MON-IND','TUE-IND','WED-IND','THU-IND','FRI-IND','SAT-IND','SUN-IND','BEGIN TIME','END TIME','BUILDING','ROOM']
+stacked_df["meeting_code"] = ""
+for col in meeting_cols:
+    stacked_df[col] = stacked_df[col].fillna('.')
+    stacked_df["meeting_code"] = stacked_df["meeting_code"] + stacked_df[col].astype(str)
+stacked_df['meeting_id'] = pd.factorize(stacked_df['meeting_code'])[0]
+
+day_cols = ['MON-IND','TUE-IND','WED-IND','THU-IND','FRI-IND','SAT-IND','SUN-IND']
+stacked_df["mtgs_per_wk"] = 0
+for col in day_cols:
+    stacked_df[col] = stacked_df[col].fillna('.')
+    stacked_df['mtgs_per_wk'] = stacked_df["mtgs_per_wk"] + (stacked_df[col] != ".").astype(int)
+
 ```
 
 ### Compute appropriate aggregate measures
@@ -235,18 +290,74 @@ stacked_df['sum_term_crse'] = 1.0 / stacked_df.groupby(['TERM','COURSE'])['COURS
 stacked_df['sum_term_crse_crn'] = 1.0 / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
 stacked_df['sum_term_crse_crn_students'] = stacked_df['ACTUAL ENROLLMENT'] * stacked_df['sum_term_crse_crn']
 stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'] * stacked_df['MAX CREDITS']
+
 ```
+
 
 ### Workload model assignments
 
 These are placeholders for any proposed workload model based on course and instructor attributes.
 
+The sort attribute is used to hold the aggregate workload score.  It is used in google sheets to help
+sort courses by instructors in the proper order.
+
 ```{python}
+stacked_df['sum_term_crse_wrkld_sample'] = 0.0
 stacked_df['sum_term_crse_wrkld_a'] = 0.0
 stacked_df['sum_term_crse_wrkld_b'] = 0.0
 stacked_df['sum_term_crse_wrkld_c'] = 0.0
 ```
 
+### Sample workload model
+
+This is a sample workload model.  The assigned faculty workoad will be stored in the *sum_term_crse_wrklod_sample* field.  Here is the model:
+
+1. Each section/CRN is worth a full teaching credit.
+1. Research, indepedent study and coop/intern sections receive zero teaching credit in this workload model.  Instructors receive *credit* through their salary if they're staff.  Research active faculty get reduced teaching loads.
+1. Lab sections including actual course labs, capstone/senior design, and VIP receive 1/3 credit.  This is consistent with the model that 3 lab hours is equivalent to 1 teaching hour. (e.g., 3-3-4 courses.)
+NOTE that laboratory sections are NOT coded as separate labs, rather they are coded as LEC making it
+difficult to discern these.  See EGRE306 for an example.
+1. Seminar sections get full section credit as a positive incentive. There is a limited number of SEM courses, they are important to the curriculum, and we want them covered.
+1. Capstone designs are scaled to give one LAB (0.33 per above) unit per groups of 4 students.
+
+
+```{python}
+# Assign standard CRN : One CRN/section per teaching course
+stacked_df['sum_term_crse_wrkld_sample'] = stacked_df["sum_term_crse_crn"]
+
+# Adjust these courses by shared offerings, classes with different CRN taught 
+# by the same instructor in the same room/period
+stacked_df['sum_term_crse_wrkld_sample'] = stacked_df['sum_term_crse_wrkld_sample'] / stacked_df.groupby(['TERM','instructor','meeting_id'])['meeting_id'].transform('count')
+
+# For specific courses, if we see a meeting time with only one day per week then this is a lab section
+# indepedent of the CRN.  We'll adjust them to LAB sections, then let the logic below
+# code them as 1/3 credit, or whatever a lab section should get.
+
+#courses_with_labs = ['EGRE306']
+#for course in courses_with_labs:
+#    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['mtgs_per_wk']==1),'TYPE'] = 'LAB'
+
+# Hack to identify lab courses:  they are worth 4 units and coded as LEC. The
+# meeting period that meets for 1 day per week is a LAB.
+stacked_df.loc[(stacked_df['MAX CREDITS']==4)&(stacked_df['TYPE']=='LEC')&(stacked_df['mtgs_per_wk']==1),'TYPE'] = 'LAB'
+
+
+# Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).
+# Credit is given for these activities in reduced teaching (research active) or summer pay.
+stacked_df.loc[stacked_df['TYPE'].isin(['RES','IND','FLD']),'sum_term_crse_wrkld_sample'] = 0.0
+
+# Reassign LAB 1/3 of CRN.  Labs include capstone, regular lab sections, and VIP
+stacked_df.loc[stacked_df['TYPE'].isin(['LAB']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['TYPE'].isin(['LAB']),'sum_term_crse_wrkld_sample'] / 3.0
+
+# For capstone senior design adjust workload to consider bundles of 4 students.  Each bundle is worth 0.33 (set above
+senior_design_courses = ['CLSC403','EGRB401','EGRB402','CMSC441','CMSC442','CMSC451','CMSC452','EGMN402','EGMN403','ENGR402','ENGR403','EGRE404','EGRE405']
+for course in senior_design_courses:
+   stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'sum_term_crse_wrkld_sample'] = stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'sum_term_crse_wrkld_sample'] * stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'ACTUAL ENROLLMENT'].astype(int) / 4.0
+
+# Ensure that SEM get full credit because we want to reward the faculty member for doing it!
+stacked_df.loc[stacked_df['TYPE'].isin(['SEM']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['TYPE'].isin(['SEM']),'sum_term_crse_wrkld_sample'] / 1.0
+
+```
 
 ### Store the data for later use
 

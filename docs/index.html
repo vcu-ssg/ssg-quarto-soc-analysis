@@ -86,15 +86,15 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./download.html" rel="" target="">
+    <a class="nav-link" href="./10_download.html" rel="" target="">
  <span class="menu-text">Download</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./clean.html" rel="" target="">
+    <a class="nav-link" href="./20_clean.html" rel="" target="">
  <span class="menu-text">Clean</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./explore.html" rel="" target="">
+    <a class="nav-link" href="./30_explore.html" rel="" target="">
  <span class="menu-text">Explore</span></a>
   </li>  
 </ul>
@@ -109,7 +109,14 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#report-organization" id="toc-report-organization" class="nav-link active" data-scroll-target="#report-organization">Report organization</a></li>
+  <li><a href="#persistent-data" id="toc-persistent-data" class="nav-link" data-scroll-target="#persistent-data">Persistent data</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -131,9 +138,25 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>this site looks at teaching loads in VCU engineering over the past several semesters</p>
+<p>This web report looks at teaching across the College of Engineering since Fall 2020.</p>
+<section id="report-organization" class="level2">
+<h2 class="anchored" data-anchor-id="report-organization">Report organization</h2>
+<p>The site is organized as follow:</p>
+<ul>
+<li><p><a href="./10_download.html">Download</a> - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.</p></li>
+<li><p><a href="./20_clean.html">clean</a> - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1728987696">google sheet</a>.</p></li>
+<li><p><a href="./30_explore.html">explore</a> - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not as part of a real workload analysis.</p></li>
+</ul>
+</section>
+<section id="persistent-data" class="level2">
+<h2 class="anchored" data-anchor-id="persistent-data">Persistent data</h2>
+<p>The analysis also expect that there are persistent data stored outside of the VCU report, data that is important for helping classify faculty and courses.</p>
+<p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116">Instructor data</a> - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.</p>
+<p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=211942472">Instructor notes</a> - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.</p>
+<p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=498592034">Course notes</a> - these data offer additional details about the courses. This table is optional to this analysis.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
