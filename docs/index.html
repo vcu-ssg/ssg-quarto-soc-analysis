@@ -162,21 +162,22 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><p><a href="./10_download.html">Download</a> - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.</p></li>
 <li><p><a href="./20_clean.html">Clean</a> - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1728987696">google sheet</a>.</p></li>
-<li><p><a href="./30_explore.html">Explore</a> - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered only as examples not as part of a real workload analysis.</p></li>
+<li><p><a href="./30_explore.html">Explore</a> - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered as demonstrations of the possible, not as part of a real analysis of workload.</p></li>
 </ul>
 </section>
 <section id="worksheet-sandbox" class="level2">
 <h2 class="anchored" data-anchor-id="worksheet-sandbox">Worksheet sandbox</h2>
-<p>Data from the <a href="./20_clean.html">cleaning</a> is used to support the example output in the <a href="./30_explore.html">explore</a> document.</p>
+<p>Data from the <a href="./20_clean.html">cleaning step</a> are used to support the example output in the <a href="./30_explore.html">explore</a> document.</p>
 <p>The resulting data are also <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1728987696">uploaded to google sheets</a> and complementary analysis is done in the google sheet:</p>
 <ul>
 <li><p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1722375566">Sample instructor reports</a> highlight the use of the google sheeet QUERY command to build summaries from the raw data.</p></li>
 <li><p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">Sample workload report</a> offers examples of how computations from a <a href="https://vcu-ssg.github.io/ssg-quarto-soc-analysis/20_clean.html#sample-workload-model">sample workload model</a> can be used to support QUERYs in a google sheet.</p></li>
 </ul>
+<p>These were sample reports are intended to highlight the possible with examples. I did not conduct a full analysis.</p>
 </section>
 <section id="persistent-data" class="level2">
 <h2 class="anchored" data-anchor-id="persistent-data">Persistent data</h2>
-<p>The analysis also expect that there are persistent data stored outside of the VCU report, data that is important for helping classify faculty and courses.</p>
+<p>The analyses also expect that there are persistent data stored outside of the VCU report, data that are important for helping classify faculty and courses.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116">Instructor data</a> - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=211942472">Instructor notes</a> - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=498592034">Course notes</a> - these data offer additional details about the courses. This table is optional to this analysis.</p>
