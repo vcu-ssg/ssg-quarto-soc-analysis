@@ -104,7 +104,7 @@ plt.show()
 ```{python}
 #| echo: false
 
-factors = ['COURSE','CRN','TITLE','TYPE','instructor','MODALITY TEXT']
+factors = ['COURSE','CRN','TITLE','TYPE','instructor','ins_role','MODALITY TEXT']
 measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
 mnames = ['CRSE sum','CRN sum','STDNTS sum','HRS sum']
 
@@ -135,7 +135,7 @@ This table aggregates teaching by instructor and course. The table is sorted by 
 
 ```{python}
 #| echo: false
-factors = ['COURSE','TITLE','TYPE','instructor']
+factors = ['COURSE','TITLE','TYPE','instructor','ins_role']
 measures = {'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_students':'sum','sum_term_crse_crn_hours':'sum'}
 mnames = ['CRSE sum','CRN sum','STDNTS sum','HRS sum']
 
@@ -195,7 +195,7 @@ df = stacked_df[
     & (stacked_df['instructor'].isin( instructors ))
 ]
 
-pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns='TYPE',aggfunc='sum' )
+pivot_df = pd.pivot_table(df,index='instructor',values='sum_term_crse_crn_hours',columns=['TYPE'],aggfunc='sum' )
 pivot_df = pivot_df[ cols ]
 def format_no_decimal(val):
     return f'{val:.0f}' if not pd.isna(val) else ''
