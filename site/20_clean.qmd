@@ -150,8 +150,14 @@ fix(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INST
 # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
 fix(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
-#fix({'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
+fix(3,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40553'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix(4,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40554'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix(5,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40555'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
 
+fix(6,"Remove Sparks as 2nd instructor",{'TERM':'202320','CRN':'17442'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix(7,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'33698'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix(8,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'41891'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix(9,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
 
 ```
 
@@ -171,8 +177,8 @@ sections_df['ins1_last'] = sections_df['PRIMARY INSTRUCTOR LAST NAME']
 sections_df['ins1_first'] = sections_df['PRIMARY INSTRUCTOR FIRST NAME']
 sections_df['ins2_last'] = sections_df['SECONDARY INSTRUCTOR LAST NAME']
 sections_df['ins2_first'] = sections_df['SECONDARY INSTRUCTOR FIRST NAME']
-sections_df['instructor_1'] = sections_df['ins1_last']+','+sections_df['ins1_first']
-sections_df['instructor_2'] = sections_df['ins2_last']+','+sections_df['ins2_first']
+sections_df['instructor_1'] = sections_df['ins1_last']+sections_df['ins1_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins1_first']
+sections_df['instructor_2'] = sections_df['ins2_last']+sections_df['ins2_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins2_first']
 sections_df['instructor_1'].fillna('',inplace=True)
 sections_df['instructor_2'].fillna('',inplace=True)
 
@@ -182,6 +188,7 @@ stacked_df = pd.melt(sections_df,
     var_name='instructor source',
     value_name='instructor'
 )
+
 ```
 
 ### Clean up rows
@@ -208,6 +215,9 @@ We may need the subject and the course number in the workload model analysis.
 ```{python}
 stacked_df["course_subject"] = stacked_df["COURSE"].str[:4]
 stacked_df["course_number"] = stacked_df["COURSE"].str[4:]
+
+# Number of instructors sharing a common CRN.
+stacked_df["instructor_cnt"] = stacked_df.groupby(['TERM','COURSE','CRN','instructor'])['instructor'].transform('count') / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
 ```
 
 ### Merge persistent instructor data
@@ -263,11 +273,22 @@ We need to identify unique combinations of days of week and rooms and assign
 store these for later aggregation.
 
 ```{python}
-meeting_cols = ['MON-IND','TUE-IND','WED-IND','THU-IND','FRI-IND','SAT-IND','SUN-IND','BEGIN TIME','END TIME','BUILDING','ROOM']
-stacked_df["meeting_code"] = ""
-for col in meeting_cols:
+time_cols = ['MON-IND','TUE-IND','WED-IND','THU-IND','FRI-IND','SAT-IND','SUN-IND','BEGIN TIME','END TIME']
+room_cols = ['BUILDING','ROOM']
+
+stacked_df["time_code"] = ""
+for col in time_cols:
     stacked_df[col] = stacked_df[col].fillna('.')
-    stacked_df["meeting_code"] = stacked_df["meeting_code"] + stacked_df[col].astype(str)
+    stacked_df["time_code"] = stacked_df["time_code"] + stacked_df[col].astype(str)
+stacked_df['time_id'] = pd.factorize(stacked_df['time_code'])[0]
+
+stacked_df["room_code"] = ""
+for col in room_cols:
+    stacked_df[col] = stacked_df[col].fillna('.')
+    stacked_df["room_code"] = stacked_df["room_code"] + stacked_df[col].astype(str)
+stacked_df['room_id'] = pd.factorize(stacked_df['room_code'])[0]
+
+stacked_df["meeting_code"] = stacked_df["room_code"] + stacked_df["time_code"]
 stacked_df['meeting_id'] = pd.factorize(stacked_df['meeting_code'])[0]
 
 day_cols = ['MON-IND','TUE-IND','WED-IND','THU-IND','FRI-IND','SAT-IND','SUN-IND']
@@ -276,7 +297,28 @@ for col in day_cols:
     stacked_df[col] = stacked_df[col].fillna('.')
     stacked_df['mtgs_per_wk'] = stacked_df["mtgs_per_wk"] + (stacked_df[col] != ".").astype(int)
 
+# Computer number of CRN that are sharing this room at the same time as this section.
+stacked_df['shared_mtgs_cnt'] = stacked_df.groupby(['TERM','COURSE','CRN','meeting_id'])['meeting_id'].transform('count') / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
+
 ```
+
+### CGEP: convert to IND rather than LEC from workload perspective
+
+```{python}
+
+# Function to set the 'TYPE' column based on a string search in 'TITLE'
+def set_type_based_on_search(row):
+    title = row['TITLE']
+    newtype = row['TYPE']
+    if 'CGEP' in title:
+        newtype = 'IND'
+    return newtype
+
+# Apply the function to the entire DataFrame
+stacked_df['TYPE'] = stacked_df.apply(set_type_based_on_search, axis=1)
+
+```
+
 
 ### Compute appropriate aggregate measures
 
@@ -298,19 +340,51 @@ stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'
 
 These are placeholders for any proposed workload model based on course and instructor attributes.
 
-The sort attribute is used to hold the aggregate workload score.  It is used in google sheets to help
-sort courses by instructors in the proper order.
+For each workload model, there is a:
+
+* *sum_term_crse_wrkld* containing the numeric assignment of workload for that entry in the dataframe.
+* *wrkld_*_type* containing the recoded course type.  For example, some LEC sections that are actually labs are coded labs. Capstones are also highlighted.
+* *wrkld_note* containing a note about the specific workload assignment.
+
 
 ```{python}
+stacked_df['wrkld_sample_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_sample'] = 0.0
+stacked_df['wrkld_sample_note'] = ""
+stacked_df['wrkld_a_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_a'] = 0.0
+stacked_df['wrkld_a_note'] = ""
+stacked_df['wrkld_b_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_b'] = 0.0
+stacked_df['wrkld_b_note'] = ""
+stacked_df['wrkld_c_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_c'] = 0.0
+stacked_df['wrkld_c_note'] = ""
+```
+
+### Find all courses taught by same instructor at the same time
+
+```{python}
+
+def concat_courses(group):
+    return ','.join(group['COURSE'])
+
+temp_df = pd.DataFrame();
+keys = ['TERM','instructor','time_code']
+temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses)
+temp_df["list"] = temp_df["concat"].apply( lambda x :  list(set(x.split(","))) )
+temp_df["combined_count"] = temp_df["list"].apply( lambda x :  len(x) )
+temp_df["combined_sections"] = temp_df["list"].apply( lambda x :  ",".join(x) )
+temp_df = temp_df.reset_index()
+temp_df = temp_df[ (temp_df['time_code']!='.........')&(temp_df['combined_count']>1)]
+temp_df = temp_df[['TERM','instructor','time_code','combined_count','combined_sections']]
+stacked_df = pd.merge(stacked_df,temp_df,left_on=keys, right_on=keys,how="left")
+
 ```
 
 ### Sample workload model
 
-This is a sample workload model.  The assigned faculty workoad will be stored in the *sum_term_crse_wrklod_sample* field.  Here is the model:
+This is the sample workload model.  The assigned faculty workoad will be stored in the *sum_term_crse_wrklod_sample* field.  Here is the model:
 
 1. Each section/CRN is worth a full teaching credit.
 1. Research, indepedent study and coop/intern sections receive zero teaching credit in this workload model.  Instructors receive *credit* through their salary if they're staff.  Research active faculty get reduced teaching loads.
@@ -321,43 +395,82 @@ difficult to discern these.  See EGRE306 for an example.
 1. Capstone designs are scaled to give one LAB (0.33 per above) unit per groups of 4 students.
 
 
+First, recode section types.
+
 ```{python}
-# Assign standard CRN : One CRN/section per teaching course
-stacked_df['sum_term_crse_wrkld_sample'] = stacked_df["sum_term_crse_crn"]
 
-# Adjust these courses by shared offerings, classes with different CRN taught 
-# by the same instructor in the same room/period
-stacked_df['sum_term_crse_wrkld_sample'] = stacked_df['sum_term_crse_wrkld_sample'] / stacked_df.groupby(['TERM','instructor','meeting_id'])['meeting_id'].transform('count')
+# Assign standard workload : One teaching course shared across multiple instructors
+stacked_df["sum_term_crse_wrkld_sample"] = 1.0 * stacked_df["instructor_cnt"]
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'wrkld_sample_note'] = "BASE: [wrkld] = 1.0 per CRN"
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = "BASE: [wrkld] = 0.5 per CRN (co-teaching)"
 
-# For specific courses, if we see a meeting time with only one day per week then this is a lab section
-# indepedent of the CRN.  We'll adjust them to LAB sections, then let the logic below
-# code them as 1/3 credit, or whatever a lab section should get.
+# Adjust for combined lectures
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'sum_term_crse_wrkld_sample'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'sum_term_crse_wrkld_sample'] / stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'combined_count'] 
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'wrkld_sample_note'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'wrkld_sample_note'] + ": combined("+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'combined_sections']+")"
 
-#courses_with_labs = ['EGRE306']
-#for course in courses_with_labs:
-#    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['mtgs_per_wk']==1),'TYPE'] = 'LAB'
 
-# Hack to identify lab courses:  they are worth 4 units and coded as LEC. The
-# meeting period that meets for 1 day per week is a LAB.
-stacked_df.loc[(stacked_df['MAX CREDITS']==4)&(stacked_df['TYPE']=='LEC')&(stacked_df['mtgs_per_wk']==1),'TYPE'] = 'LAB'
+# Assign CAP workload
+capstones_per_lecture = 3.0
+students_per_capstone = 4.0
+senior_design_courses = ['CLSC403','EGRB401','EGRB402','CMSC441','CMSC442','CMSC451','CMSC452','EGMN402','EGMN403','ENGR402','ENGR403','EGRE404','EGRE405']
+for course in senior_design_courses:
+   stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'wrkld_sample_type'] = 'CAP'
+   stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'wrkld_sample_note'] = f'RULE: [wrkld] = {(1.0/capstones_per_lecture):0.2f} for every {students_per_capstone} students in CAP'
+   stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'sum_term_crse_wrkld_sample'] = (
+     stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'sum_term_crse_crn'] / capstones_per_lecture * ( stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'ACTUAL ENROLLMENT'].astype(int) / students_per_capstone) )
 
+# Assign VIP workload
+vips_per_lecture = 3.0
+stacked_df.loc[stacked_df['COURSE'].isin(['ENGR497']),'wrkld_sample_type'] = "VIP"
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'wrkld_sample_note'] = f"RULE: [wrkld] = {(1.0/vips_per_lecture):0.2f} for VIP"
+stacked_df.loc[(stacked_df['wrkld_sample_type'].isin(['VIP']))&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = f"RULE: [wrkld] = {(1.0/vips_per_lecture):0.2f} for VIP (co-teaching)"
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'sum_term_crse_wrkld_sample'] / vips_per_lecture
+
+# Assign LAB workload
+labs_per_lecture = 3.0
+stacked_df.loc[(stacked_df['MAX CREDITS']==4)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['mtgs_per_wk']==1),'wrkld_sample_type'] = 'LAB'
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'wrkld_sample_note'] = f"RULE: [wrkld] = {(1.0/labs_per_lecture):0.2f} for LAB"
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'sum_term_crse_wrkld_sample'] / labs_per_lecture
 
 # Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).
 # Credit is given for these activities in reduced teaching (research active) or summer pay.
-stacked_df.loc[stacked_df['TYPE'].isin(['RES','IND','FLD']),'sum_term_crse_wrkld_sample'] = 0.0
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['RES','IND','FLD']),'wrkld_sample_note'] = "RULE: [wrkld]=0.0 for INS, RES and FLD"
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['RES','IND','FLD']),'sum_term_crse_wrkld_sample'] = 0.0
 
-# Reassign LAB 1/3 of CRN.  Labs include capstone, regular lab sections, and VIP
-stacked_df.loc[stacked_df['TYPE'].isin(['LAB']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['TYPE'].isin(['LAB']),'sum_term_crse_wrkld_sample'] / 3.0
-
-# For capstone senior design adjust workload to consider bundles of 4 students.  Each bundle is worth 0.33 (set above
-senior_design_courses = ['CLSC403','EGRB401','EGRB402','CMSC441','CMSC442','CMSC451','CMSC452','EGMN402','EGMN403','ENGR402','ENGR403','EGRE404','EGRE405']
-for course in senior_design_courses:
-   stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'sum_term_crse_wrkld_sample'] = stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'sum_term_crse_wrkld_sample'] * stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['TYPE']=='LAB'),'ACTUAL ENROLLMENT'].astype(int) / 4.0
-
+# Assign SEM workload
 # Ensure that SEM get full credit because we want to reward the faculty member for doing it!
-stacked_df.loc[stacked_df['TYPE'].isin(['SEM']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['TYPE'].isin(['SEM']),'sum_term_crse_wrkld_sample'] / 1.0
+seminars_per_lecture = 1.0
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'wrkld_sample_note'] = f"RULE: [wrkld] = [wrkld] / {seminars_per_lecture} for SEM"
+stacked_df.loc[(stacked_df['wrkld_sample_type'].isin(['SEM']))&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = f"RULE: [wrkld] = [wrkld] / {seminars_per_lecture} for SEM (co-teaching)"
+stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'sum_term_crse_wrkld_sample'] / seminars_per_lecture
+
+# Set ROND - on-line synchronous to 0.  Credit is given to main lecture.
+
+stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'wrkld_sample_note'] = f"RULE: [wrkld] = 0 for ROND (online synchronous)"
+stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'sum_term_crse_wrkld_sample'] = 0
+
+# For large lectures - reset lecture units
+
+weight = 1.5
+threshhold = 80
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"sum_term_crse_wrkld_sample"] = weight * stacked_df["instructor_cnt"]
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"wrkld_sample_note"] = f"BASE: [wrkld] = {weight} per CRN ENRL>={threshhold}"
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = f"BASE: [wrkld] = {weight/2.0} per CRN ENRL>={threshhold} (co-teaching)"
+
+weight = 2.0
+threshhold = 160
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"sum_term_crse_wrkld_sample"] = weight * stacked_df["instructor_cnt"]
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"wrkld_sample_note"] = f"BASE: [wrkld] = {weight} per CRN ENRL>={threshhold}"
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = f"BASE: [wrkld] = {weight/2.0} per CRN ENRL>={threshhold} (co-teaching)"
+
+weight = 2.5
+threshhold = 240
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"sum_term_crse_wrkld_sample"] = weight * stacked_df["instructor_cnt"]
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC'),"wrkld_sample_note"] = f"BASE: [wrkld] = {weight} per CRN ENRL>={threshhold}"
+stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']<1.0),'wrkld_sample_note'] = f"BASE: [wrkld] = {weight/2.0} per CRN ENRL>={threshhold} (co-teaching)"
 
 ```
+
 
 ### Store the data for later use
 
