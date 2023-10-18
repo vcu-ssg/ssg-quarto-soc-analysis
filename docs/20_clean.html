@@ -177,7 +177,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#distinguish-lab-workloads" id="toc-distinguish-lab-workloads" class="nav-link" data-scroll-target="#distinguish-lab-workloads">Distinguish LAB workloads</a></li>
   <li><a href="#distinguish-res-ind-and-fld" id="toc-distinguish-res-ind-and-fld" class="nav-link" data-scroll-target="#distinguish-res-ind-and-fld">Distinguish RES, IND and FLD</a></li>
   <li><a href="#distinguish-sem-workloads" id="toc-distinguish-sem-workloads" class="nav-link" data-scroll-target="#distinguish-sem-workloads">Distinguish SEM workloads</a></li>
-  <li><a href="#adjust-rond---on-line-synchronous" id="toc-adjust-rond---on-line-synchronous" class="nav-link" data-scroll-target="#adjust-rond---on-line-synchronous">Adjust ROND - on-line synchronous</a></li>
   <li><a href="#adjust-for-large-lectures" id="toc-adjust-for-large-lectures" class="nav-link" data-scroll-target="#adjust-for-large-lectures">Adjust for large lectures</a></li>
   <li><a href="#checks-and-verfications" id="toc-checks-and-verfications" class="nav-link" data-scroll-target="#checks-and-verfications">Checks and verfications</a></li>
   </ul></li>
@@ -689,46 +688,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> seminars_per_lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="adjust-rond---on-line-synchronous" class="level3">
-<h3 class="anchored" data-anchor-id="adjust-rond---on-line-synchronous">Adjust ROND - on-line synchronous</h3>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set ROND - on-line synchronous to 0.  Credit is given to main lecture.</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'MODALITY CODE'</span>].isin([<span class="st">'ROND'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=0.00 for ROND (online synchronous)"</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'MODALITY CODE'</span>].isin([<span class="st">'ROND'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
 <section id="adjust-for-large-lectures" class="level3">
 <h3 class="anchored" data-anchor-id="adjust-for-large-lectures">Adjust for large lectures</h3>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For large lectures - reset lecture units</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">1.5</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">80</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.0</span></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">160</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.5</span></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">240</span></span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For large lectures - reset lecture units</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">1.5</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">80</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.0</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">160</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.5</span></span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">240</span></span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="checks-and-verfications" class="level3">
 <h3 class="anchored" data-anchor-id="checks-and-verfications">Checks and verfications</h3>
 <p>The following code blocks are added as unique situations are discovered. The code below shows how these situations are handled.</p>
 <p>As odd situations are revealed, add a code block here to clearly show the inconsistency. Then, change the workload code above until the situation clears up AND you don’t screw up any of the other situations.</p>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202410'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"COURSE"</span>]<span class="op">==</span><span class="st">'EGMN416'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202410'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"COURSE"</span>]<span class="op">==</span><span class="st">'EGMN416'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="25">
 <div>
 
 
@@ -861,9 +851,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202320'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Heise,Rebecca'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202320'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Heise,Rebecca'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="26">
 <div>
 
 
@@ -1064,9 +1054,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202310'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Ferri,James'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202310'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Ferri,James'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
 
@@ -1224,6 +1214,265 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+<p><strong>Singleton ROND sections should not be zeroed out</strong></p>
+<p>This first example shows a singleton ROND sections. We may see this if all the students enroll in the online section and no one enrolls in the face-to-face section.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202320'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Manic,Milos'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="28">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">COURSE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
+<th data-quarto-table-cell-role="th">CRN</th>
+<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">time_code</th>
+<th data-quarto-table-cell-role="th">mtg_length</th>
+<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
+<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
+<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
+<th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
+<th data-quarto-table-cell-role="th">wrkld_sample_type</th>
+<th data-quarto-table-cell-role="th">wrkld_sample_note</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3085</td>
+<td>CMSC636</td>
+<td>Manic,Milos</td>
+<td>44831</td>
+<td>3</td>
+<td>M.W....12001315</td>
+<td>115</td>
+<td>1</td>
+<td>2</td>
+<td>1</td>
+<td>1.000000</td>
+<td>LEC</td>
+<td>BASE: [wrkld]</td>
+<td>NEURAL NETS AND DEEP LEARNING</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3101</td>
+<td>CMSC697</td>
+<td>Manic,Milos</td>
+<td>36849</td>
+<td>2</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>DIRECTED RESEARCH</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3102</td>
+<td>CMSC697</td>
+<td>Manic,Milos</td>
+<td>36851</td>
+<td>6</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>DIRECTED RESEARCH</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3559</td>
+<td>ENGR497</td>
+<td>Manic,Milos</td>
+<td>45526</td>
+<td>1</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.333333</td>
+<td>VIP</td>
+<td>RULE: [wrkld]=0.33 for VIP</td>
+<td>VERTICALLY INTEGRATED PROJECTS</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3560</td>
+<td>ENGR497</td>
+<td>Manic,Milos</td>
+<td>45527</td>
+<td>2</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.333333</td>
+<td>VIP</td>
+<td>RULE: [wrkld]=0.33 for VIP</td>
+<td>VERTICALLY INTEGRATED PROJECTS</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+<p>This second example shows a doubleton ROND+RINP section.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202410'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Ghosh,Preetam'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="29">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">COURSE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
+<th data-quarto-table-cell-role="th">CRN</th>
+<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">time_code</th>
+<th data-quarto-table-cell-role="th">mtg_length</th>
+<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
+<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
+<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
+<th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
+<th data-quarto-table-cell-role="th">wrkld_sample_type</th>
+<th data-quarto-table-cell-role="th">wrkld_sample_note</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3749</td>
+<td>CMSC441</td>
+<td>Ghosh,Preetam</td>
+<td>43750</td>
+<td>2</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.666667</td>
+<td>CAP</td>
+<td>RULE: [wrkld]=0.33 for every 4.0 students in CAP</td>
+<td>SR DESIGN STUDIO I (LAB/PROJ)</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3771</td>
+<td>CMSC502</td>
+<td>Ghosh,Preetam</td>
+<td>37708</td>
+<td>3</td>
+<td>.T.R...15301645</td>
+<td>115</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>0.500000</td>
+<td>LEC</td>
+<td>BASE: [wrkld] / 2 CRN at same time</td>
+<td>PARALLEL ALGORITHMS</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3772</td>
+<td>CMSC502</td>
+<td>Ghosh,Preetam</td>
+<td>37709</td>
+<td>3</td>
+<td>.T.R...15301645</td>
+<td>115</td>
+<td>2</td>
+<td>2</td>
+<td>1</td>
+<td>0.500000</td>
+<td>LEC</td>
+<td>BASE: [wrkld] / 2 CRN at same time</td>
+<td>PARALLEL ALGORITHMS</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3797</td>
+<td>CMSC697</td>
+<td>Ghosh,Preetam</td>
+<td>37384</td>
+<td>2</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>DIRECTED RESEARCH</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3798</td>
+<td>CMSC697</td>
+<td>Ghosh,Preetam</td>
+<td>37385</td>
+<td>3</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>DIRECTED RESEARCH</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3799</td>
+<td>CMSC697</td>
+<td>Ghosh,Preetam</td>
+<td>37386</td>
+<td>6</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>DIRECTED RESEARCH</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4261</td>
+<td>ENGR701</td>
+<td>Ghosh,Preetam</td>
+<td>46939</td>
+<td>9</td>
+<td>.........</td>
+<td>0</td>
+<td>1</td>
+<td>0</td>
+<td>1</td>
+<td>0.000000</td>
+<td>RES</td>
+<td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
+<td>POST-CANDIDACY DOCT RESEARCH</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
 </section>
 </section>
 <section id="store-the-dataframe" class="level2">
@@ -1231,54 +1480,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’re storing both the stacked and unstacked data. Note that the aggregate measures are stored with the stacked data only.</p>
 <section id="store-to-a-local-csv-file" class="level3">
 <h3 class="anchored" data-anchor-id="store-to-a-local-csv-file">Store to a local CSV file</h3>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="store-the-data-in-google-sheets" class="level3">
 <h3 class="anchored" data-anchor-id="store-the-data-in-google-sheets">Store the data in google sheets</h3>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
+<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
+<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="freshen-persistent-instructor-data" class="level3">
 <h3 class="anchored" data-anchor-id="freshen-persistent-instructor-data">Freshen persistent instructor data</h3>
 <p>This block identifies any instructors not found in the persistent instructor data and adds them to the list with default values.</p>
 <p><strong>This code is not working yet.</strong> It should be fixed when a new semester is added and new instructors and courses are discovered in the imported worksheets.</p>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
-<span id="cb29-14"><a href="#cb29-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-15"><a href="#cb29-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
-<span id="cb29-16"><a href="#cb29-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
-<span id="cb29-17"><a href="#cb29-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-18"><a href="#cb29-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
-<span id="cb29-19"><a href="#cb29-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
+<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
+<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
+<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
+<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
+<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
+<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
+<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
+<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
+<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>

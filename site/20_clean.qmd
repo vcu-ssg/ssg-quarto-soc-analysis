@@ -518,16 +518,6 @@ stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'sum_term_crse_wrkl
 
 ```
 
-### Adjust ROND - on-line synchronous
-
-
-```{python}
-# Set ROND - on-line synchronous to 0.  Credit is given to main lecture.
-
-stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'wrkld_sample_note'] = f"RULE: [wrkld]=0.00 for ROND (online synchronous)"
-stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'sum_term_crse_wrkld_sample'] = 0
-
-```
 
 ### Adjust for large lectures
 
@@ -575,6 +565,20 @@ stacked_df[(stacked_df["TERM"]=='202320')&(stacked_df["instructor"]=='Heise,Rebe
 
 ```{python}
 stacked_df[(stacked_df["TERM"]=='202310')&(stacked_df["instructor"]=='Ferri,James')][['COURSE','instructor','CRN','MAX CREDITS','time_code','mtg_length','shared_mtgs_cnt','mtgs_per_wk','mtgs_per_crn','combined_count','combined_sections','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note','TITLE']]
+```
+
+**Singleton ROND sections should not be zeroed out**
+
+This first example shows a singleton ROND sections.  We may see this if all the students enroll in the online section and no one enrolls in the face-to-face section.  
+
+```{python}
+stacked_df[(stacked_df["TERM"]=='202320')&(stacked_df["instructor"]=='Manic,Milos')][['COURSE','instructor','CRN','MAX CREDITS','time_code','mtg_length','shared_mtgs_cnt','mtgs_per_wk','mtgs_per_crn','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note','TITLE']]
+```
+
+This second example shows a doubleton ROND+RINP section.
+
+```{python}
+stacked_df[(stacked_df["TERM"]=='202410')&(stacked_df["instructor"]=='Ghosh,Preetam')][['COURSE','instructor','CRN','MAX CREDITS','time_code','mtg_length','shared_mtgs_cnt','mtgs_per_wk','mtgs_per_crn','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note','TITLE']]
 ```
 
 ## Store the dataframe
