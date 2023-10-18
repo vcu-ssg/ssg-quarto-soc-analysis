@@ -308,6 +308,26 @@ stacked_df['mtgs_per_crn'] =  stacked_df.groupby(['TERM','CRN','instructor'])['C
 
 ```
 
+### Find all courses taught by same instructor at the same time
+
+```{python}
+
+def concat_courses(group):
+    return ','.join(group['COURSE'])
+
+temp_df = pd.DataFrame();
+keys = ['TERM','instructor','time_code']
+temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses)
+temp_df["list"] = temp_df["concat"].apply( lambda x :  list(set(x.split(","))) )
+temp_df["combined_count"] = temp_df["list"].apply( lambda x :  len(x) )
+temp_df["combined_sections"] = temp_df["list"].apply( lambda x :  ",".join(x) )
+temp_df = temp_df.reset_index()
+temp_df = temp_df[ (temp_df['time_code']!='.........')&(temp_df['combined_count']>1)]
+temp_df = temp_df[['TERM','instructor','time_code','combined_count','combined_sections']]
+stacked_df = pd.merge(stacked_df,temp_df,left_on=keys, right_on=keys,how="left")
+
+```
+
 ### CGEP: convert to IND rather than LEC from workload perspective
 
 ```{python}
@@ -325,6 +345,23 @@ stacked_df['TYPE'] = stacked_df.apply(set_type_based_on_search, axis=1)
 
 ```
 
+### Add a bunch of spare columns
+
+It's getting old adding new columns, then having to rework the formuluas in the rather brittle
+google sheet.  I'm adding a few spare columns here to be used as necessary.  This is the best place
+to add the new columns, just prior to the calculation of the aggregate measures and workload attributes.
+
+```{python}
+stacked_df["spare_col_1"] = 0
+stacked_df["spare_col_2"] = 0
+stacked_df["spare_col_3"] = 0
+stacked_df["spare_col_4"] = 0
+stacked_df["spare_col_5"] = 0
+stacked_df["spare_col_6"] = 0
+
+```
+
+Note that several spare columns have been added to persistent google sheets (instructor and course).
 
 ### Compute appropriate aggregate measures
 
@@ -342,7 +379,7 @@ stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'
 ```
 
 
-### Workload model assignments
+### Placeholder Workload model assignments
 
 These are placeholders for any proposed workload model based on course and instructor attributes.
 
@@ -368,27 +405,7 @@ stacked_df['sum_term_crse_wrkld_c'] = 0.0
 stacked_df['wrkld_c_note'] = ""
 ```
 
-### Find all courses taught by same instructor at the same time
-
-```{python}
-
-def concat_courses(group):
-    return ','.join(group['COURSE'])
-
-temp_df = pd.DataFrame();
-keys = ['TERM','instructor','time_code']
-temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses)
-temp_df["list"] = temp_df["concat"].apply( lambda x :  list(set(x.split(","))) )
-temp_df["combined_count"] = temp_df["list"].apply( lambda x :  len(x) )
-temp_df["combined_sections"] = temp_df["list"].apply( lambda x :  ",".join(x) )
-temp_df = temp_df.reset_index()
-temp_df = temp_df[ (temp_df['time_code']!='.........')&(temp_df['combined_count']>1)]
-temp_df = temp_df[['TERM','instructor','time_code','combined_count','combined_sections']]
-stacked_df = pd.merge(stacked_df,temp_df,left_on=keys, right_on=keys,how="left")
-
-```
-
-### Sample workload model
+## Sample workload model
 
 This is the sample workload model.  The assigned faculty workoad will be stored in the *sum_term_crse_wrklod_sample* field.  Here is the model:
 
@@ -401,7 +418,9 @@ difficult to discern these.  See EGRE306 for an example.
 1. Capstone designs are scaled to give one LAB (0.33 per above) unit per groups of 4 students.
 
 
-First, recode section types.
+### Assign BASE workload to all sections
+
+This base workload assignment will be overwritten as various scenarios are explored.
 
 ```{python}
 
@@ -410,7 +429,12 @@ stacked_df["sum_term_crse_wrkld_sample"] = 1.0 / stacked_df["instructor_cnt"]
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'wrkld_sample_note'] = "BASE: [wrkld] "
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = "BASE: [wrkld] / (2 co-teaching) "
 
-# Adjust for combined lectures
+```
+
+### Adjust for courses taught at same time by same instructor
+
+```{python}
+# Adjust for combined lectures (this code is deprecated for a smarter logi)
 
 if(0):
     stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'sum_term_crse_wrkld_sample'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'sum_term_crse_wrkld_sample'] / stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['combined_count']>1),'combined_count'] 
@@ -424,7 +448,12 @@ stacked_df.loc[(stacked_df['shared_mtgs_cnt']>1),'wrkld_sample_note'] = (
   stacked_df.loc[(stacked_df['shared_mtgs_cnt']>1),'wrkld_sample_note'] + "/ " + 
   stacked_df.loc[(stacked_df['shared_mtgs_cnt']>1),'shared_mtgs_cnt'].astype(str) +" CRN at same time"
 )
+```
 
+### Distinguish capstone workloads
+
+
+```{python}
 # Assign CAP workload
 capstones_per_lecture = 3.0
 students_per_capstone = 4.0
@@ -434,14 +463,22 @@ for course in senior_design_courses:
    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'wrkld_sample_note'] = f'RULE: [wrkld]={(1.0/capstones_per_lecture):0.2f} for every {students_per_capstone} students in CAP'
    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'sum_term_crse_wrkld_sample'] = (
      stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'sum_term_crse_crn'] / capstones_per_lecture * ( stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'ACTUAL ENROLLMENT'].astype(int) / students_per_capstone) )
+```
 
+### Distinguish VIP workloads
+
+```{python}
 # Assign VIP workload
 vips_per_lecture = 3.0
 stacked_df.loc[stacked_df['course_number'].isin(['497']),'wrkld_sample_type'] = "VIP"
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'wrkld_sample_note'] = f"RULE: [wrkld]={(1.0/vips_per_lecture):0.2f} for VIP"
 stacked_df.loc[(stacked_df['wrkld_sample_type'].isin(['VIP']))&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = f"RULE: [wrkld]={(1.0/vips_per_lecture):0.2f} for VIP (co-teaching)"
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['VIP']),'sum_term_crse_wrkld_sample'] / vips_per_lecture
+```
 
+### Distinguish LAB workloads
+
+```{python}
 # Assign LAB workload
 labs_per_lecture = 3.0
 #stacked_df.loc[(stacked_df['MAX CREDITS']==4)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['mtgs_per_wk']==1&(! stacked_df['course_number'].isin(['291','391','491','591','691','791'])),'wrkld_sample_type'] = 'LAB'
@@ -455,10 +492,22 @@ stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'sum_term_crse_wrkl
 
 stacked_df.loc[(stacked_df['mtgs_per_crn']>1)&(stacked_df['wrkld_sample_type']=='LAB')&(stacked_df['mtgs_per_wk']==1),'wrkld_sample_note'] = stacked_df.loc[(stacked_df['mtgs_per_crn']>1)&(stacked_df['wrkld_sample_type']=='LAB')&(stacked_df['mtgs_per_wk']==1),'wrkld_sample_note'] + " (LAB: 1 mtg per wk rule)"
 
+```
+
+### Distinguish RES, IND and FLD
+
+```{python}
+
 # Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).
 # Credit is given for these activities in reduced teaching (research active) or summer pay.
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['RES','IND','FLD']),'wrkld_sample_note'] = "RULE: [wrkld]=0.00 for INS, RES and FLD"
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['RES','IND','FLD']),'sum_term_crse_wrkld_sample'] = 0.0
+
+```
+
+### Distinguish SEM workloads
+
+```{python}
 
 # Assign SEM workload
 # Ensure that SEM get full credit because we want to reward the faculty member for doing it!
@@ -467,11 +516,22 @@ stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'wrkld_sample_note'
 stacked_df.loc[(stacked_df['wrkld_sample_type'].isin(['SEM']))&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = f"RULE: [wrkld] / {seminars_per_lecture} for SEM (co-teaching)"
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'sum_term_crse_wrkld_sample'] = stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['SEM']),'sum_term_crse_wrkld_sample'] / seminars_per_lecture
 
+```
+
+### Adjust ROND - on-line synchronous
+
+
+```{python}
 # Set ROND - on-line synchronous to 0.  Credit is given to main lecture.
 
 stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'wrkld_sample_note'] = f"RULE: [wrkld]=0.00 for ROND (online synchronous)"
 stacked_df.loc[stacked_df['MODALITY CODE'].isin(['ROND']),'sum_term_crse_wrkld_sample'] = 0
 
+```
+
+### Adjust for large lectures
+
+```{python}
 # For large lectures - reset lecture units
 
 weight = 1.5
@@ -493,9 +553,15 @@ stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_
 stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = f"BASE: [wrkld]={weight/2.0} per CRN ENRL>={threshhold} (co-teaching)"
 
 ```
-### Sample calculations
+### Checks and verfications
 
-Here is an example of the *shared_mtgs_cnt* calculation.
+The following code blocks are added as unique situations are discovered.  The code below
+shows how these situations are handled.
+
+As odd situations are revealed, add a code block here to clearly show the inconsistency.  Then, change
+the workload code above until the situation clears up AND you don't screw up any of the other situations.
+
+
 
 ```{python}
 stacked_df[(stacked_df["TERM"]=='202410')&(stacked_df["COURSE"]=='EGMN416')][['COURSE','instructor','CRN','MAX CREDITS','time_code','mtg_length','shared_mtgs_cnt','mtgs_per_wk','mtgs_per_crn','combined_count','combined_sections','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']]
@@ -511,11 +577,12 @@ stacked_df[(stacked_df["TERM"]=='202320')&(stacked_df["instructor"]=='Heise,Rebe
 stacked_df[(stacked_df["TERM"]=='202310')&(stacked_df["instructor"]=='Ferri,James')][['COURSE','instructor','CRN','MAX CREDITS','time_code','mtg_length','shared_mtgs_cnt','mtgs_per_wk','mtgs_per_crn','combined_count','combined_sections','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note','TITLE']]
 ```
 
-
-### Store the data for later use
+## Store the dataframe
 
 We're storing both the stacked and unstacked data.  Note that the
 aggregate measures are stored with the stacked data only.
+
+### Store to a local CSV file
 
 ```{python}
 # Store as CSV files
@@ -548,6 +615,9 @@ set_with_dataframe(worksheet=sheet, dataframe=stacked_df, include_index=False,in
 This block identifies any instructors not found in the persistent instructor data
 and adds them to the list with default values.
 
+**This code is not working yet.** It should be fixed when a new semester is added and new instructors and courses
+are discovered in the imported worksheets.
+
 ```{python}
 #| echo: true
 
@@ -573,3 +643,7 @@ and adds them to the list with default values.
 ## df1 = pd.concat([df1, names_to_add], ignore_index=True)
 
 ```
+
+## Summary
+
+That's all folks!  Additional models can be added and the google sheets can be reviewed.
