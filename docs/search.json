@@ -145,5 +145,19 @@
     "title": "About",
     "section": "",
     "text": "This site was creating in quarto."
+  },
+  {
+    "objectID": "40_workload.html",
+    "href": "40_workload.html",
+    "title": "Workloads",
+    "section": "",
+    "text": "These are experimental presentations of the data."
+  },
+  {
+    "objectID": "40_workload.html#explore-tabular-data",
+    "href": "40_workload.html#explore-tabular-data",
+    "title": "Workloads",
+    "section": "Explore tabular data",
+    "text": "Explore tabular data\n\ncols = ['instructor','ins_dept','TERM','COURSE','TITLE','wrkld_sample_type','sum_term_crse_wrkld_sample','wrkld_sample_note']\nterms = [202410,202320]\n\ndf = stacked_df[stacked_df[\"TERM\"].isin(terms)][cols]\n\nbokeh_formatters = {\n    'TERM': NumberFormatter(format='000000')\n}\n\ntable = pn.widgets.Tabulator(df,\n    show_index=False,\n    formatters=bokeh_formatters\n)\n\ntable"
   }
 ]
