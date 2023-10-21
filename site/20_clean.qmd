@@ -471,7 +471,7 @@ This is the sample workload model.  The assigned faculty workoad will be stored 
 
 ```{python}
 model_sample = {
-    'base_wrkld_unit':1.0,
+    'base_lecture_value':1.0,
     'labs_per_lecture':3.0,
     'vips_per_lecture':3.0,
     'capstones_per_lecture': 3.0,
@@ -504,7 +504,7 @@ adding a "FIX" (listed above) to remove the secondary instructor from the worklo
 
 ```{python}
 # Assign standard workload : One teaching course shared across multiple instructors
-stacked_df["sum_term_crse_wrkld_sample"] = model_sample['base_wrkld_unit']
+stacked_df["sum_term_crse_wrkld_sample"] = model_sample['base_lecture_value']
 # Update note
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'wrkld_sample_note'] = "BASE: [wrkld] "
 

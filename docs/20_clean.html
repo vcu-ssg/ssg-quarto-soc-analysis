@@ -525,7 +525,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>This is the sample workload model. The assigned faculty workoad will be stored in the <em>sum_term_crse_wrklod_sample</em> field. Here is the model:</p>
 <div class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_sample <span class="op">=</span> {</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'base_wrkld_unit'</span>:<span class="fl">1.0</span>,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'base_lecture_value'</span>:<span class="fl">1.0</span>,</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'labs_per_lecture'</span>:<span class="fl">3.0</span>,</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'vips_per_lecture'</span>:<span class="fl">3.0</span>,</span>
 <span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'capstones_per_lecture'</span>: <span class="fl">3.0</span>,</span>
@@ -549,7 +549,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In some cases, a shared instructor was included in Banner so that the shared instructor could monitor the course in Canvas only, without offering additional teaching effort. In these cases, I recommend adding a “FIX” (listed above) to remove the secondary instructor from the workload data, ensuring that they don’t get credit for a class they aren’t actually co-teaching.</p>
 <div class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign standard workload : One teaching course shared across multiple instructors</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> model_sample[<span class="st">'base_wrkld_unit'</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> model_sample[<span class="st">'base_lecture_value'</span>]</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Update note</span></span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"BASE: [wrkld] "</span></span>
 <span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a></span>
