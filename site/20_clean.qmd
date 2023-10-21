@@ -64,6 +64,8 @@ Markdown(tabulate(
   showindex=False
 ))
 
+xlsx_df = xlsx_df[['file_name','term_code','academic_year','period_code','period_name']]
+
 ```
 
 ## Data Cleaning
@@ -256,7 +258,7 @@ this section.  This helps with workload and other computations later.
 # Number of instructors sharing a common CRN.
 stacked_df["instructor_cnt"] = stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count') / stacked_df.groupby(['TERM','COURSE','CRN','instructor'])['instructor'].transform('count') 
 
-stacked_df["capstone_cnt"] = 0  # used downstream to provide an actual capstone count rather than an estimated count of capstone sections.
+stacked_df["capstone_cnt"] = 0.0  # used downstream to provide an actual capstone count rather than an estimated count of capstone sections.
 
 ```
 
@@ -431,9 +433,9 @@ These computations are normalized to the appropriate group so that they sum to t
 # Create various aggregate columns
 stacked_df['sum_term'] = 1.0 / stacked_df.groupby(['TERM'])['TERM'].transform('count')
 stacked_df['sum_term_crse'] = 1.0 / stacked_df.groupby(['TERM','COURSE'])['COURSE'].transform('count')
-stacked_df['sum_term_crse_crn'] = 1.0 / stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count')
-stacked_df['sum_term_crse_crn_students'] = stacked_df['ACTUAL ENROLLMENT'] * stacked_df['sum_term_crse_crn']
-stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_students'] * stacked_df['MAX CREDITS']
+stacked_df['sum_term_crse_crn'] = 1.0 / stacked_df.groupby(['TERM','COURSE','CRN','time_code'])['CRN'].transform('count') / stacked_df['mtgs_per_crn']
+stacked_df['sum_term_crse_crn_mtg_students'] = stacked_df['ACTUAL ENROLLMENT'] * stacked_df['sum_term_crse_crn'] * stacked_df['mtgs_per_crn']
+stacked_df['sum_term_crse_crn_hours'] =  stacked_df['sum_term_crse_crn_mtg_students'] * stacked_df['MAX CREDITS']  / stacked_df['mtgs_per_crn']
 
 ```
 
@@ -469,6 +471,7 @@ This is the sample workload model.  The assigned faculty workoad will be stored 
 
 ```{python}
 model_sample = {
+    'base_wrkld_unit':1.0,
     'labs_per_lecture':3.0,
     'vips_per_lecture':3.0,
     'capstones_per_lecture': 3.0,
@@ -492,20 +495,22 @@ difficult to discern these.  See EGRE306 for an example.
 
 Assign base workload to all records. All sections independent of section type start with a base workload of 1.
 
-```{python}
-
-# Assign standard workload : One teaching course shared across multiple instructors
-stacked_df["sum_term_crse_wrkld_sample"] = 1.0 / stacked_df["instructor_cnt"]
-```
-
 Adjust base workload for courses shared by multiple instructors.
 
-In some cases, a shared instructor was included in Banner so that the shared instructor could monitor the course in Canvas only, without offering additional teaching effort.
-
-In these cases, I recommend adding a "FIX" (listed above) to remove the secondary instructor from the workload data, ensuring that they don't get credit for a class they aren't actually co-teaching.
+In some cases, a shared instructor was included in Banner so that the shared instructor could monitor the 
+course in Canvas only, without offering additional teaching effort.  In these cases, I recommend
+adding a "FIX" (listed above) to remove the secondary instructor from the workload data,
+ ensuring that they don't get credit for a class they aren't actually co-teaching.
 
 ```{python}
+# Assign standard workload : One teaching course shared across multiple instructors
+stacked_df["sum_term_crse_wrkld_sample"] = model_sample['base_wrkld_unit']
+# Update note
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'wrkld_sample_note'] = "BASE: [wrkld] "
+
+# Adjust for multiple instructors
+stacked_df["sum_term_crse_wrkld_sample"] = stacked_df["sum_term_crse_wrkld_sample"] / stacked_df["instructor_cnt"]
+# Update note
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = "BASE: [wrkld] / (2 co-teaching) "
 
 ```
@@ -578,7 +583,8 @@ for course in senior_design_courses:
      stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'sum_term_crse_crn'] / capstones_per_lecture * ( stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'capstone_cnt'] ) )
 
     # Update note to show adjustments
-    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'wrkld_sample_note'] = f"RULE: [wrkld]={(1.0/capstones_per_lecture):0.2f} for every {students_per_capstone} students in CAP (capstones: {stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'capstone_cnt']})"
+    stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'wrkld_sample_note'] = (f"RULE: [wrkld]={(1.0/capstones_per_lecture):0.2f} for every {students_per_capstone} students in CAP (CAP=" +
+     stacked_df.loc[(stacked_df['COURSE']==course)&(stacked_df['wrkld_sample_type']=='CAP'),'capstone_cnt'].astype(str) + ")")
 
 ```
 
@@ -688,7 +694,7 @@ for threshhold,weight in model_sample['large_classes']:
 ### Examples, checks and verifications
 
 The following code blocks are added as unique situations are discovered.  The code below
-shows how these situations are handled.
+shows how these situations are handled and demonstrates how they were corrected.
 
 As odd situations are revealed, add a code block here to clearly show the inconsistency.  Then, change
 the workload code above until the situation clears up AND you don't screw up any of the other situations.
@@ -696,7 +702,9 @@ the workload code above until the situation clears up AND you don't screw up any
 #### Example: LECT / LAB
 
 In this example, a lecture/lab course was coded as 3 separate CRN.  Each CRN has a main lecture and a single-meeting-period lab.
+
 All three lectures share the same meeting time and are combined into a single workload LECT.  Each lab section is assigned 1/3 workload.
+
 However, two of the lab sections share a common meeting time, so they are combined into a single 1/3 workload section.
 
 ```{python}
@@ -708,9 +716,19 @@ def show_block( df,keys,cols):
 
 show_block(stacked_df,
     {'TERM':'202410','COURSE':'EGMN416'},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+    ['COURSE','CRN','TYPE','TITLE','instructor','time_code',
+    'sum_term_crse_crn',
+    'sum_term_crse_crn_mtg_students',
+    'sum_term_crse_crn_hours',
+    'sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 ```
+
+* *sum_term_crse_crn* represents the number of unique CRNs.  This value is split across multiple meeting times per CRN.
+
+* *sum_term_crse_crn_mtg_students* represents the number of students in each crn-meeting time. This value is useful to determine how many students are in any given meeting time.
+
+* *sum_term_crse_crn_hours* represents the number of credit hours associated with a CRN.  This value is split across multiple meeting times.
 
 #### Example: LECT sharing a common time
 
@@ -757,6 +775,19 @@ This second example shows a doubleton ROND+RINP section.
 show_block(stacked_df,
     {'TERM':'202410','instructor':"Ghosh,Preetam"},
     ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+)
+
+```
+
+#### Example: odd counting 
+
+Verifying actual enrollment vs sum_term_crse_wrkld_sample
+
+```{python}
+show_block(stacked_df,
+    {'TERM':'202410','instructor':"Duke,Debra",'COURSE':'CMSC256'},
+    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','ACTUAL ENROLLMENT','MAX CREDITS','time_code','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours',
+    'sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 
 ```
