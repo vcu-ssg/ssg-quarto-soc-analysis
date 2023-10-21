@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="John Leonard">
-<meta name="dcterms.date" content="2023-10-20">
+<meta name="dcterms.date" content="2023-10-21">
 
 <title>Analysis of Teaching</title>
 <style>
@@ -116,7 +116,7 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#report-organization" id="toc-report-organization" class="nav-link active" data-scroll-target="#report-organization">Report organization</a></li>
-  <li><a href="#worksheet-sandbox" id="toc-worksheet-sandbox" class="nav-link" data-scroll-target="#worksheet-sandbox">Worksheet sandbox</a></li>
+  <li><a href="#rolling-your-own-model" id="toc-rolling-your-own-model" class="nav-link" data-scroll-target="#rolling-your-own-model">Rolling your own model</a></li>
   <li><a href="#persistent-data" id="toc-persistent-data" class="nav-link" data-scroll-target="#persistent-data">Persistent data</a></li>
   </ul>
 </nav>
@@ -143,7 +143,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">October 20, 2023</p>
+      <p class="date">October 21, 2023</p>
     </div>
   </div>
   
@@ -153,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>This web report looks at teaching across the College of Engineering since Fall 2020.</p>
+<p>This web report presents an application of a sample model of faculty workload over the past two semesters (Spring 2023 and Fall 2023).</p>
 <p>This is intended to be a living analysis. As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.</p>
 <p>This report was developed using <a href="https://quarto.org/">Quarto</a>, an open-source scientific and technical publishing designed with reproducibility in mind. Analyses were performed using python. The source code for the pages on this site are available in a <a href="https://github.com/vcu-ssg/ssg-quarto-soc-analysis">github repository</a>.</p>
 <section id="report-organization" class="level2">
@@ -165,19 +165,15 @@ ul.task-list li input[type="checkbox"] {
 <li><p><a href="./30_explore.html">Explore</a> - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered as demonstrations of the possible, not as part of a real analysis of workload.</p></li>
 </ul>
 </section>
-<section id="worksheet-sandbox" class="level2">
-<h2 class="anchored" data-anchor-id="worksheet-sandbox">Worksheet sandbox</h2>
-<p>Data from the <a href="./20_clean.html">cleaning step</a> are used to support the example output in the <a href="./30_explore.html">explore</a> document.</p>
-<p>The resulting data are also <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1728987696">uploaded to google sheets</a> and complementary analysis is done in the google sheet:</p>
-<ul>
-<li><p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1722375566">Sample instructor reports</a> highlight the use of the google sheeet QUERY command to build summaries from the raw data.</p></li>
-<li><p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">Sample workload report</a> offers examples of how computations from a <a href="https://vcu-ssg.github.io/ssg-quarto-soc-analysis/20_clean.html#sample-workload-model">sample workload model</a> can be used to support QUERYs in a google sheet.</p></li>
-</ul>
-<p>These were sample reports are intended to highlight the possible with examples. I did not conduct a full analysis.</p>
+<section id="rolling-your-own-model" class="level2">
+<h2 class="anchored" data-anchor-id="rolling-your-own-model">Rolling your own model</h2>
+<p>The resulting dataframe is <a href="stacked_df.csv">available here</a> for download as CSV.</p>
+<p>The result dataframe is also uploaded to a <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1722375566">google workbook</a> and a sample analysis is conducted.</p>
 </section>
 <section id="persistent-data" class="level2">
 <h2 class="anchored" data-anchor-id="persistent-data">Persistent data</h2>
-<p>The analyses also expect that there are persistent data stored outside of the VCU report, data that are important for helping classify faculty and courses.</p>
+<p>The <a href="./10_download.html">banner report</a> used to create this report does not contain all the necessary data to complete the analysis (e.g., instructor department).</p>
+<p>Persistent data are stored in a google sheet.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116">Instructor data</a> - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=211942472">Instructor notes</a> - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.</p>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=498592034">Course notes</a> - these data offer additional details about the courses. This table is optional to this analysis.</p>

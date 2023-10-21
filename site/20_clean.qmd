@@ -8,6 +8,9 @@ At completion of this script all the individual semester data files will be comb
 
 TLDR: Here is a link to the [cleaned dataframe](stacked_df.csv).  This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).
 
+TLDR: Here is a link to the [google sheet](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377) with the cleaned data loaded 
+in the "source data" tab and other sheets referencing the source data.
+
 ## Data sources
 
 The files are named appropriately and stored in the *data* folder in this repository.

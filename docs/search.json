@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Analysis of Teaching",
     "section": "",
-    "text": "This web report looks at teaching across the College of Engineering since Fall 2020.\nThis is intended to be a living analysis. As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.\nThis report was developed using Quarto, an open-source scientific and technical publishing designed with reproducibility in mind. Analyses were performed using python. The source code for the pages on this site are available in a github repository."
+    "text": "This web report presents an application of a sample model of faculty workload over the past two semesters (Spring 2023 and Fall 2023).\nThis is intended to be a living analysis. As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.\nThis report was developed using Quarto, an open-source scientific and technical publishing designed with reproducibility in mind. Analyses were performed using python. The source code for the pages on this site are available in a github repository."
   },
   {
     "objectID": "index.html#report-organization",
@@ -14,18 +14,18 @@
     "text": "Report organization\nThe site is organized as follow:\n\nDownload - this section describes the source of data (VCU reports) and shows the files and semesters downloaded. This section is provided so that others can obtain the same data used for this report.\nClean - this section documents the cleaning strategies applied to the data obtained above. This section refactors and reshapes the data, adds new columns and corrects known errors. The data are stored in this repo, and are also uploaded to this google sheet.\nExplore - this section offers several sample analysis using the cleaned data. This report is generated using python and matplotlib. The examples are offered as demonstrations of the possible, not as part of a real analysis of workload."
   },
   {
-    "objectID": "index.html#worksheet-sandbox",
-    "href": "index.html#worksheet-sandbox",
+    "objectID": "index.html#rolling-your-own-model",
+    "href": "index.html#rolling-your-own-model",
     "title": "Analysis of Teaching",
-    "section": "Worksheet sandbox",
-    "text": "Worksheet sandbox\nData from the cleaning step are used to support the example output in the explore document.\nThe resulting data are also uploaded to google sheets and complementary analysis is done in the google sheet:\n\nSample instructor reports highlight the use of the google sheeet QUERY command to build summaries from the raw data.\nSample workload report offers examples of how computations from a sample workload model can be used to support QUERYs in a google sheet.\n\nThese were sample reports are intended to highlight the possible with examples. I did not conduct a full analysis."
+    "section": "Rolling your own model",
+    "text": "Rolling your own model\nThe resulting dataframe is available here for download as CSV.\nThe result dataframe is also uploaded to a google workbook and a sample analysis is conducted."
   },
   {
     "objectID": "index.html#persistent-data",
     "href": "index.html#persistent-data",
     "title": "Analysis of Teaching",
     "section": "Persistent data",
-    "text": "Persistent data\nThe analyses also expect that there are persistent data stored outside of the VCU report, data that are important for helping classify faculty and courses.\nInstructor data - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.\nInstructor notes - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.\nCourse notes - these data offer additional details about the courses. This table is optional to this analysis."
+    "text": "Persistent data\nThe banner report used to create this report does not contain all the necessary data to complete the analysis (e.g., instructor department).\nPersistent data are stored in a google sheet.\nInstructor data - these data provide instructor departments and instructor roles, and an instructor workload designation. This table is necessary for the analysis.\nInstructor notes - these data offer additional details about instructors. It is expected that these data might be incorporated into a subsequent workload report. This table is optional to this analysis.\nCourse notes - these data offer additional details about the courses. This table is optional to this analysis."
   },
   {
     "objectID": "40_workload.html",
@@ -46,7 +46,7 @@
     "href": "20_clean.html",
     "title": "Cleaning the data",
     "section": "",
-    "text": "This script describes the data and walks through a process of data cleaning.\nAt completion of this script all the individual semester data files will be combined into a single dataframe for analysis, and the dataframe will be refactored for cleaner analysis.\nTLDR: Here is a link to the cleaned dataframe. This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE)."
+    "text": "This script describes the data and walks through a process of data cleaning.\nAt completion of this script all the individual semester data files will be combined into a single dataframe for analysis, and the dataframe will be refactored for cleaner analysis.\nTLDR: Here is a link to the cleaned dataframe. This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).\nTLDR: Here is a link to the google sheet with the cleaned data loaded in the “source data” tab and other sheets referencing the source data."
   },
   {
     "objectID": "20_clean.html#data-sources",
