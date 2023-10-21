@@ -172,13 +172,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <ul class="collapse">
   <li><a href="#assign-base-workload-to-all-sections" id="toc-assign-base-workload-to-all-sections" class="nav-link" data-scroll-target="#assign-base-workload-to-all-sections">Assign BASE workload to all sections</a></li>
   <li><a href="#adjust-for-courses-taught-at-same-time-by-same-instructor" id="toc-adjust-for-courses-taught-at-same-time-by-same-instructor" class="nav-link" data-scroll-target="#adjust-for-courses-taught-at-same-time-by-same-instructor">Adjust for courses taught at same time by same instructor</a></li>
-  <li><a href="#distinguish-capstone-workloads" id="toc-distinguish-capstone-workloads" class="nav-link" data-scroll-target="#distinguish-capstone-workloads">Distinguish capstone workloads</a></li>
+  <li><a href="#adjust-for-capstone-workloads" id="toc-adjust-for-capstone-workloads" class="nav-link" data-scroll-target="#adjust-for-capstone-workloads">Adjust for capstone workloads</a></li>
   <li><a href="#distinguish-vip-workloads" id="toc-distinguish-vip-workloads" class="nav-link" data-scroll-target="#distinguish-vip-workloads">Distinguish VIP workloads</a></li>
   <li><a href="#distinguish-lab-workloads" id="toc-distinguish-lab-workloads" class="nav-link" data-scroll-target="#distinguish-lab-workloads">Distinguish LAB workloads</a></li>
   <li><a href="#distinguish-res-ind-and-fld" id="toc-distinguish-res-ind-and-fld" class="nav-link" data-scroll-target="#distinguish-res-ind-and-fld">Distinguish RES, IND and FLD</a></li>
   <li><a href="#distinguish-sem-workloads" id="toc-distinguish-sem-workloads" class="nav-link" data-scroll-target="#distinguish-sem-workloads">Distinguish SEM workloads</a></li>
   <li><a href="#adjust-for-large-lectures" id="toc-adjust-for-large-lectures" class="nav-link" data-scroll-target="#adjust-for-large-lectures">Adjust for large lectures</a></li>
-  <li><a href="#checks-and-verfications" id="toc-checks-and-verfications" class="nav-link" data-scroll-target="#checks-and-verfications">Checks and verfications</a></li>
+  <li><a href="#examples-checks-and-verifications" id="toc-examples-checks-and-verifications" class="nav-link" data-scroll-target="#examples-checks-and-verifications">Examples, checks and verifications</a></li>
   </ul></li>
   <li><a href="#store-the-dataframe" id="toc-store-the-dataframe" class="nav-link" data-scroll-target="#store-the-dataframe">Store the dataframe</a>
   <ul class="collapse">
@@ -212,6 +212,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <p>This script describes the data and walks through a process of data cleaning.</p>
 <p>At completion of this script all the individual semester data files will be combined into a single dataframe for analysis, and the dataframe will be refactored for cleaner analysis.</p>
+<p>TLDR: Here is a link to the <a href="stacked_df.csv">cleaned dataframe</a>. This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).</p>
 <section id="data-sources" class="level2">
 <h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
 <p>The files are named appropriately and stored in the <em>data</em> folder in this repository.</p>
@@ -229,70 +230,70 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">VCU-SOC-202110-FA2020.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202110-FA2020.xlsx">VCU-SOC-202110-FA2020.xlsx</a></td>
 <td style="text-align: left;">202110</td>
 <td style="text-align: left;">AY20-21</td>
 <td style="text-align: left;">FA2020</td>
 <td style="text-align: left;">Fall 2020</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VCU-SOC-202120-SP2021.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202120-SP2021.xlsx">VCU-SOC-202120-SP2021.xlsx</a></td>
 <td style="text-align: left;">202120</td>
 <td style="text-align: left;">AY20-21</td>
 <td style="text-align: left;">SP2021</td>
 <td style="text-align: left;">Spring 2021</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VCU-SOC-202130-SU2021.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202130-SU2021.xlsx">VCU-SOC-202130-SU2021.xlsx</a></td>
 <td style="text-align: left;">202130</td>
 <td style="text-align: left;">AY20-21</td>
 <td style="text-align: left;">SU2021</td>
 <td style="text-align: left;">Summer 2021</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VCU-SOC-202210-FA2021.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202210-FA2021.xlsx">VCU-SOC-202210-FA2021.xlsx</a></td>
 <td style="text-align: left;">202210</td>
 <td style="text-align: left;">AY21-22</td>
 <td style="text-align: left;">FA2021</td>
 <td style="text-align: left;">Fall 2021</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VCU-SOC-202220-SP2022.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202220-SP2022.xlsx">VCU-SOC-202220-SP2022.xlsx</a></td>
 <td style="text-align: left;">202220</td>
 <td style="text-align: left;">AY21-22</td>
 <td style="text-align: left;">SP2022</td>
 <td style="text-align: left;">Spring 2022</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VCU-SOC-202230-SU2022.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202230-SU2022.xlsx">VCU-SOC-202230-SU2022.xlsx</a></td>
 <td style="text-align: left;">202230</td>
 <td style="text-align: left;">AY21-22</td>
 <td style="text-align: left;">SU2022</td>
 <td style="text-align: left;">Summer 2022</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VCU-SOC-202310-FA2022.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202310-FA2022.xlsx">VCU-SOC-202310-FA2022.xlsx</a></td>
 <td style="text-align: left;">202310</td>
 <td style="text-align: left;">AY22-23</td>
 <td style="text-align: left;">FA2022</td>
 <td style="text-align: left;">Fall 2022</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VCU-SOC-202320-SP2023.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202320-SP2023.xlsx">VCU-SOC-202320-SP2023.xlsx</a></td>
 <td style="text-align: left;">202320</td>
 <td style="text-align: left;">AY22-23</td>
 <td style="text-align: left;">SP2023</td>
 <td style="text-align: left;">Spring 2023</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">VCU-SOC-202330-SU2023.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202330-SU2023.xlsx">VCU-SOC-202330-SU2023.xlsx</a></td>
 <td style="text-align: left;">202330</td>
 <td style="text-align: left;">AY22-23</td>
 <td style="text-align: left;">SU2023</td>
 <td style="text-align: left;">Summer 2023</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">VCU-SOC-202410-FA2023.xlsx</td>
+<td style="text-align: left;"><a href="data/VCU-SOC-202410-FA2023.xlsx">VCU-SOC-202410-FA2023.xlsx</a></td>
 <td style="text-align: left;">202410</td>
 <td style="text-align: left;">AY23-24</td>
 <td style="text-align: left;">FA2023</td>
@@ -352,6 +353,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="fix-known-errors">Fix known errors</h3>
 <p>The data in Banner doesn’t always reflect reality. This step corrects known errors in the data.</p>
 <p>Note that the section data are stored one row per term-crn-meeting period.</p>
+<p>The purpose of this section is to demonstrate an auditable process for documenting changes to the source data.</p>
+<p>There is nothing magic about the changes below. As I shared the data with others, they found that the banner data did not reflect reality. For this workload analysis we want the data to reflect reality, so we fix it.</p>
+<p>Additional fixes are expected to be added as new eyes look at their data.</p>
 <div class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Spring 2023: CMSC475 John Leonard taught for David Shepherd</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>fix(<span class="dv">1</span>,<span class="st">'Swap Leonard for Shepherd'</span>,{<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'CRN'</span>:<span class="st">'43471'</span>},{<span class="st">'PRIMARY INSTRUCTOR FIRST NAME'</span>:<span class="st">'John'</span>,<span class="st">'PRIMARY INSTRUCTOR LAST NAME'</span>:<span class="st">'Leonard'</span>})</span>
@@ -373,7 +377,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reshape-the-data" class="level3">
 <h3 class="anchored" data-anchor-id="reshape-the-data">Reshape the data</h3>
-<p>The current dataframe <em>sections_df</em> contains one record per term-crn-meeting period tuple. Within each tuple there can be up to 2 instructors. We need to reshape the data with the instructors in a single column.</p>
+<p>The current dataframe <a href="sections_df.csv">sections_df</a> contains one record per term-crn-meeting period tuple. Within each tuple there can be up to 2 instructors. We need to reshape the data with the instructors in a single column.</p>
 <p>While we’re here we can combine instructor first and last name, and drop verbose columns.</p>
 <div class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> sections_df.columns</span>
@@ -399,167 +403,185 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="clean-up-rows" class="level3">
 <h3 class="anchored" data-anchor-id="clean-up-rows">Clean up rows</h3>
+<p>The process above introduces records with missing instructor_2. This code removes records missing instructor_2.</p>
 <div class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows with empty instructor 1.  Keep rows with empty instructor 1.</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[ <span class="op">~</span> ((stacked_df[<span class="st">'instructor source'</span>]<span class="op">==</span><span class="st">'instructor_2'</span>) <span class="op">&amp;</span> (stacked_df[<span class="st">'instructor'</span>]<span class="op">==</span><span class="st">''</span>)) ]</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any missing instructors with note</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>]),<span class="st">"instructor"</span>] <span class="op">=</span> stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'COURSE'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'TERM'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'CRN'</span>]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co"># drop rows with zero enrollments</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data frame so it looks pretty in the output file.</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df.sort_values([<span class="st">'TERM'</span>,<span class="st">'DEPT'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>,<span class="st">'instructor source'</span>,<span class="st">'instructor'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[ <span class="op">~</span> ((stacked_df[<span class="st">'instructor source'</span>]<span class="op">==</span><span class="st">'instructor_2'</span>) <span class="op">&amp;</span> (stacked_df[<span class="st">'instructor'</span>]<span class="op">==</span><span class="st">''</span>)) ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>In some summer courses an instructor was not listed in the data. An instructor name is generated using the course and semester. This can be cleaned later.</p>
+<div class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any missing instructors with note</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>]),<span class="st">"instructor"</span>] <span class="op">=</span> stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'COURSE'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'TERM'</span>]<span class="op">+</span><span class="st">' '</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor"</span>].isin([<span class="st">''</span>])][<span class="st">'CRN'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Some sections, for example RES sections or cancelled sections have zero enrollments. These are removed, keeping only sections with positive enrollments.</p>
+<div class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop rows with zero enrollments</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>While not necessary, the resulting dataframe can be sorted so that it looks pretty when saved to a CSV.</p>
+<div class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data frame so it looks pretty in the output file.</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df.sort_values([<span class="st">'TERM'</span>,<span class="st">'DEPT'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>,<span class="st">'instructor source'</span>,<span class="st">'instructor'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="add-additional-columns" class="level3">
 <h3 class="anchored" data-anchor-id="add-additional-columns">Add additional columns</h3>
 <p>We may need the subject and the course number in the workload model analysis.</p>
-<div class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_subject"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_number"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[<span class="dv">4</span>:]</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of instructors sharing a common CRN.</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"instructor_cnt"</span>] <span class="op">=</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>) <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'instructor'</span>])[<span class="st">'instructor'</span>].transform(<span class="st">'count'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_subject"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_number"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[<span class="dv">4</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For each section, add a new field with the count of instructors sharing this section. This helps with workload and other computations later.</p>
+<div class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of instructors sharing a common CRN.</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"instructor_cnt"</span>] <span class="op">=</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>) <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'instructor'</span>])[<span class="st">'instructor'</span>].transform(<span class="st">'count'</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="merge-persistent-instructor-data" class="level3">
 <h3 class="anchored" data-anchor-id="merge-persistent-instructor-data">Merge persistent instructor data</h3>
-<p>We’re storing some of the results in google sheets. Further, we’re using google sheets to store persistent data not found in the VCU course schedule report.</p>
-<div class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define scope</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> [<span class="st">'https://spreadsheets.google.com/feeds'</span>, <span class="st">'https://www.googleapis.com/auth/drive'</span>]</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create credentials object</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>credential_file <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">"~"</span>), <span class="st">".gsecrets"</span>, <span class="st">"gsheets-credentials.json"</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.isfile( credential_file ):</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Missing credential file:"</span>,credential_file)</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  sys.exit()</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># authorize the client</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>creds <span class="op">=</span> ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> gspread.authorize(creds)</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor data"</span></span>
-<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>instructor_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
-<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_df,left_on<span class="op">=</span><span class="st">'instructor'</span>,right_on<span class="op">=</span><span class="st">'instructor'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span>
-<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor notes"</span></span>
-<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>instructor_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
-<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_notes_df,left_on<span class="op">=</span><span class="st">'instructor'</span>,right_on<span class="op">=</span><span class="st">'instructor'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The Banner report that we’re using for this analysis does not include all the necessary data for a proper analysis. The report infers the offering department of the course (e.g., ENGR497 or CMSC475), but not the home department of the instructor. For example, capstone courses are coded ad ENGR497, but the record won’t include the home department of the instructor, making it difficult to roll up all the courses by home department of the instructor.</p>
+<p>We store persistent instructor and course data in a separate google sheet. As these persistent data are changed or corrected, this analysis should be regenerated to use these amended data.</p>
+<p>The code below merges the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116">persistent instructor data</a> from the google sheet into the working dataframe.</p>
+<div class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define scope</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> [<span class="st">'https://spreadsheets.google.com/feeds'</span>, <span class="st">'https://www.googleapis.com/auth/drive'</span>]</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create credentials object</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>credential_file <span class="op">=</span> os.path.join(os.path.expanduser(<span class="st">"~"</span>), <span class="st">".gsecrets"</span>, <span class="st">"gsheets-credentials.json"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="kw">not</span> os.path.isfile( credential_file ):</span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="bu">print</span>(<span class="st">"Missing credential file:"</span>,credential_file)</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  sys.exit()</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="co"># authorize the client</span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>creds <span class="op">=</span> ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)</span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> gspread.authorize(creds)</span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor data"</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>instructor_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_df,left_on<span class="op">=</span><span class="st">'instructor'</span>,right_on<span class="op">=</span><span class="st">'instructor'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span>
+<span id="cb11-20"><a href="#cb11-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-21"><a href="#cb11-21" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor notes"</span></span>
+<span id="cb11-22"><a href="#cb11-22" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb11-23"><a href="#cb11-23" aria-hidden="true" tabindex="-1"></a>instructor_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb11-24"><a href="#cb11-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-25"><a href="#cb11-25" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_notes_df,left_on<span class="op">=</span><span class="st">'instructor'</span>,right_on<span class="op">=</span><span class="st">'instructor'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="merge-persistent-course-data" class="level3">
 <h3 class="anchored" data-anchor-id="merge-persistent-course-data">Merge persistent course data</h3>
-<div class="cell" data-execution_count="10">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw" from above!</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Course notes"</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>course_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,course_notes_df,left_on<span class="op">=</span><span class="st">'COURSE'</span>,right_on<span class="op">=</span><span class="st">'crse'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=498592034">Persistent course data</a> is also stored in the google sheet and merged with the working dataframe.</p>
+<div class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw" from above!</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Course notes"</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>course_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,course_notes_df,left_on<span class="op">=</span><span class="st">'COURSE'</span>,right_on<span class="op">=</span><span class="st">'crse'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="identify-shared-rooms" class="level3">
 <h3 class="anchored" data-anchor-id="identify-shared-rooms">Identify shared rooms</h3>
-<p>Many larger courses comprise of multiple CRN sharing a single classroom period. We need to identify unique combinations of days of week and rooms and assign store these for later aggregation.</p>
-<div class="cell" data-execution_count="11">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>time_cols <span class="op">=</span> [<span class="st">'MON-IND'</span>,<span class="st">'TUE-IND'</span>,<span class="st">'WED-IND'</span>,<span class="st">'THU-IND'</span>,<span class="st">'FRI-IND'</span>,<span class="st">'SAT-IND'</span>,<span class="st">'SUN-IND'</span>,<span class="st">'BEGIN TIME'</span>,<span class="st">'END TIME'</span>]</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>room_cols <span class="op">=</span> [<span class="st">'BUILDING'</span>,<span class="st">'ROOM'</span>]</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"time_code"</span>] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> time_cols:</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">"time_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"time_code"</span>] <span class="op">+</span> stacked_df[col].astype(<span class="bu">str</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'time_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'time_code'</span>])[<span class="dv">0</span>]</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"room_code"</span>] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> room_cols:</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">"room_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"room_code"</span>] <span class="op">+</span> stacked_df[col].astype(<span class="bu">str</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'room_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'room_code'</span>])[<span class="dv">0</span>]</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"meeting_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"room_code"</span>] <span class="op">+</span> stacked_df[<span class="st">"time_code"</span>]</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'meeting_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'meeting_code'</span>])[<span class="dv">0</span>]</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>day_cols <span class="op">=</span> [<span class="st">'MON-IND'</span>,<span class="st">'TUE-IND'</span>,<span class="st">'WED-IND'</span>,<span class="st">'THU-IND'</span>,<span class="st">'FRI-IND'</span>,<span class="st">'SAT-IND'</span>,<span class="st">'SUN-IND'</span>]</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"mtgs_per_wk"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> day_cols:</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">'mtgs_per_wk'</span>] <span class="op">=</span> stacked_df[<span class="st">"mtgs_per_wk"</span>] <span class="op">+</span> (stacked_df[col] <span class="op">!=</span> <span class="st">"."</span>).astype(<span class="bu">int</span>)</span>
-<span id="cb9-24"><a href="#cb9-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"BEGIN TIME"</span>] <span class="op">=</span> stacked_df[<span class="st">"BEGIN TIME"</span>].replace(<span class="st">"."</span>,<span class="st">"0"</span>)</span>
-<span id="cb9-26"><a href="#cb9-26" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"END TIME"</span>] <span class="op">=</span> stacked_df[<span class="st">"END TIME"</span>].replace(<span class="st">"."</span>,<span class="st">"0"</span>)</span>
-<span id="cb9-27"><a href="#cb9-27" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'mtg_length'</span>] <span class="op">=</span> stacked_df[<span class="st">"END TIME"</span>].astype(<span class="bu">int</span>) <span class="op">-</span> stacked_df[<span class="st">"BEGIN TIME"</span>].astype(<span class="bu">int</span>)</span>
-<span id="cb9-28"><a href="#cb9-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-29"><a href="#cb9-29" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'shared_mtgs_cnt'</span>] <span class="op">=</span>  stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_id'</span>])[<span class="st">'time_id'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb9-30"><a href="#cb9-30" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'time_code'</span>].isin([<span class="st">'.........'</span>])),<span class="st">'shared_mtgs_cnt'</span>] <span class="op">=</span> <span class="dv">1</span></span>
-<span id="cb9-31"><a href="#cb9-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-32"><a href="#cb9-32" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'mtgs_per_crn'</span>] <span class="op">=</span>  stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'CRN'</span>,<span class="st">'instructor'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Some CRN share the same classroom and instructor. Examples might include an UG and GR section sharing the same lecture, or multiple LEC/LAB combos sharing the same LEC with different LAB rooms and time.</p>
+<p>To properly identify shared lectures we need to identify unique combinations of days of week and rooms and assign store these values for later aggregation.</p>
+<div class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>time_cols <span class="op">=</span> [<span class="st">'MON-IND'</span>,<span class="st">'TUE-IND'</span>,<span class="st">'WED-IND'</span>,<span class="st">'THU-IND'</span>,<span class="st">'FRI-IND'</span>,<span class="st">'SAT-IND'</span>,<span class="st">'SUN-IND'</span>,<span class="st">'BEGIN TIME'</span>,<span class="st">'END TIME'</span>]</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>room_cols <span class="op">=</span> [<span class="st">'BUILDING'</span>,<span class="st">'ROOM'</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"time_code"</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> time_cols:</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">"time_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"time_code"</span>] <span class="op">+</span> stacked_df[col].astype(<span class="bu">str</span>)</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'time_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'time_code'</span>])[<span class="dv">0</span>]</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"room_code"</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> room_cols:</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">"room_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"room_code"</span>] <span class="op">+</span> stacked_df[col].astype(<span class="bu">str</span>)</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'room_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'room_code'</span>])[<span class="dv">0</span>]</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"meeting_code"</span>] <span class="op">=</span> stacked_df[<span class="st">"room_code"</span>] <span class="op">+</span> stacked_df[<span class="st">"time_code"</span>]</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'meeting_id'</span>] <span class="op">=</span> pd.factorize(stacked_df[<span class="st">'meeting_code'</span>])[<span class="dv">0</span>]</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-19"><a href="#cb13-19" aria-hidden="true" tabindex="-1"></a>day_cols <span class="op">=</span> [<span class="st">'MON-IND'</span>,<span class="st">'TUE-IND'</span>,<span class="st">'WED-IND'</span>,<span class="st">'THU-IND'</span>,<span class="st">'FRI-IND'</span>,<span class="st">'SAT-IND'</span>,<span class="st">'SUN-IND'</span>]</span>
+<span id="cb13-20"><a href="#cb13-20" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"mtgs_per_wk"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb13-21"><a href="#cb13-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> day_cols:</span>
+<span id="cb13-22"><a href="#cb13-22" aria-hidden="true" tabindex="-1"></a>    stacked_df[col] <span class="op">=</span> stacked_df[col].fillna(<span class="st">'.'</span>)</span>
+<span id="cb13-23"><a href="#cb13-23" aria-hidden="true" tabindex="-1"></a>    stacked_df[<span class="st">'mtgs_per_wk'</span>] <span class="op">=</span> stacked_df[<span class="st">"mtgs_per_wk"</span>] <span class="op">+</span> (stacked_df[col] <span class="op">!=</span> <span class="st">"."</span>).astype(<span class="bu">int</span>)</span>
+<span id="cb13-24"><a href="#cb13-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-25"><a href="#cb13-25" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"BEGIN TIME"</span>] <span class="op">=</span> stacked_df[<span class="st">"BEGIN TIME"</span>].replace(<span class="st">"."</span>,<span class="st">"0"</span>)</span>
+<span id="cb13-26"><a href="#cb13-26" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"END TIME"</span>] <span class="op">=</span> stacked_df[<span class="st">"END TIME"</span>].replace(<span class="st">"."</span>,<span class="st">"0"</span>)</span>
+<span id="cb13-27"><a href="#cb13-27" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'mtg_length'</span>] <span class="op">=</span> stacked_df[<span class="st">"END TIME"</span>].astype(<span class="bu">int</span>) <span class="op">-</span> stacked_df[<span class="st">"BEGIN TIME"</span>].astype(<span class="bu">int</span>)</span>
+<span id="cb13-28"><a href="#cb13-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-29"><a href="#cb13-29" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'shared_mtgs_cnt'</span>] <span class="op">=</span>  stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_id'</span>])[<span class="st">'time_id'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb13-30"><a href="#cb13-30" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'time_code'</span>].isin([<span class="st">'.........'</span>])),<span class="st">'shared_mtgs_cnt'</span>] <span class="op">=</span> <span class="dv">1</span></span>
+<span id="cb13-31"><a href="#cb13-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-32"><a href="#cb13-32" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'mtgs_per_crn'</span>] <span class="op">=</span>  stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'CRN'</span>,<span class="st">'instructor'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="find-all-courses-taught-by-same-instructor-at-the-same-time" class="level3">
 <h3 class="anchored" data-anchor-id="find-all-courses-taught-by-same-instructor-at-the-same-time">Find all courses taught by same instructor at the same time</h3>
-<div class="cell" data-execution_count="12">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> concat_courses(group):</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">','</span>.join(group[<span class="st">'COURSE'</span>])</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> pd.DataFrame()<span class="op">;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>keys <span class="op">=</span> [<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"concat"</span>] <span class="op">=</span> stacked_df.groupby(keys).<span class="bu">apply</span>(concat_courses)</span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"list"</span>] <span class="op">=</span> temp_df[<span class="st">"concat"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="bu">list</span>(<span class="bu">set</span>(x.split(<span class="st">","</span>))) )</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"combined_count"</span>] <span class="op">=</span> temp_df[<span class="st">"list"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="bu">len</span>(x) )</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"combined_sections"</span>] <span class="op">=</span> temp_df[<span class="st">"list"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="st">","</span>.join(x) )</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df.reset_index()</span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df[ (temp_df[<span class="st">'time_code'</span>]<span class="op">!=</span><span class="st">'.........'</span>)<span class="op">&amp;</span>(temp_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>)]</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df[[<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>]]</span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge(stacked_df,temp_df,left_on<span class="op">=</span>keys, right_on<span class="op">=</span>keys,how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This code builds a list of separate courses taught by an instructor at the same time. This code is similar to the code above with the enhancement that it produces an explicit list of courses that share the same room and time.</p>
+<div class="cell" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> concat_courses(group):</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">','</span>.join(group[<span class="st">'COURSE'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> pd.DataFrame()<span class="op">;</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>keys <span class="op">=</span> [<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>]</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"concat"</span>] <span class="op">=</span> stacked_df.groupby(keys).<span class="bu">apply</span>(concat_courses)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"list"</span>] <span class="op">=</span> temp_df[<span class="st">"concat"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="bu">list</span>(<span class="bu">set</span>(x.split(<span class="st">","</span>))) )</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"combined_count"</span>] <span class="op">=</span> temp_df[<span class="st">"list"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="bu">len</span>(x) )</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>temp_df[<span class="st">"combined_sections"</span>] <span class="op">=</span> temp_df[<span class="st">"list"</span>].<span class="bu">apply</span>( <span class="kw">lambda</span> x :  <span class="st">","</span>.join(x) )</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df.reset_index()</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df[ (temp_df[<span class="st">'time_code'</span>]<span class="op">!=</span><span class="st">'.........'</span>)<span class="op">&amp;</span>(temp_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>)]</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>temp_df <span class="op">=</span> temp_df[[<span class="st">'TERM'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>]]</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge(stacked_df,temp_df,left_on<span class="op">=</span>keys, right_on<span class="op">=</span>keys,how<span class="op">=</span><span class="st">"left"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="cgep-convert-to-ind-rather-than-lec-from-workload-perspective" class="level3">
 <h3 class="anchored" data-anchor-id="cgep-convert-to-ind-rather-than-lec-from-workload-perspective">CGEP: convert to IND rather than LEC from workload perspective</h3>
-<div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to set the 'TYPE' column based on a string search in 'TITLE'</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_type_based_on_search(row):</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> row[<span class="st">'TITLE'</span>]</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    newtype <span class="op">=</span> row[<span class="st">'TYPE'</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'CGEP'</span> <span class="kw">in</span> title:</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>        newtype <span class="op">=</span> <span class="st">'IND'</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> newtype</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the entire DataFrame</span></span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'TYPE'</span>] <span class="op">=</span> stacked_df.<span class="bu">apply</span>(set_type_based_on_search, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://www.cardinaleducation.org/">Cardinal Education</a> (formally known as the <a href="https://cgep.vcu.edu/">Commonwealth Graduate Engineering Program (CGEP)</a>) is a collaborative effort among six participating universities and institutions throughout the Commonwealth of Virginia. It utilizes virtual learning classrooms and education technology in synchronous and asynchronous formats to provide working engineers the opportunity to earn a master’s degree in engineering from any of the six participating universities/institutions.</p>
+<p>CGEP courses hosted at VCU are coded as LEC in Banner and must be associated with a VCU instructor. This ensures that the student receives proper credit towards graduation. However, from a workload perspective, these courses do not require local instructor preparation or teaching effort.</p>
+<p>This section recodes CGEP courses to independent study (IND).</p>
+<div class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to set the 'TYPE' column based on a string search in 'TITLE'</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_type_based_on_search(row):</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> row[<span class="st">'TITLE'</span>]</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    newtype <span class="op">=</span> row[<span class="st">'TYPE'</span>]</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="st">'CGEP'</span> <span class="kw">in</span> title:</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>        newtype <span class="op">=</span> <span class="st">'IND'</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> newtype</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Apply the function to the entire DataFrame</span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'TYPE'</span>] <span class="op">=</span> stacked_df.<span class="bu">apply</span>(set_type_based_on_search, axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="add-a-bunch-of-spare-columns" class="level3">
 <h3 class="anchored" data-anchor-id="add-a-bunch-of-spare-columns">Add a bunch of spare columns</h3>
 <p>It’s getting old adding new columns, then having to rework the formuluas in the rather brittle google sheet. I’m adding a few spare columns here to be used as necessary. This is the best place to add the new columns, just prior to the calculation of the aggregate measures and workload attributes.</p>
-<div class="cell" data-execution_count="14">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_1"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_2"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_3"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_4"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_5"</span>] <span class="op">=</span> <span class="dv">0</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_6"</span>] <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"capstone_cnt"</span>] <span class="op">=</span> <span class="dv">0</span>  <span class="co"># used downstream to provide an actual capstone count rather than an estimated count of capstone sections.</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_2"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_3"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_4"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_5"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_6"</span>] <span class="op">=</span> <span class="dv">0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Note that several spare columns have been added to persistent google sheets (instructor and course).</p>
+<p>Note that additional spare columns are added to persistent instructor and course google sheets.</p>
 </section>
 <section id="compute-appropriate-aggregate-measures" class="level3">
 <h3 class="anchored" data-anchor-id="compute-appropriate-aggregate-measures">Compute appropriate aggregate measures</h3>
 <p>These measures are used in later calculations for numbers of courses, sections, instructors, etc.</p>
-<div class="cell" data-execution_count="15">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create various aggregate columns</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>])[<span class="st">'TERM'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>])[<span class="st">'COURSE'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">=</span> stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>] <span class="op">*</span> stacked_df[<span class="st">'sum_term_crse_crn'</span>]</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_hours'</span>] <span class="op">=</span>  stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">*</span> stacked_df[<span class="st">'MAX CREDITS'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>These computations are normalized to the appropriate group so that they sum to the correct values when aggregated at the specified group level.</p>
+<div class="cell" data-execution_count="19">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create various aggregate columns</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>])[<span class="st">'TERM'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>])[<span class="st">'COURSE'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">=</span> stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>] <span class="op">*</span> stacked_df[<span class="st">'sum_term_crse_crn'</span>]</span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_crn_hours'</span>] <span class="op">=</span>  stacked_df[<span class="st">'sum_term_crse_crn_students'</span>] <span class="op">*</span> stacked_df[<span class="st">'MAX CREDITS'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="placeholder-workload-model-assignments" class="level3">
@@ -571,25 +593,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><em>wrkld_</em>_type* containing the recoded course type. For example, some LEC sections that are actually labs are coded labs. Capstones are also highlighted.</li>
 <li><em>wrkld_note</em> containing a note about the specific workload assignment.</li>
 </ul>
-<div class="cell" data-execution_count="16">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_a_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_a'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_a_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_b_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_b'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_b_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_c_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_c'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_c_note'</span>] <span class="op">=</span> <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_a_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_a'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_a_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_b_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_b'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_b_note'</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_c_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_c'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_c_note'</span>] <span class="op">=</span> <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="sample-workload-model" class="level2">
 <h2 class="anchored" data-anchor-id="sample-workload-model">Sample workload model</h2>
 <p>This is the sample workload model. The assigned faculty workoad will be stored in the <em>sum_term_crse_wrklod_sample</em> field. Here is the model:</p>
+<div class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>model_sample <span class="op">=</span> {</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'labs_per_lecture'</span>:<span class="fl">3.0</span>,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'vips_per_lecture'</span>:<span class="fl">3.0</span>,</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'capstones_per_lecture'</span>: <span class="fl">3.0</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">'students_per_capstone'</span>: <span class="fl">4.0</span>,</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">'seminars_per_lecture'</span>: <span class="fl">1.0</span>,</span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">'res_ind_fld_per_lecture'</span>: <span class="fl">0.0</span>,</span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">'large_classes'</span>: [ [<span class="dv">80</span>,<span class="fl">1.5</span>],[<span class="dv">160</span>,<span class="fl">2.0</span>],[<span class="dv">240</span>,<span class="fl">2.5</span>] ]</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 <ol type="1">
 <li>Each section/CRN is worth a full teaching credit.</li>
 <li>Research, indepedent study and coop/intern sections receive zero teaching credit in this workload model. Instructors receive <em>credit</em> through their salary if they’re staff. Research active faculty get reduced teaching loads.</li>
@@ -599,126 +632,178 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <section id="assign-base-workload-to-all-sections" class="level3">
 <h3 class="anchored" data-anchor-id="assign-base-workload-to-all-sections">Assign BASE workload to all sections</h3>
-<p>This base workload assignment will be overwritten as various scenarios are explored.</p>
-<div class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign standard workload : One teaching course shared across multiple instructors</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"BASE: [wrkld] "</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"BASE: [wrkld] / (2 co-teaching) "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Assign base workload to all records. All sections independent of section type start with a base workload of 1.</p>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign standard workload : One teaching course shared across multiple instructors</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Adjust base workload for courses shared by multiple instructors.</p>
+<p>In some cases, a shared instructor was included in Banner so that the shared instructor could monitor the course in Canvas only, without offering additional teaching effort.</p>
+<p>In these cases, I recommend adding a “FIX” (listed above) to remove the secondary instructor from the workload data, ensuring that they don’t get credit for a class they aren’t actually co-teaching.</p>
+<div class="cell" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"BASE: [wrkld] "</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"BASE: [wrkld] / (2 co-teaching) "</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="adjust-for-courses-taught-at-same-time-by-same-instructor" class="level3">
 <h3 class="anchored" data-anchor-id="adjust-for-courses-taught-at-same-time-by-same-instructor">Adjust for courses taught at same time by same instructor</h3>
-<div class="cell" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Adjust for combined lectures (this code is deprecated for a smarter logi)</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span>(<span class="dv">0</span>):</span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'combined_count'</span>] </span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">+</span> <span class="st">": combined("</span><span class="op">+</span>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'combined_count'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'combined_sections'</span>]<span class="op">+</span><span class="st">")"</span></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust for CRN sharing same teaching time</span></span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'shared_mtgs_cnt'</span>] </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> (</span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>  stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">+</span> <span class="st">"/ "</span> <span class="op">+</span> </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'shared_mtgs_cnt'</span>].astype(<span class="bu">str</span>) <span class="op">+</span><span class="st">" CRN at same time"</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="25">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust workload for CRN sharing same teaching time</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'shared_mtgs_cnt'</span>] </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Update note to reflect adjustment</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> (</span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">+</span> <span class="st">"/ "</span> <span class="op">+</span> </span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>  stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'shared_mtgs_cnt'</span>].astype(<span class="bu">str</span>) <span class="op">+</span><span class="st">" CRN at same time"</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="distinguish-capstone-workloads" class="level3">
-<h3 class="anchored" data-anchor-id="distinguish-capstone-workloads">Distinguish capstone workloads</h3>
-<div class="cell" data-execution_count="19">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign CAP workload</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>capstones_per_lecture <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>students_per_capstone <span class="op">=</span> <span class="fl">4.0</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>senior_design_courses <span class="op">=</span> [<span class="st">'CLSC403'</span>,<span class="st">'EGRB401'</span>,<span class="st">'EGRB402'</span>,<span class="st">'CMSC441'</span>,<span class="st">'CMSC442'</span>,<span class="st">'CMSC451'</span>,<span class="st">'CMSC452'</span>,<span class="st">'EGMN402'</span>,<span class="st">'EGMN403'</span>,<span class="st">'ENGR402'</span>,<span class="st">'ENGR403'</span>,<span class="st">'EGRE404'</span>,<span class="st">'EGRE405'</span>]</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> course <span class="kw">in</span> senior_design_courses:</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>   stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'TYPE'</span>]<span class="op">==</span><span class="st">'LAB'</span>),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">'CAP'</span></span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>   stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f'RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>capstones_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for every </span><span class="sc">{</span>students_per_capstone<span class="sc">}</span><span class="ss"> students in CAP'</span></span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>   stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> (</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>     stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'sum_term_crse_crn'</span>] <span class="op">/</span> capstones_per_lecture <span class="op">*</span> ( stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'ACTUAL ENROLLMENT'</span>].astype(<span class="bu">int</span>) <span class="op">/</span> students_per_capstone) )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="adjust-for-capstone-workloads" class="level3">
+<h3 class="anchored" data-anchor-id="adjust-for-capstone-workloads">Adjust for capstone workloads</h3>
+<p>Capstone / senior design courses are coded differently in each department within the college. Further, some of these course numbers change over time (across semesters).</p>
+<p>A list of capstone courses was assembled manually and then applied to convert the capstone sections to CAP.</p>
+<p>This code is applied in two steps with an opportunity to introduce adjustments to the estimate of capstones.</p>
+<p>In this sample workload model, estimates of the number of capstones are rounded up (CEIL) to the next highest integer number of capstones.</p>
+<div class="cell" data-execution_count="26">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign CAP workload</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>capstones_per_lecture <span class="op">=</span> model_sample[<span class="st">'capstones_per_lecture'</span>]</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>students_per_capstone <span class="op">=</span> model_sample[<span class="st">'students_per_capstone'</span>]</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>senior_design_courses <span class="op">=</span> [<span class="st">'CLSC403'</span>,<span class="st">'EGRB401'</span>,<span class="st">'EGRB402'</span>,<span class="st">'CMSC441'</span>,<span class="st">'CMSC442'</span>,<span class="st">'CMSC451'</span>,<span class="st">'CMSC452'</span>,<span class="st">'EGMN402'</span>,<span class="st">'EGMN403'</span>,<span class="st">'ENGR402'</span>,<span class="st">'ENGR403'</span>,<span class="st">'EGRE404'</span>,<span class="st">'EGRE405'</span>]</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> course <span class="kw">in</span> senior_design_courses:</span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Set section type</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'TYPE'</span>]<span class="op">==</span><span class="st">'LAB'</span>),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">'CAP'</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Estimate number of capstone sections using load of "students_per_capstone". Round up or down.</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This code was added after the initial code build, so we're storing the capstone_cnt in one of the spares we created above.</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>] <span class="op">=</span> ( <span class="fl">1.0</span><span class="op">*</span> stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'ACTUAL ENROLLMENT'</span>].astype(<span class="bu">float</span>) <span class="op">/</span> students_per_capstone)</span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># apply CEIL function</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>].<span class="bu">apply</span>( np.ceil )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>C:\Users\jdleonard\AppData\Local\Temp\ipykernel_1992\2572994087.py:13: FutureWarning:
+
+Setting an item of incompatible dtype is deprecated and will raise in a future error of pandas. Value '[11.25  1.25 12.75  1.5   9.25  3.   11.25]' has dtype incompatible with int64, please explicitly cast to a compatible dtype first.
+</code></pre>
+</div>
+</div>
+<p>Now, apply any necessary fixes.</p>
+<div class="cell" data-execution_count="27">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co">## apply any fixes to number of capstone sections. Use TERM,CRN as keys</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, actually compute the workload based on the capstone_cnt.</p>
+<div class="cell" data-execution_count="28">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> course <span class="kw">in</span> senior_design_courses:</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Using the capstone count above, calculate the capstone workload</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> (</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>     stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'sum_term_crse_crn'</span>] <span class="op">/</span> capstones_per_lecture <span class="op">*</span> ( stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>] ) )</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Update note to show adjustments</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>capstones_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for every </span><span class="sc">{</span>students_per_capstone<span class="sc">}</span><span class="ss"> students in CAP (capstones: </span><span class="sc">{</span>stacked_df<span class="sc">.</span>loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>]<span class="sc">}</span><span class="ss">)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="distinguish-vip-workloads" class="level3">
 <h3 class="anchored" data-anchor-id="distinguish-vip-workloads">Distinguish VIP workloads</h3>
-<div class="cell" data-execution_count="20">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign VIP workload</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>vips_per_lecture <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'course_number'</span>].isin([<span class="st">'497'</span>]),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">"VIP"</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>vips_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for VIP"</span></span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]))<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>vips_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for VIP (co-teaching)"</span></span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> vips_per_lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><a href="https://vip.vcu.edu/">Vertically Integrated Programs (VIP)</a> provide undergraduate students the opportunity to participate in course-based, multiyear, multidisciplinary, team-based projects under the guidance of faculty and graduate students. These projects are in the faculty areas of expertise, with the main criterion for participation being that of mutual interest.</p>
+<p>Managing a VIP requires effort on the part of the faculty, yet at a lower rate than a standard class.</p>
+<div class="cell" data-execution_count="29">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign VIP workload</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>vips_per_lecture <span class="op">=</span> model_sample[<span class="st">'vips_per_lecture'</span>]</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'course_number'</span>].isin([<span class="st">'497'</span>]),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">"VIP"</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>vips_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for VIP"</span></span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]))<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>vips_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for VIP (co-teaching)"</span></span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'VIP'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> vips_per_lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="distinguish-lab-workloads" class="level3">
 <h3 class="anchored" data-anchor-id="distinguish-lab-workloads">Distinguish LAB workloads</h3>
-<div class="cell" data-execution_count="21">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign LAB workload</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>labs_per_lecture <span class="op">=</span> <span class="fl">3.0</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="co">#stacked_df.loc[(stacked_df['MAX CREDITS']==4)&amp;(stacked_df['wrkld_sample_type']=='LEC')&amp;(stacked_df['mtgs_per_wk']==1&amp;(! stacked_df['course_number'].isin(['291','391','491','591','691','791'])),'wrkld_sample_type'] = 'LAB'</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">'LAB'</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>labs_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for LAB"</span></span>
-<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> labs_per_lecture</span>
-<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a><span class="co">#stacked_df.loc[(stacked_df['MAX CREDITS']==4)&amp;(stacked_df['wrkld_sample_type']=='LAB')&amp;(stacked_df['mtgs_per_wk']==1),'wrkld_sample_note'] = stacked_df.loc[(stacked_df['MAX CREDITS']==4)&amp;(stacked_df['wrkld_sample_type']=='LAB')&amp;(stacked_df['mtgs_per_wk']==1),'wrkld_sample_note'] + " (LAB: 4-credit rule)"</span></span>
-<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LAB'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LAB'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">+</span> <span class="st">" (LAB: 1 mtg per wk rule)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Laboratory sections (LAB) are an important part of an engineering and computer science curriculum.</p>
+<p>LAB sections require effort on the part of the faculty member, but at a reduced rate.</p>
+<p>Identifying lab sections is tricky. The College often codes lab sections differently across departments. Some are coded properly as LAB sections.</p>
+<p>In other cases, LAB sections are coded as LEC because they share the same CRN as their owner lecture. To capture these cases a special logic is introduced. If a section is taught once per week (e.g., M or W or TH) and the CRN has more than one meeting period, then the section with one meeting period is designated a LAB section.</p>
+<div class="cell" data-execution_count="30">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign LAB workload</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>labs_per_lecture <span class="op">=</span> model_sample[<span class="st">'labs_per_lecture'</span>]</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign LAB sections</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> <span class="st">'LAB'</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a note for all LAB sections</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld]=</span><span class="sc">{</span>(<span class="fl">1.0</span><span class="op">/</span>labs_per_lecture)<span class="sc">:0.2f}</span><span class="ss"> for LAB"</span></span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign workload</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'LAB'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> labs_per_lecture</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a special note for LAB sections that used the special logic to be identified.</span></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LAB'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'mtgs_per_crn'</span>]<span class="op">&gt;</span><span class="dv">1</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LAB'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'mtgs_per_wk'</span>]<span class="op">==</span><span class="dv">1</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">+</span> <span class="st">" (LAB: 1 mtg per wk rule)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="distinguish-res-ind-and-fld" class="level3">
 <h3 class="anchored" data-anchor-id="distinguish-res-ind-and-fld">Distinguish RES, IND and FLD</h3>
-<div class="cell" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Credit is given for these activities in reduced teaching (research active) or summer pay.</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'RES'</span>,<span class="st">'IND'</span>,<span class="st">'FLD'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"RULE: [wrkld]=0.00 for INS, RES and FLD"</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'RES'</span>,<span class="st">'IND'</span>,<span class="st">'FLD'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> <span class="fl">0.0</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>RES, IND and FLD sections are variable unit placeholders in banner that contribute to the full-time status calculation of a student, but don’t necessarily reflect effort of the faculty mentor.</p>
+<p>Research active faculty are most associated with RES, IND and FLD. To capture the workload we have two options:</p>
+<ol type="1">
+<li>We can associate these units with a non-zero workload value, or</li>
+<li>We can reduce the workloads of research active faculty.</li>
+</ol>
+<p>To do both would double-count the effort of RES, IND and FLD sections.</p>
+<p>For purposes of this workload model, we’ll zero these out and let research active faculty have reduced workloads.</p>
+<div class="cell" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Credit is given for these activities in reduced teaching (research active) or summer pay.</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'RES'</span>,<span class="st">'IND'</span>,<span class="st">'FLD'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"RULE: [wrkld]=0.00 for INS, RES and FLD"</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'RES'</span>,<span class="st">'IND'</span>,<span class="st">'FLD'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> model_sample[<span class="st">'res_ind_fld_per_lecture'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="distinguish-sem-workloads" class="level3">
 <h3 class="anchored" data-anchor-id="distinguish-sem-workloads">Distinguish SEM workloads</h3>
-<div class="cell" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign SEM workload</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure that SEM get full credit because we want to reward the faculty member for doing it!</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>seminars_per_lecture <span class="op">=</span> <span class="fl">1.0</span></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld] / </span><span class="sc">{</span>seminars_per_lecture<span class="sc">}</span><span class="ss"> for SEM"</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]))<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld] / </span><span class="sc">{</span>seminars_per_lecture<span class="sc">}</span><span class="ss"> for SEM (co-teaching)"</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> seminars_per_lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>The seminar class is an important part of our curriculum and requires effort of those organizing the course.</p>
+<p>In this workload model, the seminar counts as a full workload course.</p>
+<div class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign SEM workload</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure that SEM get full credit because we want to reward the faculty member for doing it!</span></span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>seminars_per_lecture <span class="op">=</span> model_sample[<span class="st">'seminars_per_lecture'</span>]</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld] / </span><span class="sc">{</span>seminars_per_lecture<span class="sc">}</span><span class="ss"> for SEM"</span></span>
+<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]))<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"RULE: [wrkld] / </span><span class="sc">{</span>seminars_per_lecture<span class="sc">}</span><span class="ss"> for SEM (co-teaching)"</span></span>
+<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'SEM'</span>]),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> seminars_per_lecture</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="adjust-for-large-lectures" class="level3">
 <h3 class="anchored" data-anchor-id="adjust-for-large-lectures">Adjust for large lectures</h3>
-<div class="cell" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># For large lectures - reset lecture units</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">1.5</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">80</span></span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
-<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.0</span></span>
-<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">160</span></span>
-<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span>
-<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a>weight <span class="op">=</span> <span class="fl">2.5</span></span>
-<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>threshhold <span class="op">=</span> <span class="dv">240</span></span>
-<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
-<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Larger lectures require more effort. The code blocks below adjust the base workload for large classes.</p>
+<div class="cell" data-execution_count="33">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Process large classes using thresholds and weights in model_sample parameters.</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> threshhold,weight <span class="kw">in</span> model_sample[<span class="st">'large_classes'</span>]:</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> weight <span class="op">/</span> stacked_df[<span class="st">"instructor_cnt"</span>]</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">"wrkld_sample_note"</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld] = </span><span class="sc">{</span>weight<span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;=</span>threshhold)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'instructor_cnt'</span>]<span class="op">&gt;</span><span class="fl">1.0</span>),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="ss">f"BASE: [wrkld]=</span><span class="sc">{</span>weight<span class="op">/</span><span class="fl">2.0</span><span class="sc">}</span><span class="ss"> per CRN ENRL&gt;=</span><span class="sc">{</span>threshhold<span class="sc">}</span><span class="ss"> (co-teaching)"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="checks-and-verfications" class="level3">
-<h3 class="anchored" data-anchor-id="checks-and-verfications">Checks and verfications</h3>
+<section id="examples-checks-and-verifications" class="level3">
+<h3 class="anchored" data-anchor-id="examples-checks-and-verifications">Examples, checks and verifications</h3>
 <p>The following code blocks are added as unique situations are discovered. The code below shows how these situations are handled.</p>
 <p>As odd situations are revealed, add a code block here to clearly show the inconsistency. Then, change the workload code above until the situation clears up AND you don’t screw up any of the other situations.</p>
-<div class="cell" data-execution_count="25">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202410'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"COURSE"</span>]<span class="op">==</span><span class="st">'EGMN416'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="25">
+<section id="example-lect-lab" class="level4">
+<h4 class="anchored" data-anchor-id="example-lect-lab">Example: LECT / LAB</h4>
+<p>In this example, a lecture/lab course was coded as 3 separate CRN. Each CRN has a main lecture and a single-meeting-period lab. All three lectures share the same meeting time and are combined into a single workload LECT. Each lab section is assigned 1/3 workload. However, two of the lab sections share a common meeting time, so they are combined into a single 1/3 workload section.</p>
+<div class="cell" data-execution_count="34">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_block( df,keys,cols):</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    tdf <span class="op">=</span> df</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> keys.keys():</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        tdf <span class="op">=</span> tdf[tdf[key]<span class="op">==</span>keys[key]]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tdf[cols]</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'COURSE'</span>:<span class="st">'EGMN416'</span>},</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="33">
 <div>
 
 
@@ -727,16 +812,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">COURSE</th>
-<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">CRN</th>
-<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">TYPE</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">time_code</th>
-<th data-quarto-table-cell-role="th">mtg_length</th>
-<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
-<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
-<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
-<th data-quarto-table-cell-role="th">combined_count</th>
-<th data-quarto-table-cell-role="th">combined_sections</th>
 <th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_type</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_note</th>
@@ -746,16 +826,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4117</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>45899</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>....F..14001650</td>
-<td>250</td>
-<td>1</td>
-<td>1</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.333333</td>
 <td>LAB</td>
 <td>RULE: [wrkld]=0.33 for LAB (LAB: 1 mtg per wk ...</td>
@@ -763,16 +838,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4118</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>45899</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>M...F..13001350</td>
-<td>50</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.333333</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 3 CRN at same time</td>
@@ -780,16 +850,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4119</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>32709</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>M......14001650</td>
-<td>250</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.166667</td>
 <td>LAB</td>
 <td>RULE: [wrkld]=0.33 for LAB (LAB: 1 mtg per wk ...</td>
@@ -797,16 +862,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4120</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>32709</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>M...F..13001350</td>
-<td>50</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.333333</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 3 CRN at same time</td>
@@ -814,16 +874,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4121</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>46922</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>M......14001650</td>
-<td>250</td>
-<td>2</td>
-<td>1</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.166667</td>
 <td>LAB</td>
 <td>RULE: [wrkld]=0.33 for LAB (LAB: 1 mtg per wk ...</td>
@@ -831,16 +886,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4122</td>
 <td>EGMN416</td>
-<td>Hadimani,Ravi</td>
 <td>46922</td>
-<td>3</td>
+<td>LEC</td>
+<td>MECHATRONICS</td>
+<td>Hadimani,Ravi</td>
 <td>M...F..13001350</td>
-<td>50</td>
-<td>3</td>
-<td>2</td>
-<td>2</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.333333</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 3 CRN at same time</td>
@@ -851,9 +901,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="26">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202320'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Heise,Rebecca'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="26">
+</section>
+<section id="example-lect-sharing-a-common-time" class="level4">
+<h4 class="anchored" data-anchor-id="example-lect-sharing-a-common-time">Example: LECT sharing a common time</h4>
+<p>In this example, two CRN are sharing a common teaching time and their workloads are split across the two CRN.</p>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Heise,Rebecca"</span>},</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="34">
 <div>
 
 
@@ -862,16 +919,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">COURSE</th>
-<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">CRN</th>
-<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">TYPE</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">time_code</th>
-<th data-quarto-table-cell-role="th">mtg_length</th>
-<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
-<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
-<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
-<th data-quarto-table-cell-role="th">combined_count</th>
-<th data-quarto-table-cell-role="th">combined_sections</th>
 <th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_type</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_note</th>
@@ -881,16 +933,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3128</td>
 <td>EGRB111</td>
-<td>Heise,Rebecca</td>
 <td>43476</td>
-<td>3</td>
+<td>LEC</td>
+<td>INTRO TO BIOL SYS ENGINEERING</td>
+<td>Heise,Rebecca</td>
 <td>M.W.F..900950</td>
-<td>50</td>
-<td>1</td>
-<td>3</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
@@ -898,16 +945,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3150</td>
 <td>EGRB411</td>
-<td>Heise,Rebecca</td>
 <td>40539</td>
-<td>3</td>
+<td>LEC</td>
+<td>CELL MECHANICS &amp; MECHANOBIOL</td>
+<td>Heise,Rebecca</td>
 <td>M.W.F..10001050</td>
-<td>50</td>
-<td>2</td>
-<td>3</td>
-<td>1</td>
-<td>2.0</td>
-<td>EGRB517,EGRB411</td>
 <td>0.5</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 2 CRN at same time</td>
@@ -915,16 +957,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3154</td>
 <td>EGRB491</td>
-<td>Heise,Rebecca</td>
 <td>45797</td>
-<td>3</td>
+<td>LEC</td>
+<td>ST: PULMONARY LAB RESEARCH</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
@@ -932,16 +969,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3156</td>
 <td>EGRB517</td>
-<td>Heise,Rebecca</td>
 <td>40540</td>
-<td>3</td>
+<td>LEC</td>
+<td>CELL MECHANICS &amp; MECHANOBIOLOG</td>
+<td>Heise,Rebecca</td>
 <td>M.W.F..10001050</td>
-<td>50</td>
-<td>2</td>
-<td>3</td>
-<td>1</td>
-<td>2.0</td>
-<td>EGRB517,EGRB411</td>
 <td>0.5</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 2 CRN at same time</td>
@@ -949,16 +981,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3164</td>
 <td>EGRB697</td>
-<td>Heise,Rebecca</td>
 <td>28942</td>
-<td>15</td>
+<td>RES</td>
+<td>DIRECTED RES IN BIOMEDICAL EGR</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -966,16 +993,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3171</td>
 <td>EGRB697</td>
-<td>Heise,Rebecca</td>
 <td>45891</td>
-<td>4</td>
+<td>RES</td>
+<td>DIRECTED RES IN BIOMEDICAL EGR</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -983,16 +1005,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3194</td>
 <td>EGRB697</td>
-<td>Heise,Rebecca</td>
 <td>28930</td>
-<td>3</td>
+<td>RES</td>
+<td>DIRECTED RES IN BIOMEDICAL EGR</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -1000,16 +1017,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3195</td>
 <td>EGRB697</td>
-<td>Heise,Rebecca</td>
 <td>28934</td>
-<td>7</td>
+<td>RES</td>
+<td>DIRECTED RES IN BIOMEDICAL EGR</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -1017,16 +1029,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3196</td>
 <td>EGRB697</td>
-<td>Heise,Rebecca</td>
 <td>45890</td>
-<td>11</td>
+<td>RES</td>
+<td>DIRECTED RES IN BIOMEDICAL EGR</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -1034,16 +1041,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3590</td>
 <td>ENGR701</td>
-<td>Heise,Rebecca</td>
 <td>43901</td>
-<td>9</td>
+<td>RES</td>
+<td>POST-CANDIDACY DOCT RESEARCH</td>
+<td>Heise,Rebecca</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
@@ -1054,9 +1056,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div class="cell" data-execution_count="27">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202310'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Ferri,James'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'combined_count'</span>,<span class="st">'combined_sections'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="27">
+</section>
+<section id="example-miscode" class="level4">
+<h4 class="anchored" data-anchor-id="example-miscode">Example: Miscode?</h4>
+<p>This record shows two CRN overlapping in teaching time, but not exactly matching teaching times. Is this for real? Is this a miscode? My initial guess is that this is a miscode and the times should be corrected. This can be accomplished with a FIX record above.</p>
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202310'</span>,<span class="st">'instructor'</span>:<span class="st">"Ferri,James"</span>},</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 
 
@@ -1065,148 +1074,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">COURSE</th>
-<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">CRN</th>
-<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">TYPE</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">time_code</th>
-<th data-quarto-table-cell-role="th">mtg_length</th>
-<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
-<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
-<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
-<th data-quarto-table-cell-role="th">combined_count</th>
-<th data-quarto-table-cell-role="th">combined_sections</th>
+<th data-quarto-table-cell-role="th">MODALITY CODE</th>
 <th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_type</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_note</th>
-<th data-quarto-table-cell-role="th">TITLE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2676</td>
 <td>CLSE301</td>
-<td>Ferri,James</td>
 <td>42633</td>
-<td>3</td>
+<td>LEC</td>
+<td>TRANSPORT PHENOMENA I</td>
+<td>Ferri,James</td>
 <td>.T.R...15301645</td>
-<td>115</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINP</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
-<td>TRANSPORT PHENOMENA I</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2688</td>
 <td>CLSE585</td>
-<td>Ferri,James</td>
 <td>44879</td>
-<td>3</td>
+<td>LEC</td>
+<td>INTERFACIAL PHENOMENA</td>
+<td>Ferri,James</td>
 <td>..W....17001930</td>
-<td>230</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINP</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
-<td>INTERFACIAL PHENOMENA</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2700</td>
 <td>CLSE697</td>
-<td>Ferri,James</td>
 <td>37469</td>
-<td>8</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Ferri,James</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINS</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2707</td>
 <td>CLSE697</td>
-<td>Ferri,James</td>
 <td>37073</td>
-<td>3</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Ferri,James</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINS</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2991</td>
 <td>ENGR591</td>
-<td>Ferri,James</td>
 <td>44935</td>
-<td>3</td>
+<td>LEC</td>
+<td>TOP: SYSTEMS ENGINEERING I</td>
+<td>Ferri,James</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RONA</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
-<td>TOP: SYSTEMS ENGINEERING I</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2999</td>
 <td>ENGR691</td>
-<td>Ferri,James</td>
 <td>44989</td>
-<td>4</td>
+<td>LEC</td>
+<td>ST:ADV TOP IN INTERFACIAL PHEN</td>
+<td>Ferri,James</td>
 <td>..W....17001900</td>
-<td>200</td>
-<td>1</td>
-<td>1</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINP</td>
 <td>1.0</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
-<td>ST:ADV TOP IN INTERFACIAL PHEN</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3004</td>
 <td>ENGR701</td>
-<td>Ferri,James</td>
 <td>43323</td>
-<td>9</td>
+<td>RES</td>
+<td>POST-CANDIDACY DOCT RESEARCH</td>
+<td>Ferri,James</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
-<td>NaN</td>
-<td>NaN</td>
+<td>RINS</td>
 <td>0.0</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>POST-CANDIDACY DOCT RESEARCH</td>
 </tr>
 </tbody>
 </table>
@@ -1214,11 +1183,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p><strong>Singleton ROND sections should not be zeroed out</strong></p>
-<p>This first example shows a singleton ROND sections. We may see this if all the students enroll in the online section and no one enrolls in the face-to-face section.</p>
-<div class="cell" data-execution_count="28">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202320'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Manic,Milos'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="28">
+</section>
+<section id="example-singleton-rond" class="level4">
+<h4 class="anchored" data-anchor-id="example-singleton-rond">Example: Singleton ROND</h4>
+<p>This shows a singleton ROND sections. Synchronous on-line sections (ROND) should always be taught with an in-person section. In this case I can only imagine that no students enrolled in the RINP/face-to-face section and it was dropped during earlier data cleaning.</p>
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Manic,Milos"</span>},</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 
 
@@ -1227,100 +1201,82 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">COURSE</th>
-<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">CRN</th>
-<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">TYPE</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">time_code</th>
-<th data-quarto-table-cell-role="th">mtg_length</th>
-<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
-<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
-<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
+<th data-quarto-table-cell-role="th">MODALITY CODE</th>
 <th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_type</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_note</th>
-<th data-quarto-table-cell-role="th">TITLE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3085</td>
 <td>CMSC636</td>
-<td>Manic,Milos</td>
 <td>44831</td>
-<td>3</td>
+<td>LEC</td>
+<td>NEURAL NETS AND DEEP LEARNING</td>
+<td>Manic,Milos</td>
 <td>M.W....12001315</td>
-<td>115</td>
-<td>1</td>
-<td>2</td>
-<td>1</td>
+<td>ROND</td>
 <td>1.000000</td>
 <td>LEC</td>
 <td>BASE: [wrkld]</td>
-<td>NEURAL NETS AND DEEP LEARNING</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3101</td>
 <td>CMSC697</td>
-<td>Manic,Milos</td>
 <td>36849</td>
-<td>2</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Manic,Milos</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3102</td>
 <td>CMSC697</td>
-<td>Manic,Milos</td>
 <td>36851</td>
-<td>6</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Manic,Milos</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3559</td>
 <td>ENGR497</td>
-<td>Manic,Milos</td>
 <td>45526</td>
-<td>1</td>
+<td>LAB</td>
+<td>VERTICALLY INTEGRATED PROJECTS</td>
+<td>Manic,Milos</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.333333</td>
 <td>VIP</td>
 <td>RULE: [wrkld]=0.33 for VIP</td>
-<td>VERTICALLY INTEGRATED PROJECTS</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3560</td>
 <td>ENGR497</td>
-<td>Manic,Milos</td>
 <td>45527</td>
-<td>2</td>
+<td>LAB</td>
+<td>VERTICALLY INTEGRATED PROJECTS</td>
+<td>Manic,Milos</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.333333</td>
 <td>VIP</td>
 <td>RULE: [wrkld]=0.33 for VIP</td>
-<td>VERTICALLY INTEGRATED PROJECTS</td>
 </tr>
 </tbody>
 </table>
@@ -1328,10 +1284,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</section>
+<section id="example-doubleton-rondrinp" class="level4">
+<h4 class="anchored" data-anchor-id="example-doubleton-rondrinp">Example: Doubleton ROND+RINP</h4>
 <p>This second example shows a doubleton ROND+RINP section.</p>
-<div class="cell" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">"TERM"</span>]<span class="op">==</span><span class="st">'202410'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">"instructor"</span>]<span class="op">==</span><span class="st">'Ghosh,Preetam'</span>)][[<span class="st">'COURSE'</span>,<span class="st">'instructor'</span>,<span class="st">'CRN'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'mtg_length'</span>,<span class="st">'shared_mtgs_cnt'</span>,<span class="st">'mtgs_per_wk'</span>,<span class="st">'mtgs_per_crn'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>,<span class="st">'TITLE'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="29">
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Ghosh,Preetam"</span>},</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div>
 
 
@@ -1340,132 +1302,108 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
 <th data-quarto-table-cell-role="th">COURSE</th>
-<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">CRN</th>
-<th data-quarto-table-cell-role="th">MAX CREDITS</th>
+<th data-quarto-table-cell-role="th">TYPE</th>
+<th data-quarto-table-cell-role="th">TITLE</th>
+<th data-quarto-table-cell-role="th">instructor</th>
 <th data-quarto-table-cell-role="th">time_code</th>
-<th data-quarto-table-cell-role="th">mtg_length</th>
-<th data-quarto-table-cell-role="th">shared_mtgs_cnt</th>
-<th data-quarto-table-cell-role="th">mtgs_per_wk</th>
-<th data-quarto-table-cell-role="th">mtgs_per_crn</th>
+<th data-quarto-table-cell-role="th">MODALITY CODE</th>
 <th data-quarto-table-cell-role="th">sum_term_crse_wrkld_sample</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_type</th>
 <th data-quarto-table-cell-role="th">wrkld_sample_note</th>
-<th data-quarto-table-cell-role="th">TITLE</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3749</td>
 <td>CMSC441</td>
-<td>Ghosh,Preetam</td>
 <td>43750</td>
-<td>2</td>
+<td>LAB</td>
+<td>SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td>Ghosh,Preetam</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RONL</td>
 <td>0.666667</td>
 <td>CAP</td>
-<td>RULE: [wrkld]=0.33 for every 4.0 students in CAP</td>
-<td>SR DESIGN STUDIO I (LAB/PROJ)</td>
+<td>RULE: [wrkld]=0.33 for every 4.0 students in C...</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3771</td>
 <td>CMSC502</td>
-<td>Ghosh,Preetam</td>
 <td>37708</td>
-<td>3</td>
+<td>LEC</td>
+<td>PARALLEL ALGORITHMS</td>
+<td>Ghosh,Preetam</td>
 <td>.T.R...15301645</td>
-<td>115</td>
-<td>2</td>
-<td>2</td>
-<td>1</td>
+<td>RINP</td>
 <td>0.500000</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 2 CRN at same time</td>
-<td>PARALLEL ALGORITHMS</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3772</td>
 <td>CMSC502</td>
-<td>Ghosh,Preetam</td>
 <td>37709</td>
-<td>3</td>
+<td>LEC</td>
+<td>PARALLEL ALGORITHMS</td>
+<td>Ghosh,Preetam</td>
 <td>.T.R...15301645</td>
-<td>115</td>
-<td>2</td>
-<td>2</td>
-<td>1</td>
+<td>ROND</td>
 <td>0.500000</td>
 <td>LEC</td>
 <td>BASE: [wrkld] / 2 CRN at same time</td>
-<td>PARALLEL ALGORITHMS</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3797</td>
 <td>CMSC697</td>
-<td>Ghosh,Preetam</td>
 <td>37384</td>
-<td>2</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Ghosh,Preetam</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3798</td>
 <td>CMSC697</td>
-<td>Ghosh,Preetam</td>
 <td>37385</td>
-<td>3</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Ghosh,Preetam</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">3799</td>
 <td>CMSC697</td>
-<td>Ghosh,Preetam</td>
 <td>37386</td>
-<td>6</td>
+<td>RES</td>
+<td>DIRECTED RESEARCH</td>
+<td>Ghosh,Preetam</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>DIRECTED RESEARCH</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4261</td>
 <td>ENGR701</td>
-<td>Ghosh,Preetam</td>
 <td>46939</td>
-<td>9</td>
+<td>RES</td>
+<td>POST-CANDIDACY DOCT RESEARCH</td>
+<td>Ghosh,Preetam</td>
 <td>.........</td>
-<td>0</td>
-<td>1</td>
-<td>0</td>
-<td>1</td>
+<td>RINS</td>
 <td>0.000000</td>
 <td>RES</td>
 <td>RULE: [wrkld]=0.00 for INS, RES and FLD</td>
-<td>POST-CANDIDACY DOCT RESEARCH</td>
 </tr>
 </tbody>
 </table>
@@ -1473,6 +1411,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
+</section>
 </section>
 </section>
 <section id="store-the-dataframe" class="level2">
@@ -1480,60 +1419,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’re storing both the stacked and unstacked data. Note that the aggregate measures are stored with the stacked data only.</p>
 <section id="store-to-a-local-csv-file" class="level3">
 <h3 class="anchored" data-anchor-id="store-to-a-local-csv-file">Store to a local CSV file</h3>
-<div class="cell" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="store-the-data-in-google-sheets" class="level3">
 <h3 class="anchored" data-anchor-id="store-the-data-in-google-sheets">Store the data in google sheets</h3>
-<div class="cell" data-execution_count="31">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb29-8"><a href="#cb29-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb29-9"><a href="#cb29-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
-<span id="cb29-10"><a href="#cb29-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb29-11"><a href="#cb29-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb29-12"><a href="#cb29-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
-<span id="cb29-13"><a href="#cb29-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="freshen-persistent-instructor-data" class="level3">
 <h3 class="anchored" data-anchor-id="freshen-persistent-instructor-data">Freshen persistent instructor data</h3>
 <p>This block identifies any instructors not found in the persistent instructor data and adds them to the list with default values.</p>
 <p><strong>This code is not working yet.</strong> It should be fixed when a new semester is added and new instructors and courses are discovered in the imported worksheets.</p>
-<div class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
-<span id="cb30-7"><a href="#cb30-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
-<span id="cb30-8"><a href="#cb30-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
-<span id="cb30-9"><a href="#cb30-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
-<span id="cb30-10"><a href="#cb30-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
-<span id="cb30-11"><a href="#cb30-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
-<span id="cb30-12"><a href="#cb30-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
-<span id="cb30-13"><a href="#cb30-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
-<span id="cb30-14"><a href="#cb30-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-15"><a href="#cb30-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
-<span id="cb30-16"><a href="#cb30-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
-<span id="cb30-17"><a href="#cb30-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-18"><a href="#cb30-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
-<span id="cb30-19"><a href="#cb30-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
 <section id="summary" class="level2">
 <h2 class="anchored" data-anchor-id="summary">Summary</h2>
 <p>That’s all folks! Additional models can be added and the google sheets can be reviewed.</p>
+<p>Now the real analysis can begin:</p>
+<ul>
+<li><a href="">here is a link to a google sheet</a> that shows tables created from the dataframe.</li>
+<li><a href="./30_explore.html">here is a HTML report</a> that is still evolving.</li>
+</ul>
 
 
 </section>
