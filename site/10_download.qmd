@@ -52,6 +52,8 @@ def convert_period(period_code):
 
 xlsx_df['period_name'] = xlsx_df['period_code'].apply(convert_period)
 
+xlsx_df["file_name"] = "<a href='data/"+xlsx_df["file_name"]+"'>"+xlsx_df["file_name"]+"</a>"
+
 Markdown(tabulate(
   xlsx_df, 
   headers=['File name','Term Code','Acad Year','Period Code','Period Name'],
@@ -61,3 +63,4 @@ Markdown(tabulate(
 
 ```
 
+These data are difficult to work in separate files and often contain incorrect or inconsistent data.  A significant process of [data cleaning](20_clean.qmd) was undertaken prior to computing workloads.
