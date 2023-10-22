@@ -178,6 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#distinguish-sem-workloads" id="toc-distinguish-sem-workloads" class="nav-link" data-scroll-target="#distinguish-sem-workloads">Distinguish SEM workloads</a></li>
   <li><a href="#adjust-for-large-lectures" id="toc-adjust-for-large-lectures" class="nav-link" data-scroll-target="#adjust-for-large-lectures">Adjust for large lectures</a></li>
   <li><a href="#store-lec-only-workload-in-separate-column." id="toc-store-lec-only-workload-in-separate-column." class="nav-link" data-scroll-target="#store-lec-only-workload-in-separate-column.">Store LEC-only workload in separate column.</a></li>
+  <li><a href="#store-list-of-lect-only-courses" id="toc-store-list-of-lect-only-courses" class="nav-link" data-scroll-target="#store-list-of-lect-only-courses">Store list of LECT-only courses</a></li>
   <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
   </ul></li>
   <li><a href="#examples-checks-and-verifications" id="toc-examples-checks-and-verifications" class="nav-link" data-scroll-target="#examples-checks-and-verifications">Examples, checks and verifications</a>
@@ -364,7 +365,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>It’s getting old adding new columns, then having to rework the formuluas in the rather brittle google sheet. I’m adding a few spare columns here to be used as necessary. This is the best place to add the new columns, just prior to the calculation of the aggregate measures and workload attributes.</p>
 <div class="cell" data-execution_count="13">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_1"</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"lec_only_course_list"</span>] <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_2"</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_3"</span>] <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_4"</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -725,6 +726,95 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'sum_term_crse_wrkld_sample_lec'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
+<section id="store-list-of-lect-only-courses" class="level3">
+<h3 class="anchored" data-anchor-id="store-list-of-lect-only-courses">Store list of LECT-only courses</h3>
+<div class="cell" data-execution_count="35">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> list_courses( x ):</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> x.unique().tolist()</span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> item: item <span class="op">!=</span> <span class="st">""</span>, l))</span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">","</span>.join(l)</span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>temp  <span class="op">=</span> stacked_df.copy()</span>
+<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>temp[<span class="st">"lec-only-course"</span>] <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>temp.loc[temp[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>,<span class="st">"lec-only-course"</span>] <span class="op">=</span> temp.loc[temp[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>,<span class="st">"COURSE"</span>]</span>
+<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'lec_only_course_list'</span>] <span class="op">=</span> temp.groupby([<span class="st">'TERM'</span>,<span class="st">'instructor'</span>])[<span class="st">'lec-only-course'</span>].transform( list_courses )</span>
+<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">'instructor'</span>]<span class="op">==</span><span class="st">'Leonard,John'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'TERM'</span>].isin([<span class="st">'202410'</span>,<span class="st">'202320'</span>]))][[<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'lec_only_course_list'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="156">
+<div>
+
+
+<table class="dataframe table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th"></th>
+<th data-quarto-table-cell-role="th">TERM</th>
+<th data-quarto-table-cell-role="th">COURSE</th>
+<th data-quarto-table-cell-role="th">lec_only_course_list</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3056</td>
+<td>202320</td>
+<td>CMSC442</td>
+<td>CMSC475</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3072</td>
+<td>202320</td>
+<td>CMSC475</td>
+<td>CMSC475</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3554</td>
+<td>202320</td>
+<td>ENGR497</td>
+<td>CMSC475</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3556</td>
+<td>202320</td>
+<td>ENGR497</td>
+<td>CMSC475</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3737</td>
+<td>202410</td>
+<td>CMSC391</td>
+<td>CMSC391,CMSC508</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">3748</td>
+<td>202410</td>
+<td>CMSC441</td>
+<td>CMSC391,CMSC508</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">3773</td>
+<td>202410</td>
+<td>CMSC508</td>
+<td>CMSC391,CMSC508</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">4225</td>
+<td>202410</td>
+<td>ENGR497</td>
+<td>CMSC391,CMSC508</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">4227</td>
+<td>202410</td>
+<td>ENGR497</td>
+<td>CMSC391,CMSC508</td>
+</tr>
+</tbody>
+</table>
+
+</div>
+</div>
+</div>
+</section>
 <section id="summary" class="level3">
 <h3 class="anchored" data-anchor-id="summary">Summary</h3>
 <p>At this point the model building is done and the workload assignments are stored in the appropriate columns.</p>
@@ -739,22 +829,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this example, a lecture/lab course was coded as 3 separate CRN. Each CRN has a main lecture and a single-meeting-period lab.</p>
 <p>All three lectures share the same meeting time and are combined into a single workload LECT. Each lab section is assigned 1/3 workload.</p>
 <p>However, two of the lab sections share a common meeting time, so they are combined into a single 1/3 workload section.</p>
-<div class="cell" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_block( df,keys,cols):</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>    tdf <span class="op">=</span> df</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> keys.keys():</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>        tdf <span class="op">=</span> tdf[tdf[key]<span class="op">==</span>keys[key]]</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tdf[cols]</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-7"><a href="#cb31-7" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb31-8"><a href="#cb31-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'COURSE'</span>:<span class="st">'EGMN416'</span>},</span>
-<span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,</span>
-<span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn'</span>,</span>
-<span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn_mtg_students'</span>,</span>
-<span id="cb31-12"><a href="#cb31-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn_hours'</span>,</span>
-<span id="cb31-13"><a href="#cb31-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb31-14"><a href="#cb31-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="34">
+<div class="cell" data-execution_count="36">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_block( df,keys,cols):</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    tdf <span class="op">=</span> df</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> keys.keys():</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>        tdf <span class="op">=</span> tdf[tdf[key]<span class="op">==</span>keys[key]]</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> tdf[cols]</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'COURSE'</span>:<span class="st">'EGMN416'</span>},</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,</span>
+<span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn'</span>,</span>
+<span id="cb32-11"><a href="#cb32-11" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn_mtg_students'</span>,</span>
+<span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn_hours'</span>,</span>
+<span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="157">
 <div>
 
 
@@ -882,12 +972,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-lect-sharing-a-common-time" class="level3">
 <h3 class="anchored" data-anchor-id="example-lect-sharing-a-common-time">Example: LECT sharing a common time</h3>
 <p>In this example, two CRN are sharing a common teaching time and their workloads are split across the two CRN.</p>
-<div class="cell" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Heise,Rebecca"</span>},</span>
-<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="35">
+<div class="cell" data-execution_count="37">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Heise,Rebecca"</span>},</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="158">
 <div>
 
 
@@ -1037,12 +1127,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-miscode" class="level3">
 <h3 class="anchored" data-anchor-id="example-miscode">Example: Miscode?</h3>
 <p>This record shows two CRN overlapping in teaching time, but not exactly matching teaching times. Is this for real? Is this a miscode? My initial guess is that this is a miscode and the times should be corrected. This can be accomplished with a FIX record above.</p>
-<div class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202310'</span>,<span class="st">'instructor'</span>:<span class="st">"Ferri,James"</span>},</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="36">
+<div class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202310'</span>,<span class="st">'instructor'</span>:<span class="st">"Ferri,James"</span>},</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="159">
 <div>
 
 
@@ -1164,12 +1254,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-singleton-rond" class="level3">
 <h3 class="anchored" data-anchor-id="example-singleton-rond">Example: Singleton ROND</h3>
 <p>This shows a singleton ROND sections. Synchronous on-line sections (ROND) should always be taught with an in-person section. In this case I can only imagine that no students enrolled in the RINP/face-to-face section and it was dropped during earlier data cleaning.</p>
-<div class="cell" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Manic,Milos"</span>},</span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="37">
+<div class="cell" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Manic,Milos"</span>},</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="160">
 <div>
 
 
@@ -1265,12 +1355,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-doubleton-rondrinp" class="level3">
 <h3 class="anchored" data-anchor-id="example-doubleton-rondrinp">Example: Doubleton ROND+RINP</h3>
 <p>This second example shows a doubleton ROND+RINP section.</p>
-<div class="cell" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Ghosh,Preetam"</span>},</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="38">
+<div class="cell" data-execution_count="40">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Ghosh,Preetam"</span>},</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="161">
 <div>
 
 
@@ -1392,13 +1482,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-odd-counting" class="level3">
 <h3 class="anchored" data-anchor-id="example-odd-counting">Example: odd counting</h3>
 <p>Verifying actual enrollment vs sum_term_crse_wrkld_sample</p>
-<div class="cell" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Duke,Debra"</span>,<span class="st">'COURSE'</span>:<span class="st">'CMSC256'</span>},</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="39">
+<div class="cell" data-execution_count="41">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Duke,Debra"</span>,<span class="st">'COURSE'</span>:<span class="st">'CMSC256'</span>},</span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="162">
 <div>
 
 
@@ -1506,13 +1596,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-odd-counting-1" class="level3">
 <h3 class="anchored" data-anchor-id="example-odd-counting-1">Example: odd counting</h3>
 <p>Verifying actual enrollment vs sum_term_crse_wrkld_sample</p>
-<div class="cell" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Duke,Debra"</span>,<span class="st">'COURSE'</span>:<span class="st">'CMSC256'</span>},</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="40">
+<div class="cell" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Duke,Debra"</span>,<span class="st">'COURSE'</span>:<span class="st">'CMSC256'</span>},</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="163">
 <div>
 
 
@@ -1623,54 +1713,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’re storing both the stacked and unstacked data. Note that the aggregate measures are stored with the stacked data only.</p>
 <section id="store-to-a-local-csv-file" class="level3">
 <h3 class="anchored" data-anchor-id="store-to-a-local-csv-file">Store to a local CSV file</h3>
-<div class="cell" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="store-the-data-in-google-sheets" class="level3">
 <h3 class="anchored" data-anchor-id="store-the-data-in-google-sheets">Store the data in google sheets</h3>
-<div class="cell" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
-<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>data_to_write <span class="op">=</span> stacked_df.to_records(index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span>:</span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>    sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).add_worksheet( </span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>        title <span class="op">=</span> worksheet_name,nrows<span class="op">=</span><span class="dv">100</span>,ncols<span class="op">=</span><span class="dv">10</span></span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a>sheet.clear()</span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a>set_with_dataframe(worksheet<span class="op">=</span>sheet, dataframe<span class="op">=</span>stacked_df, include_index<span class="op">=</span><span class="va">False</span>,include_column_header<span class="op">=</span><span class="va">True</span>, resize<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="freshen-persistent-instructor-data" class="level3">
 <h3 class="anchored" data-anchor-id="freshen-persistent-instructor-data">Freshen persistent instructor data</h3>
 <p>This block identifies any instructors not found in the persistent instructor data and adds them to the list with default values.</p>
 <p><strong>This code is not working yet.</strong> It should be fixed when a new semester is added and new instructors and courses are discovered in the imported worksheets.</p>
-<div class="cell" data-execution_count="44">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a><span class="co">#data_to_write = summary_df.to_records(index=False)</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co">#try:</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span></span>
+<span id="cb41-7"><a href="#cb41-7" aria-hidden="true" tabindex="-1"></a><span class="co">#except:</span></span>
+<span id="cb41-8"><a href="#cb41-8" aria-hidden="true" tabindex="-1"></a><span class="co">#    nrows,ncols = summary_df.shape</span></span>
+<span id="cb41-9"><a href="#cb41-9" aria-hidden="true" tabindex="-1"></a><span class="co">#    sheet = client.open_by_key(spreadsheet_key).add_worksheet( </span></span>
+<span id="cb41-10"><a href="#cb41-10" aria-hidden="true" tabindex="-1"></a><span class="co">#        title = worksheet_name,rows=nrows+1,cols=ncols+1</span></span>
+<span id="cb41-11"><a href="#cb41-11" aria-hidden="true" tabindex="-1"></a><span class="co">#    )</span></span>
+<span id="cb41-12"><a href="#cb41-12" aria-hidden="true" tabindex="-1"></a><span class="co">#sheet.clear()</span></span>
+<span id="cb41-13"><a href="#cb41-13" aria-hidden="true" tabindex="-1"></a><span class="co">#set_with_dataframe(worksheet=sheet, dataframe=summary_df, include_index=False,include_column_header=True, resize=True)</span></span>
+<span id="cb41-14"><a href="#cb41-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-15"><a href="#cb41-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Find names in df2 that are not in df1</span></span>
+<span id="cb41-16"><a href="#cb41-16" aria-hidden="true" tabindex="-1"></a><span class="co">##names_to_add = df2[~df2['name'].isin(df1['name'])]</span></span>
+<span id="cb41-17"><a href="#cb41-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-18"><a href="#cb41-18" aria-hidden="true" tabindex="-1"></a><span class="co"># Add the rows with missing names from df2 to df1</span></span>
+<span id="cb41-19"><a href="#cb41-19" aria-hidden="true" tabindex="-1"></a><span class="co">## df1 = pd.concat([df1, names_to_add], ignore_index=True)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
