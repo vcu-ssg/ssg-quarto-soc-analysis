@@ -154,7 +154,7 @@ sections_df["fix_notes"] = ""
 
 # A helper function to correct data.
 
-def fix( id, note, key, data ):
+def fix_sections( id, note, key, data ):
     for item in data.keys():
         sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),item]=data[item]
     sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),"fixes"] += f";FIX{id:03}"
@@ -164,21 +164,21 @@ def fix( id, note, key, data ):
 
 ```{python}
 # Spring 2023: CMSC475 John Leonard taught for David Shepherd
-fix(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
+fix_sections(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
 # Fall 2024: CMSC391 is cross listed with COAR463.
 # Total enrollment 34 across two instructors (Bennett and Leonard)
 # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
-fix(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
+fix_sections(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
-fix(3,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40553'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix(4,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40554'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix(5,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40555'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(3,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40553'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(4,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40554'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(5,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40555'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
 
-fix(6,"Remove Sparks as 2nd instructor",{'TERM':'202320','CRN':'17442'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix(7,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'33698'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix(8,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'41891'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix(9,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
+fix_sections(6,"Remove Sparks as 2nd instructor",{'TERM':'202320','CRN':'17442'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(7,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'33698'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(8,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'41891'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
+fix_sections(9,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
 
 ```
 
@@ -456,15 +456,19 @@ For each workload model, there is a:
 ```{python}
 stacked_df['wrkld_sample_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_sample'] = 0.0
+stacked_df['sum_term_crse_wrkld_sample_lec'] = 0.0
 stacked_df['wrkld_sample_note'] = ""
 stacked_df['wrkld_a_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_a'] = 0.0
+stacked_df['sum_term_crse_wrkld_a_lec'] = 0.0
 stacked_df['wrkld_a_note'] = ""
 stacked_df['wrkld_b_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_b'] = 0.0
+stacked_df['sum_term_crse_wrkld_b_lec'] = 0.0
 stacked_df['wrkld_b_note'] = ""
 stacked_df['wrkld_c_type'] = stacked_df['TYPE']
 stacked_df['sum_term_crse_wrkld_c'] = 0.0
+stacked_df['sum_term_crse_wrkld_c_lec'] = 0.0
 stacked_df['wrkld_c_note'] = ""
 ```
 
@@ -620,12 +624,41 @@ sections.
 In other cases, LAB sections are coded as LEC because they share the same CRN as their owner lecture.  To capture these
 cases a special logic is introduced.  If a section is taught once per week (e.g., M or W or TH) and the CRN has more than one meeting period, then the section with one meeting period is designated a LAB section. 
 
+In reviewing the data I found some really odd coding. To accomodate this, I added an override
+block to turn specific tuples into lab sections.
+
+```{python}
+#| eval: true
+#| echo: false
+
+def fix_stacked( id, note, key, data ):
+    filter = (
+        (stacked_df["TERM"]==key["TERM"])
+        &(stacked_df["CRN"]==key["CRN"])
+        &(stacked_df["time_code"]==key["time_code"])
+        &(stacked_df["instructor"]==key["instructor"])
+        )
+
+    for item in data.keys():
+        stacked_df.loc[filter,item]=data[item]
+    stacked_df.loc[filter,"fixes"] += f";FIX{id:03}"
+    stacked_df.loc[filter,"fix_notes"] += ";" + note
+
+```
+
 ```{python}
 # Assign LAB workload
 labs_per_lecture = model_sample['labs_per_lecture']
 
 # Assign LAB sections
 stacked_df.loc[(stacked_df['mtgs_per_crn']>1)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['mtgs_per_wk']==1),'wrkld_sample_type'] = 'LAB'
+
+# Apply overrides for LAB sections
+
+fix_stacked(100,"2x lab mtg",
+ {'TERM':'202410','CRN':12151,'time_code':'.T.R...14511559','instructor':'Abdelwahed,Sherif'},
+ {'wrkld_sample_type':'LAB'}
+)
 
 # Create a note for all LAB sections
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'wrkld_sample_note'] = f"RULE: [wrkld]={(1.0/labs_per_lecture):0.2f} for LAB"
@@ -693,8 +726,21 @@ for threshhold,weight in model_sample['large_classes']:
     stacked_df.loc[(stacked_df['ACTUAL ENROLLMENT']>=threshhold)&(stacked_df['wrkld_sample_type']=='LEC')&(stacked_df['instructor_cnt']>1.0),'wrkld_sample_note'] = f"BASE: [wrkld]={weight/2.0} per CRN ENRL>={threshhold} (co-teaching)"
 ```
 
+### Store LEC-only workload in separate column.
 
-### Examples, checks and verifications
+```{python}
+
+stacked_df['sum_term_crse_wrkld_sample_lec'] = 0.0
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_wrkld_sample_lec'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_wrkld_sample']
+
+```
+
+### Summary
+
+At this point the model building is done and the workload assignments are stored in the appropriate columns.
+
+
+## Examples, checks and verifications
 
 The following code blocks are added as unique situations are discovered.  The code below
 shows how these situations are handled and demonstrates how they were corrected.
@@ -702,7 +748,7 @@ shows how these situations are handled and demonstrates how they were corrected.
 As odd situations are revealed, add a code block here to clearly show the inconsistency.  Then, change
 the workload code above until the situation clears up AND you don't screw up any of the other situations.
 
-#### Example: LECT / LAB
+### Example: LECT / LAB
 
 In this example, a lecture/lab course was coded as 3 separate CRN.  Each CRN has a main lecture and a single-meeting-period lab.
 
@@ -733,7 +779,7 @@ show_block(stacked_df,
 
 * *sum_term_crse_crn_hours* represents the number of credit hours associated with a CRN.  This value is split across multiple meeting times.
 
-#### Example: LECT sharing a common time
+### Example: LECT sharing a common time
 
 In this example, two CRN are sharing a common teaching time and their workloads are split across the two CRN.
 
@@ -747,7 +793,7 @@ show_block(stacked_df,
 ```
 
 
-#### Example: Miscode?
+### Example: Miscode?
 
 This record shows two CRN overlapping in teaching time, but not exactly matching teaching times.  Is this for real? Is this a miscode?  My initial guess is that this is a miscode and the times should be corrected.  This can be accomplished with a FIX record above.
 ```{python}
@@ -757,7 +803,7 @@ show_block(stacked_df,
 )
 ```
 
-#### Example: Singleton ROND
+### Example: Singleton ROND
 
 This shows a singleton ROND sections.  Synchronous on-line sections (ROND) should always be taught with an in-person section. In this
 case I can only imagine that no students enrolled in the RINP/face-to-face section and it was dropped during earlier data cleaning.
@@ -770,7 +816,7 @@ show_block(stacked_df,
 
 ```
 
-#### Example: Doubleton ROND+RINP
+### Example: Doubleton ROND+RINP
 
 This second example shows a doubleton ROND+RINP section.
 
@@ -782,7 +828,7 @@ show_block(stacked_df,
 
 ```
 
-#### Example: odd counting 
+### Example: odd counting 
 
 Verifying actual enrollment vs sum_term_crse_wrkld_sample
 
@@ -794,6 +840,22 @@ show_block(stacked_df,
 )
 
 ```
+
+
+### Example: odd counting 
+
+Verifying actual enrollment vs sum_term_crse_wrkld_sample
+
+```{python}
+show_block(stacked_df,
+    {'TERM':'202410','instructor':"Duke,Debra",'COURSE':'CMSC256'},
+    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','ACTUAL ENROLLMENT','MAX CREDITS','time_code','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours',
+    'sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+)
+
+```
+
+
 
 ## Store the dataframe
 
