@@ -116,7 +116,7 @@
     "href": "30_explore.html#columns-in-the-dataframe",
     "title": "Exploring the data",
     "section": "Columns in the dataframe",
-    "text": "Columns in the dataframe\n\n\nIndex(['TERM', 'PART_OF_TERM', 'COLLEGE', 'DEPT', 'COURSE', 'SECT', 'CRN',\n       'TYPE', 'MIN CREDITS', 'MAX CREDITS',\n       ...\n       'wrkld_a_note', 'wrkld_b_type', 'sum_term_crse_wrkld_b',\n       'sum_term_crse_wrkld_b_lec', 'wrkld_b_note', 'wrkld_c_type',\n       'sum_term_crse_wrkld_c', 'sum_term_crse_wrkld_c_lec', 'wrkld_c_note',\n       'sum_term_crse_wrklod_sample_lec'],\n      dtype='object', length=103)"
+    "text": "Columns in the dataframe\n\n\nIndex(['TERM', 'PART_OF_TERM', 'COLLEGE', 'DEPT', 'COURSE', 'SECT', 'CRN',\n       'TYPE', 'MIN CREDITS', 'MAX CREDITS',\n       ...\n       'sum_term_crse_wrkld_a_lec', 'wrkld_a_note', 'wrkld_b_type',\n       'sum_term_crse_wrkld_b', 'sum_term_crse_wrkld_b_lec', 'wrkld_b_note',\n       'wrkld_c_type', 'sum_term_crse_wrkld_c', 'sum_term_crse_wrkld_c_lec',\n       'wrkld_c_note'],\n      dtype='object', length=102)"
   },
   {
     "objectID": "30_explore.html#college-wide-measures-over-time",
