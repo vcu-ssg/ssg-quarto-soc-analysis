@@ -740,7 +740,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb31-9"><a href="#cb31-9" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'lec_only_course_list'</span>] <span class="op">=</span> temp.groupby([<span class="st">'TERM'</span>,<span class="st">'instructor'</span>])[<span class="st">'lec-only-course'</span>].transform( list_courses )</span>
 <span id="cb31-10"><a href="#cb31-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb31-11"><a href="#cb31-11" aria-hidden="true" tabindex="-1"></a>stacked_df[(stacked_df[<span class="st">'instructor'</span>]<span class="op">==</span><span class="st">'Leonard,John'</span>)<span class="op">&amp;</span>(stacked_df[<span class="st">'TERM'</span>].isin([<span class="st">'202410'</span>,<span class="st">'202320'</span>]))][[<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'lec_only_course_list'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="156">
+<div class="cell-output cell-output-display" data-execution_count="34">
 <div>
 
 
@@ -844,7 +844,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb32-12"><a href="#cb32-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_crn_hours'</span>,</span>
 <span id="cb32-13"><a href="#cb32-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb32-14"><a href="#cb32-14" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="157">
+<div class="cell-output cell-output-display" data-execution_count="35">
 <div>
 
 
@@ -977,7 +977,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Heise,Rebecca"</span>},</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="158">
+<div class="cell-output cell-output-display" data-execution_count="36">
 <div>
 
 
@@ -1132,7 +1132,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202310'</span>,<span class="st">'instructor'</span>:<span class="st">"Ferri,James"</span>},</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="159">
+<div class="cell-output cell-output-display" data-execution_count="37">
 <div>
 
 
@@ -1259,7 +1259,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor'</span>:<span class="st">"Manic,Milos"</span>},</span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="160">
+<div class="cell-output cell-output-display" data-execution_count="38">
 <div>
 
 
@@ -1360,7 +1360,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor'</span>:<span class="st">"Ghosh,Preetam"</span>},</span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="161">
+<div class="cell-output cell-output-display" data-execution_count="39">
 <div>
 
 
@@ -1488,7 +1488,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
 <span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="162">
+<div class="cell-output cell-output-display" data-execution_count="40">
 <div>
 
 
@@ -1602,7 +1602,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="163">
+<div class="cell-output cell-output-display" data-execution_count="41">
 <div>
 
 
@@ -1769,8 +1769,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>That’s all folks! Additional models can be added and the google sheets can be reviewed.</p>
 <p>Now the real analysis can begin:</p>
 <ul>
-<li><a href="">here is a link to a google sheet</a> that shows tables created from the dataframe.</li>
+<li><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">here is a link to a google sheet</a> that shows tables created from the dataframe.</li>
 <li><a href="./30_explore.html">here is a HTML report</a> that is still evolving.</li>
+<li><a href="stacked_df.csv">here is the CSV for the cleaned dataframe</a>. This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).</li>
 </ul>
 
 

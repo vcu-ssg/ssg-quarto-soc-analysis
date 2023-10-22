@@ -88,7 +88,7 @@
     "href": "20_clean.html#summary-1",
     "title": "Cleaning the data",
     "section": "Summary",
-    "text": "Summary\nThat’s all folks! Additional models can be added and the google sheets can be reviewed.\nNow the real analysis can begin:\n\nhere is a link to a google sheet that shows tables created from the dataframe.\nhere is a HTML report that is still evolving."
+    "text": "Summary\nThat’s all folks! Additional models can be added and the google sheets can be reviewed.\nNow the real analysis can begin:\n\nhere is a link to a google sheet that shows tables created from the dataframe.\nhere is a HTML report that is still evolving.\nhere is the CSV for the cleaned dataframe. This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE)."
   },
   {
     "objectID": "10_download.html",

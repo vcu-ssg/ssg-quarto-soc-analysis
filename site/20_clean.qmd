@@ -946,5 +946,6 @@ That's all folks!  Additional models can be added and the google sheets can be r
 
 Now the real analysis can begin:
 
-* [here is a link to a google sheet]() that shows tables created from the dataframe.
+* [here is a link to a google sheet](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377) that shows tables created from the dataframe.
 * [here is a HTML report](30_explore.qmd) that is still evolving.
+* [here is the CSV for the cleaned dataframe](stacked_df.csv).  This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).
