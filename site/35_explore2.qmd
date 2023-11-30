@@ -1,0 +1,105 @@
+---
+title: Exploring the data
+---
+
+For this analysis we'll be using the *stacked_df* data frame from the cleaning process.
+
+I haven't spend much time on this.  My effort to date has been spent on developing 
+and documenting the preparing of the data at the instructor level.
+
+Significant effort was also invested in the [corresponding google workbook](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377).
+
+## Columns in the dataframe
+
+```{python}
+#| echo: false
+import os
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+stacked_df = pd.read_csv('stacked_df.csv')
+
+for col in ['TERM','COURSE','SECT']:
+  stacked_df[col] = stacked_df[col].astype(str)
+
+print(stacked_df.columns)
+```
+
+## College-wide measures over time
+
+This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.
+
+```{python}
+#| echo: false
+summary_df = stacked_df.groupby(['TERM','period_name']).agg({'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_mtg_students':'sum','sum_term_crse_crn_hours':'sum'}).reset_index()
+
+Markdown(tabulate(
+  summary_df, 
+  headers=['Term','Term Name','Course Sum','CRN Sum','StuMtg Sum','Hours Sum'],
+  numalign="right",stralign="left",
+  showindex=False,
+  floatfmt=".0f"  # Format numbers without decimals
+))
+
+```
+
+```{python}
+#| echo: false
+#| 
+X_column = 'period_name'
+Y_column = 'sum_term_crse_crn_hours'
+
+plt.bar(summary_df[X_column], summary_df[Y_column])
+
+plt.xticks(rotation=45, ha='right')
+
+plt.xlabel('Semester')
+plt.ylabel('Sum of Credit Hours')
+plt.title("Credit hours taught by semester")
+
+plt.show()
+
+```
+
+
+## Teaching for Fall 2023 by subject
+
+```{python}
+#| echo: false
+
+df = stacked_df[stacked_df['TERM'] == '202410']
+
+summary_df = df.groupby(['DEPT']).agg({'sum_term_crse':'sum','sum_term_crse_crn':'sum','sum_term_crse_crn_mtg_students':'sum','sum_term_crse_crn_hours':'sum'}).reset_index()
+
+Markdown(tabulate(
+  summary_df, 
+  headers=['Dept','Course Sum','CRN Sum','Student Sum','Hours Sum'],
+  numalign="right",stralign="left",
+  showindex=False,
+  floatfmt=".0f"  # Format numbers without decimals
+))
+
+```
+
+
+```{python}
+#| echo: false
+#| 
+X_column = 'DEPT'
+Y_column = 'sum_term_crse_crn_hours'
+
+plt.bar(summary_df[X_column], summary_df[Y_column])
+
+plt.xticks(rotation=45, ha='right')
+
+plt.xlabel('Department')
+plt.ylabel('Sum of Credit Hours')
+plt.title("Credit hours for Fall 2023 by subject")
+
+plt.show()
+
+```

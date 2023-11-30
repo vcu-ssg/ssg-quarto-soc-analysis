@@ -902,9 +902,12 @@ except:
     sheet = client.open_by_key(spreadsheet_key).add_worksheet( 
         title = worksheet_name,nrows=100,ncols=10
     )
-sheet.clear()
-set_with_dataframe(worksheet=sheet, dataframe=stacked_df, include_index=False,include_column_header=True, resize=True)
-
+try:
+    sheet.clear()
+    set_with_dataframe(worksheet=sheet, dataframe=stacked_df, include_index=False,include_column_header=True, resize=True)
+except:
+    print(f"Data can't be written")
+    
 ```
 
 ### Freshen persistent instructor data
