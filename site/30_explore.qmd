@@ -20,13 +20,19 @@ from IPython.display import Markdown
 from tabulate import tabulate
 import pandas as pd
 import numpy as np
+```
+
+```{python}
+# Load the CSV file into a pandas data frame.
 
 stacked_df = pd.read_csv('stacked_df.csv')
 
+# Ensure that these 3 columns are treated as strings and not as numbers.
 for col in ['TERM','COURSE','SECT']:
   stacked_df[col] = stacked_df[col].astype(str)
 
-print(stacked_df.columns)
+# Print a list of columns
+stacked_df.columns
 ```
 
 ## College-wide measures over time
