@@ -1,0 +1,47 @@
+---
+title: "Sort Button Test"
+---
+
+# make simplex button
+
+<button type="button" class="btn btn-primary btn-lg">Large button</button>
+
+
+# make card
+
+
+<div class="card border-primary mb-3" style="max-width: 20rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+<h4 class="card-title">Primary card title</h4>
+<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+<div class="card border-secondary mb-3" style="max-width: 20rem;">
+<div class="card-header">Header</div>
+<div class="card-body">
+<h4 class="card-title">Secondary card title</h4>
+<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+</div>
+</div>
+
+<div id="sorting-controls">
+  <label for="sorting-criteria">Sort by: </label>
+  <select id="sorting-criteria">
+    <option value="total_hours">Total Hours</option>
+    <option value="lec_hours">Lecture Hours</option>
+    <option value="total_workload">Total Workload</option>
+    <option value="lec_workload">Lecture Workload</option>
+    <option value="alphabet">Alphabet</option>
+  </select>
+</div>
+
+
+<div id="sort-buttons">
+    <button class="sort-btn" id="sort-asc">
+<spanclass="arrow-up">&#9650;</span>
+    </button>
+    <button class="sort-btn" id="sort-desc">
+      <span class="arrow-down">&#9660;</span>
+    </button>
+</div>

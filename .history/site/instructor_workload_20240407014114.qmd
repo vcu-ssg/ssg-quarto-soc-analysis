@@ -1,0 +1,8 @@
+---
+title: "Instructor Workload"
+---
+
+```{ojs}
+
+// Importing D3.js
+d3 = require('d3@6')

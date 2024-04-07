@@ -1,0 +1,15 @@
+<div id="sorting-controls">
+  <label for="sorting-criteria">Sort by: </label>
+  <select id="sorting-criteria">
+    <option value="total_hours">Total Hours</option>
+    <option value="lec_hours">Lecture Hours</option>
+    <option value="total_workload">Total Workload</option>
+    <option value="lec_workload">Lecture Workload</option>
+    <option value="alphabet">Alphabet</option>
+  </select>
+
+  <div id="sort-buttons">
+    <button class="sort-btn" id="sort-asc">&#9650;</button>
+    <button class="sort-btn" id="sort-desc">&#9660;</button>
+  </div>
+</div>

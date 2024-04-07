@@ -30,7 +30,8 @@ from math import ceil
 from tabulate import tabulate
 from IPython.display import Markdown
 from gspread_dataframe import set_with_dataframe, get_as_dataframe
-from oauth2client.service_account import ServiceAccountCredentials
+from google.oauth2.credentials import Credentials
+from google_auth_oauthlib.flow import InstalledAppFlow
 
 
 directory_path = './data'
@@ -291,18 +292,17 @@ changed or corrected, this analysis should be regenerated to use these amended d
 The code below merges the [persistent instructor data](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116) from the google sheet into the working dataframe.
 
 ```{python}
-# define scope
-scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+# Define the scope
+scope = ['https://www.googleapis.com/auth/spreadsheets']
 
-# create credentials object
-credential_file = os.path.join(os.path.expanduser("~"), ".gsecrets", "gsheets-credentials.json")
-if not os.path.isfile( credential_file ):
-  print("Missing credential file:",credential_file)
-  sys.exit()
+# Start the OAuth flow
+flow = InstalledAppFlow.from_client_secrets_file(
+    '/Users/winniehuynh81/Desktop/vcussg_dashboards/client_secret_5229018863-5m24tu79nikg6ik3hfh3aunndkip9hn3.apps.googleusercontent.com.json', scope)
+credentials = flow.run_local_server(port=0)
 
 # authorize the client
-creds = ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)
-client = gspread.authorize(creds)
+# creds = ServiceAccountCredentials.from_json_keyfile_name(credential_file, scope)
+client = gspread.authorize(credentials)
 
 spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"
 worksheet_name = "Instructor data"

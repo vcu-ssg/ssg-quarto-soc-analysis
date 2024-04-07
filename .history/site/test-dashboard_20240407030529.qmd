@@ -1,0 +1,20 @@
+---
+title: "Sort Button Test"
+---
+
+<div id="sorting-controls">
+  <label for="sorting-criteria">Sort by: </label>
+  <select id="sorting-criteria">
+    <option value="total_hours">Total Hours</option>
+    <option value="lec_hours">Lecture Hours</option>
+    <option value="total_workload">Total Workload</option>
+    <option value="lec_workload">Lecture Workload</option>
+    <option value="alphabet">Alphabet</option>
+  </select>
+>
+
+
+<div id="sort-buttons">
+<button class="sort-btn" id="sort-asc"><span class="arrow-up">&#9650;</span></button>
+<button class="sort-btn" id="sort-desc"><span class="arrow-down">&#9660;</span></button>
+</div>

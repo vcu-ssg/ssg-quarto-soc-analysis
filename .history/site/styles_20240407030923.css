@@ -1,0 +1,53 @@
+  #sorting-controls {
+    display: flex;
+    align-items: center; /* Align the dropdown and button vertically */
+    gap: 10px; /* Space between the dropdown and the button */
+  }
+  
+  #sorting-criteria {
+    padding: 5px 10px;
+    font-size: 16px;
+    border-radius: 4px;
+    border: 1px solid #ccc; 
+  }
+
+  #sort-buttons {
+    display: flex;
+    flex-direction: column; /* Stack the buttons vertically */
+    gap: 6px; /* Small space between buttons *
+    /
+    margin-top: 10px;
+  }
+  
+  .sort-btn {
+    background-color: transparent; 
+    color: grey;
+    padding: 3px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center; /* Center-align the arrow */
+    justify-content: center; /* Center the content vertically */
+    border-radius: 8px;
+    width: 5px; /* Set a fixed width for the buttons */
+    height: 5px; /* Set a fixed height for the buttons */
+    transition-duration: 0.4s;
+    transition: transform 0.1s, background-color 0.2s;
+  }
+  
+  .sort-btn:hover {
+    transform: scale(1.5);
+  }
+
+  .sort-btn:active {
+    background-color: transparent; 
+    color: black;
+  }
+  
+  .arrow-up, .arrow-down {
+    display: block;
+    background-color: transparent;
+    font-size: 12px; 
+    stroke: none;
+  }

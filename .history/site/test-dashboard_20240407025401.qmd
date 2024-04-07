@@ -1,0 +1,16 @@
+---
+title: "Sort Button Test"
+format:
+    html:
+        css: styles.css
+        page-layout: full
+---
+
+
+<div id="sorting-controls">
+  <div id="sort-buttons">
+    <button class="sort-btn" id="sort-asc">&#9650;</button>
+    <button class="sort-btn" id="sort-desc">&#9660;</button>
+  </div>
+</div>
+-->

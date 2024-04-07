@@ -1,0 +1,35 @@
+---
+title: "Instructor Workload"
+---
+
+```{ojs}
+
+// Importing D3.js
+d3 = require('d3@6')
+```
+
+```{ojs}
+// Attach the CSV file
+fileAttachment = FileAttachment("stacked_df.csv")
+```
+
+```{ojs}
+// Load the CSV data
+data = await fileAttachment.csv()
+```
+
+
+```{ojs}
+// Filter and transform data
+transformedData = data.map(d => ({
+  instructor: d.instructor,
+  total_hours: +d.sum_term + +d.sum_term_crse + +d.sum_term_crse_crn + +d.sum_term_crse_crn_mtg_students + +d.sum_term_crse_crn_hours,
+  lec_hours: d.wrkld_sample_type === 'LEC' ? +d.sum_term_crse_crn_hours : 0,
+  total_workload: +d.sum_term_crse_wrkld_sample,
+  lec_workload: d.wrkld_sample_type === 'LEC' ? +d.sum_term_crse_wrkld_sample_lec : 0,
+  dept: d.ins_dept,
+  role: d.ins_role,
+  course: d.COURSE
+}));
+```
+
