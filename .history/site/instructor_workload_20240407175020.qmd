@@ -691,7 +691,7 @@ width = 850 + margin.left - margin.right
     d3.select("#sort-desc").on("click", function() {
       const selectedCriterion = d3.select("#sorting-criteria").property("value");
       sortData(selectedCriterion, false); 
-    });
+    })i;
   }
 
   attachSortingEventListeners();

@@ -34,5 +34,11 @@
   },
   "test-dashboard.qmd": {
     "test-dashboard.html": "23d71ef9"
+  },
+  "visual1.qmd": {
+    "visual1.html": "37a9e5d0"
+  },
+  "test-button.qmd": {
+    "test-button.html": "9da69771"
   }
 }
