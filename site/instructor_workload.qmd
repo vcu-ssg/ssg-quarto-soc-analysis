@@ -41,7 +41,6 @@ fileAttachment = FileAttachment("selected_data.csv")
 data = await fileAttachment.csv()
 ```
 
-
 ```{ojs}
 //| echo: false
 // Filter and transform data
@@ -164,54 +163,99 @@ width = 850 + margin.left - margin.right
       .style("text-anchor", "end")
       .text(d => d.label);
 
-  // dropdown button
+  // check boxes
   const departments = [
     'CMSC', 'EGRB', 'EGRC', 'EGRE', 'EGRM', 'ENGR', 'INNO', 'EBRC', 'COAR'
   ];
+
+  const roles = [
+    'TTT', 'Adjunct', 'Term'
+  ]
   
   const checkboxSize = 15; // Size of the checkbox
   const spacing = 20; // Spacing between checkboxes
   
   // Initial filter state
-  let selectedFilters = new Set();
-  
-  // Draw checkboxes and labels
-  departments.forEach((dept, index) => {
-    const group = svg.append('g')
-      .attr('transform', `translate(10, ${10 + index * spacing})`)
-      .attr('class', 'dept-filter')
-      .attr('id', `filter${dept}`)
-      .data([dept])
-      .style('cursor', 'pointer')
-      .on('click', function(event, d) {
-        // Toggle selection
-        if (selectedFilters.has(d)) {
-          selectedFilters.delete(d);
-          d3.select(this).select('rect').attr('fill', 'none');
-        } else {
-          selectedFilters.add(d);
-          d3.select(this).select('rect').attr('fill', 'black');
-        }
-        // Apply filter
-        //applyFilter();
-      });
-  
-    // Draw checkbox
-    group.append('rect')
-      .attr("x", width + 100)
-      .attr("y", height - 1650)
-      .attr('width', checkboxSize)
-      .attr('height', checkboxSize)
-      .attr('fill', 'none')
-      .attr('stroke', 'black');
-  
-    // Add label next to checkbox
-    group.append('text')
-      .attr('x', checkboxSize + 900)
-      .attr('y', checkboxSize + 9)
-      .text(dept);
-  });
+  let selectedDepartments = new Set();
+  let selectedRoles = new Set();
 
+  const rightMargin = 0;
+  const checkBoxStartX = width - rightMargin;
+
+  // Add headings for Departments and Roles
+  svg.append('text')
+      .attr('x', checkBoxStartX)
+      .attr('y', 20)
+      .text('Departments:')
+      .style('font-weight', 'bold');
+  
+  svg.append('text')
+      .attr('x', checkBoxStartX)
+      .attr('y', 40 + (departments.length + 1) * spacing)
+      .text('Roles:')
+      .style('font-weight', 'bold');
+  
+  // Draw checkboxes for departments
+  departments.forEach((dept, index) => {
+      const group = svg.append('g')
+          .attr('transform', `translate(${checkBoxStartX}, ${40 + index * spacing})`)
+          .attr('class', 'dept-filter')
+          .style('cursor', 'pointer')
+          .on('click', function() {
+              if (selectedDepartments.has(dept)) {
+                  selectedDepartments.delete(dept);
+                  d3.select(this).select('rect').attr('fill', 'none');
+              } else {
+                  selectedDepartments.add(dept);
+                  d3.select(this).select('rect').attr('fill', 'black');
+              }
+              //applyFilters();
+              applyCurrentState();
+          });
+  
+      group.append('rect')
+          .attr('width', checkboxSize)
+          .attr('height', checkboxSize)
+          .attr('fill', selectedDepartments.has(dept) ? 'black' : 'none')
+          .attr('stroke', 'black');
+  
+      group.append('text')
+          .attr('x', checkboxSize + 5)
+          .attr('y', checkboxSize / 2)
+          .attr('alignment-baseline', 'middle')
+          .text(dept);
+  });
+  
+  // Draw checkboxes for roles
+  roles.forEach((role, index) => {
+      const group = svg.append('g')
+          .attr('transform', `translate(${checkBoxStartX}, ${40 + (departments.length + 1) * spacing + (index + 1) * spacing})`)
+          .attr('class', 'role-filter')
+          .style('cursor', 'pointer')
+          .on('click', function() {
+              if (selectedRoles.has(role)) {
+                  selectedRoles.delete(role);
+                  d3.select(this).select('rect').attr('fill', 'none');
+              } else {
+                  selectedRoles.add(role);
+                  d3.select(this).select('rect').attr('fill', 'black');
+              }
+              //applyFilters();
+              applyCurrentState();
+          });
+  
+      group.append('rect')
+          .attr('width', checkboxSize)
+          .attr('height', checkboxSize)
+          .attr('fill', selectedRoles.has(role) ? 'black' : 'none')
+          .attr('stroke', 'black');
+  
+      group.append('text')
+          .attr('x', checkboxSize + 5)
+          .attr('y', checkboxSize / 2)
+          .attr('alignment-baseline', 'middle')
+          .text(role);
+  });
 
   // tick line
   const axisOffset = 50; // amount to move the axis down 
@@ -344,26 +388,30 @@ width = 850 + margin.left - margin.right
   }
 
    // Sort helper functions
-    const sortAscending = criterion => (a, b) => {
-      if (typeof a[criterion] === "string") {
+  function sortAscending(criterion) {
+    return (a, b) => {
+      if (typeof a[criterion] === 'string') {
         return a[criterion].localeCompare(b[criterion]);
       }
-      return d3.ascending(a[criterion], b[criterion]);
+      return a[criterion] - b[criterion];
     };
-    
-    const sortDescending = criterion => (a, b) => {
-      if (typeof a[criterion] === "string") {
+  }
+
+  function sortDescending(criterion) {
+    return (a, b) => {
+      if (typeof a [criterion] === 'string') {
         return b[criterion].localeCompare(a[criterion]);
       }
-      return d3.descending(a[criterion], b[criterion]);
+      return b[criterion] - a[criterion];
     };
+  }
 
-   function sortData(criterion, ascending) {
+  function sortData(criterion, ascending) {
     currentState.sortCriterion = criterion;
     currentState.sortOrderAscending = ascending;
     applyCurrentState();
   }
-
+  
     // Function to update filtering state and apply changes
   function filterData() {
     currentState.selectedDepartments = new Set(
@@ -654,9 +702,9 @@ width = 850 + margin.left - margin.right
     // Function to apply sorting and filtering
   function applyCurrentState() {
     // Apply filter first
-    let displayData = aggregatedData.filter(d => 
-      (currentState.selectedDepartments.size === 0 || currentState.selectedDepartments.has(d.ins_dept)) &&
-      (currentState.selectedRoles.size === 0 || currentState.selectedRoles.has(d.ins_role))
+    let filteredData = aggregatedData.filter(d => 
+      (selectedDepartments.size === 0 || selectedDepartments.has(d.ins_dept)) &&
+      (selectedRoles.size === 0 || selectedRoles.has(d.ins_role))
     );
   
     // Then apply sorting
@@ -664,11 +712,11 @@ width = 850 + margin.left - margin.right
       const sortFunction = currentState.sortOrderAscending
         ? sortAscending(currentState.sortCriterion)
         : sortDescending(currentState.sortCriterion);
-      displayData.sort(sortFunction);
+      filteredData.sort(sortFunction);
     }
   
     // Update the charts with the filtered and sorted data
-    updateChart(displayData);
+    updateChart(filteredData);
   }
   
   applyCurrentState();
@@ -694,7 +742,7 @@ width = 850 + margin.left - margin.right
     });
   }
 
-  attachSortingEventListeners();
+  attachSortingEventListeners();      
 
   return svg.node();
 }

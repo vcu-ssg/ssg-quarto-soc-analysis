@@ -1,0 +1,707 @@
+---
+title: "Instructor Workload"
+format:
+    html:
+        css: styles.css
+        page-layout: full
+---
+
+<div id="sorting-controls">
+  <label for="sorting-criteria">Sort by: </label>
+  <select id="sorting-criteria">
+    <option value="total_hours">Total Hours</option>
+    <option value="lec_hours">Lecture Hours</option>
+    <option value="total_workload">Total Workload</option>
+    <option value="lec_workload">Lecture Workload</option>
+    <option value="alphabet">Alphabet</option>
+  </select>
+
+
+<div id="sort-buttons">
+<button class="sort-btn" id="sort-asc"><span class="arrow-up">&#9650;</span></button>
+<button class="sort-btn" id="sort-desc"><span class="arrow-down">&#9660;</span></button>
+</div>
+
+
+```{ojs}
+//| echo: false
+// Importing D3.js
+d3 = require('d3@6')
+```
+
+```{ojs}
+//| echo: false
+// Attach the CSV file
+fileAttachment = FileAttachment("selected_data.csv")
+```
+
+```{ojs}
+//| echo: false
+// Load the CSV data
+data = await fileAttachment.csv()
+```
+
+
+```{ojs}
+//| echo: false
+// Filter and transform data
+transformedData = data.map(d => ({
+  instructor: d.instructor,
+  total_hours: +d.sum_term + +d.sum_term_crse + +d.sum_term_crse_crn + +d.sum_term_crse_crn_mtg_students + +d.sum_term_crse_crn_hours,
+  lec_hours: d.wrkld_sample_type === 'LEC' ? +d.sum_term_crse_crn_hours : 0,
+  total_workload: +d.sum_term_crse_wrkld_sample,
+  lec_workload: d.wrkld_sample_type === 'LEC' ? +d.sum_term_crse_wrkld_sample_lec : 0,
+  dept: d.ins_dept,
+  role: d.ins_role,
+  course: d.COURSE
+}));
+```
+
+```{ojs}
+//| echo: false
+// aggregate data
+aggregatedData = d3.rollups(transformedData, v => ({
+  total_hours: d3.sum(v, d => d.total_hours),
+  lec_hours: d3.sum(v, d => d.lec_hours),
+  total_workload: d3.sum(v, d => d.total_workload),
+  courses: Array.from(new Set(v.map(d => d.course))),
+  lec_workload: d3.sum(v, d => d.lec_workload),
+  ins_dept: v[0].dept,
+  ins_role: v[0].role
+}), d => d.instructor).map(([instructor, values]) => ({ instructor, ...values}));
+```
+
+```{ojs}
+//| echo: false
+margin = ({top: 20, right: 20, bottom: 20, left: 40 })
+```
+
+```{ojs}
+//| echo: false
+height = 1700 - margin.top - margin.bottom
+```
+
+```{ojs}
+//| echo: false
+width = 850 + margin.left - margin.right
+```
+
+```{ojs}
+//| echo: false
+{
+  const minHeight = 700;
+  const minWidth = 600;
+
+  const svgWidth = width + margin.left + margin.right;
+  const svgHeight = height + margin.top + margin.bottom;
+
+  let dynamicHeight = Math.max((aggregatedData.length || 0) * 10 + margin.top + margin.bottom, minHeight);
+  let dynamicWidth = Math.max(width, minWidth);
+
+  margin.bottom = Math.max(margin.bottom, 50); // space for x-axis tick marks
+  margin.right = Math.max(margin.right, 150);
+
+  const middleGap = 220;
+  const chartWidth = width/2  - middleGap/2;
+
+  // set up mirrored chart 
+  const xScaleLeft = d3.scaleLinear()
+    .domain([0, d3.max(aggregatedData, d => Math.max(d.total_hours, d.lec_hours))])
+    .range([chartWidth, 0]); // ranging from middle to left 
+  
+  const xScaleRight = d3.scaleLinear()
+    .domain([0, d3.max(aggregatedData, d => Math.max(d.total_workload, d.lec_workload))])
+    .range([width/2 + middleGap/2, width]); // ranging from middle to right
+
+  const yScale = d3.scaleBand()
+    .domain(aggregatedData.map(d => d.instructor))
+    .range([0, height])
+    .paddingInner(0.1);
+
+  // create svg container
+  const svg = d3.create("svg")
+    .attr('width', svgWidth)
+    .attr('height', svgHeight)
+    .attr("viewBox", `0 0 ${width + margin.left + margin.right} ${dynamicHeight}`)
+    //.style("border", "1px solid black");
+
+  const g = svg.append("g").attr("transform", `translate(${margin.left}, ${margin.top})`)
+
+  const chartGroup = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+
+   // Define legend data
+  const legendMarginTop = -30;
+  const legendXStart = margin.left;
+  const legendSpacing = 200;
+  const legendYPosition = legendMarginTop;
+  
+  const legendData = [
+    { color: "skyblue", label: "Total Hours" },
+    { color: "blue", label: "Lecture Hours" },
+    { color: "lightgreen", label: "Total Workload" },
+    { color: "green", label: "Lecture Workload" }
+  ];
+
+  // Position the legend at the top within the newly adjusted margin space
+  const legend = chartGroup.selectAll(".legend")
+    .data(legendData)
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", (d, i) => `translate(${legendXStart + i * legendSpacing}, ${-margin.top + legendMarginTop})`);
+  
+  legend.append("rect")
+      .attr("x", 30)
+      .attr("y", 0)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", d => d.color);
+  
+  legend.append("text")
+      .attr("x", 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(d => d.label);
+
+  // dropdown button
+  const departments = [
+    'CMSC', 'EGRB', 'EGRC', 'EGRE', 'EGRM', 'ENGR', 'INNO', 'EBRC', 'COAR'
+  ];
+  
+  const checkboxSize = 15; // Size of the checkbox
+  const spacing = 20; // Spacing between checkboxes
+  
+  // Initial filter state
+  let selectedFilters = new Set();
+  
+  // Draw checkboxes and labels
+  departments.forEach((dept, index) => {
+    const group = svg.append('g')
+      .attr('transform', `translate(10, ${10 + index * spacing})`)
+      .attr('class', 'dept-filter')
+      .attr('id', `filter${dept}`)
+      .data([dept])
+      .style('cursor', 'pointer')
+      .on('click', function(event, d) {
+        // Toggle selection
+        if (selectedFilters.has(d)) {
+          selectedFilters.delete(d);
+          d3.select(this).select('rect').attr('fill', 'none');
+        } else {
+          selectedFilters.add(d);
+          d3.select(this).select('rect').attr('fill', 'black');
+        }
+        // Apply filter
+        //applyFilter();
+      });
+  
+    // Draw checkbox
+    group.append('rect')
+      .attr("x", width + 100)
+      .attr("y", height - 1650)
+      .attr('width', checkboxSize)
+      .attr('height', checkboxSize)
+      .attr('fill', 'none')
+      .attr('stroke', 'black');
+  
+    // Add label next to checkbox
+    group.append('text')
+      .attr('x', checkboxSize + 900)
+      .attr('y', checkboxSize + 9)
+      .text(dept);
+  });
+
+
+  // tick line
+  const axisOffset = 50; // amount to move the axis down 
+  const axisOffset2 = 70; //extend length of tick line 
+  
+  const xAxisLeft = d3.axisBottom(xScaleLeft)
+    .ticks(5)
+    .tickSizeInner(-(height - margin.top - margin.bottom + axisOffset2))
+    .tickSizeOuter(0);
+
+  const xAxisRight = d3.axisBottom(xScaleRight)
+    .ticks(5)
+    .tickSizeInner(-(height - margin.top - margin.bottom + axisOffset2))
+    .tickSizeOuter(0);
+
+  svg.append("g")
+    .attr("class", "x-axis-left")
+    .attr("transform", `translate(0, ${height - margin.bottom + axisOffset})`)
+    .call(xAxisLeft)
+    .selectAll(".tick line") 
+    .attr("stroke", "#ccc");
+  
+  svg.append("g")
+    .attr("class", "x-axis-right")
+    .attr("transform", `translate(0, ${height - margin.bottom + axisOffset})`)
+    .call(xAxisRight)
+    .selectAll(".tick line") 
+    .attr("stroke", "#ccc");
+
+  // Create a tooltip div that is hidden by default
+  var tooltip = d3.select("body").append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0)
+    .style("position", "absolute")
+    .style("text-align", "center")
+    .style("width", "150px")
+    .style("height", "auto")
+    .style("padding", "2px")
+    .style("font", "12px sans-serif")
+    .style("color", "white")
+    .style("background", "black")
+    .style("border", "0px")
+    .style("border-radius", "8px")
+    .style("pointer-events", "none");
+
+  // labels
+  const instructorXPosition = width/2 + 15;
+  svg.selectAll(".label-instructor") // append instructor - middleGap
+   .data(aggregatedData)
+   .enter().append("text")
+     .attr("class", "label-instructor")
+     .attr("x", instructorXPosition)
+     .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+     .attr("dy", ".35em")
+     .attr("text-anchor", "end")
+     .text(d => d.instructor)
+     .style("font-size", "10px");
+
+  const departmentXPosition = width/2 + 25;
+  svg.selectAll(".label-department") // append departments - middleGap
+     .data(aggregatedData)
+     .enter().append("text")
+     .attr("class", "label-department")
+     .attr("x", departmentXPosition)
+     .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+     .attr("dy", ".35em")
+     .attr("text-anchor", "start")
+     .text(d => d.ins_dept)
+     .style("font-size", "10px");
+
+  const roleXPosition = width/2 + 80;
+  // Append roles
+  svg.selectAll(".label-role")
+     .data(aggregatedData)
+     .enter().append("text")
+     .attr("class", "label-role")
+     .attr("x", roleXPosition)
+     .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+     .attr("dy", ".35em")
+     .attr("text-anchor", "middle")
+     .text(d => `(${d.ins_role})`)
+     .style("font-size", "10px");
+
+  // draw bars - middleGap
+  svg.selectAll(".bar-total-hours")
+    .data(aggregatedData)
+    .enter().append("rect")
+      .attr("class", "bar-total-hours")
+      .attr("x", d => xScaleLeft(d.total_hours))
+      .attr("y", d => yScale(d.instructor))
+      .attr("width", d => chartWidth - xScaleLeft(d.total_hours))
+      .attr("height", yScale.bandwidth())
+      .attr("fill", "skyblue");
+
+  svg.selectAll(".bar-lec-hours")
+    .data(aggregatedData)
+    .enter().append("rect")
+      .attr("class", "bar-lec-hours")
+      .attr("x", d => xScaleLeft(d.lec_hours))
+      .attr("y", d => yScale(d.instructor))
+      .attr("width", d => chartWidth - xScaleLeft(d.lec_hours))
+      .attr("height", yScale.bandwidth())
+      .attr("fill", "blue");
+
+  svg.selectAll(".bar-total-workload")
+    .data(aggregatedData)
+    .enter().append("rect")
+      .attr("class", "bar-total-workload")
+      .attr("x", width/2 + middleGap/2)
+      .attr("y", d => yScale(d.instructor))
+      .attr("width", d => xScaleRight(d.total_workload) - (width/2 + middleGap/2))
+      .attr("height", yScale.bandwidth())
+      .attr("fill", "lightgreen");
+
+  svg.selectAll(".bar-lec-workload")
+    .data(aggregatedData)
+    .enter().append("rect")
+      .attr("class", "bar-lec-workload")
+      .attr("x", width/2 + middleGap/2)
+      .attr("y", d => yScale(d.instructor))
+      .attr("width", d => xScaleRight(d.lec_workload) - (width/2 + middleGap/2))
+      .attr("height", yScale.bandwidth())
+      .attr("fill", "green");
+
+  let currentState = {
+    sortCriterion: null,
+    sortOrderAscending: true,
+    selectedDepartments: new Set(),
+    selectedRoles: new Set()
+  }
+
+  let filter = {
+    department: new Set(),
+    role 
+  }
+
+   // Sort helper functions
+    const sortAscending = criterion => (a, b) => {
+      if (typeof a[criterion] === "string") {
+        return a[criterion].localeCompare(b[criterion]);
+      }
+      return d3.ascending(a[criterion], b[criterion]);
+    };
+    
+    const sortDescending = criterion => (a, b) => {
+      if (typeof a[criterion] === "string") {
+        return b[criterion].localeCompare(a[criterion]);
+      }
+      return d3.descending(a[criterion], b[criterion]);
+    };
+
+   function sortData(criterion, ascending) {
+    currentState.sortCriterion = criterion;
+    currentState.sortOrderAscending = ascending;
+    applyCurrentState();
+  }
+
+    // Function to update filtering state and apply changes
+  function filterData() {
+    currentState.selectedDepartments = new Set(
+      d3.selectAll(".dept-filter:checked").nodes().map(d => d.value)
+    );
+
+    currentState.selectedRoles = new Set(
+      d3.selectAll(".role-filter:checked").nodes().map(d => d.value)
+    ); 
+    
+    applyCurrentState();
+  }
+
+  // Function to update bars
+  function updateBars(selector, data, xScale, fillColor, transition, isRightSide) {
+      let bars = svg.selectAll(selector)
+          .data(data, d => d.instructor);
+  
+      // Enter and Update selections
+      bars.enter().append("rect")
+          .attr("class", selector.replace('.', ''))
+          .attr("fill", fillColor)
+          .merge(bars) // Merging enter and update selections
+          .transition(transition)
+          .attr("x", d => isRightSide ? width / 2 : xScale(d.total_hours))
+          .attr("y", d => yScale(d.instructor))
+          .attr("width", d => isRightSide ? xScale(d.total_workload) - (width / 2) : (width / 2 - middleGap) - xScale(d.total_hours))
+          .attr("height", yScale.bandwidth());
+  
+      // Exit selection
+      bars.exit().remove();
+  }
+  
+  // Function to update labels
+  function updateLabels(selector, data, xPos, textAccessor, transition) {
+      let labels = svg.selectAll(selector)
+                      .data(data, d => d.instructor);
+  
+      labels.enter().append("text")
+          .attr("class", selector.substring(1)) 
+          .merge(labels)
+          .transition(transition)
+          .attr("x", xPos)
+          .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+          .attr("dy", ".35em")
+          .text(textAccessor);
+     labels.exit().remove();
+  }
+  
+   function updateChart(displayData) {
+      // Update yScale's range and domain
+      yScale.domain(displayData.map(d => d.instructor))
+            .padding(0.1);
+  
+      // Transition for bars and labels
+      const t = svg.transition().duration(500);
+  
+      // Update chart elements in updateChart function
+      updateBars(".bar-total-hours", displayData, xScaleLeft, "skyblue", t, false);  // Left side bar
+      updateBars(".bar-lec-hours", displayData, xScaleLeft, "blue", t, false);      // Left side bar
+      updateBars(".bar-total-workload", displayData, xScaleRight, "lightgreen", t, true); // Right side bar
+      updateBars(".bar-lec-workload", displayData, xScaleRight, "green", t, true);   // Right side bar
+       
+      // Update labels
+      updateLabels(".label-instructor", displayData, instructorXPosition, d => d.instructor, t);
+      updateLabels(".label-department", displayData, departmentXPosition, d => d.ins_dept, t);
+      updateLabels(".label-role", displayData, roleXPosition, d => `(${d.ins_role})`, t);
+  
+  
+      // Select and bind data for total hours bars
+      let barsTotalHours = svg.selectAll(".bar-total-hours")
+                              .data(displayData, d => d.instructor);
+      
+      // Enter + Update Selection for total hours bars
+      barsTotalHours.enter().append("rect")
+          .attr("class", "bar-total-hours")
+          // Initial attributes for new elements
+          .attr("fill", "skyblue")
+          .merge(barsTotalHours) // Merging enter and update selections
+          // Add mouse event
+          .on("mouseover", function(event, d) {
+              let format = d3.format(".2f");
+              tooltip.transition()
+                  .duration(200)
+                  .style("opacity", .9);
+              tooltip.html(`
+                  <div class="tooltip-content">
+                      <strong>${d.instructor}</strong><br>
+                      <span class="tooltip-text">Total Hours: ${format(d.total_hours)}</span><br>
+                      <ul>${d.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                  </div>
+              `)
+                  .style("left", (event.pageX + 5) + "px")
+                  .style("top", (event.pageY - 28) + "px");
+          })
+          .on("mouseout", function() {
+              tooltip.transition()
+                  .duration(500)
+                  .style("opacity", 0);
+          })
+          .transition(t)
+          .attr("x", d => xScaleLeft(d.total_hours))
+          .attr("y", d => yScale(d.instructor))
+          .attr("width", d => chartWidth - xScaleLeft(d.total_hours))
+          .attr("height", yScale.bandwidth());
+   
+      barsTotalHours.exit().remove();
+  
+      
+      // Select and bind data for lecture hours bars
+      let barsLectureHours = svg.selectAll(".bar-lec-hours")
+                                .data(displayData, d => d.instructor);
+        
+        // Enter + Update Selection for lecture hours bars
+        barsLectureHours.enter().append("rect")
+            .attr("class", "bar-lec-hours")
+            .attr("fill", "blue")
+            .merge(barsLectureHours)
+            // add mouse event
+            .on("mouseover", function(event, d) {
+                let format = d3.format(".2f");
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltip.html(`
+                  <div class="tooltip-content">
+                      <strong>${d.instructor}</strong><br>
+                      <span class="tooltip-text">Lecture Hours: ${format(d.lec_hours)}</span><br>
+                      <ul>${d.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                  </div>
+                `)
+                    .style("left", (event.pageX + 5) + "px")
+                    .style("top", (event.pageY - 28) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            })
+            .transition(t)
+            .attr("x", d => xScaleLeft(d.lec_hours))
+            .attr("y", d => yScale(d.instructor))
+            .attr("width", d => chartWidth - xScaleLeft(d.lec_hours))
+            .attr("height", yScale.bandwidth());
+            
+        barsLectureHours.exit().remove();
+  
+      
+      let barsTotalWorkload = svg.selectAll(".bar-total-workload")
+                       .data(displayData, d => d.instructor);
+
+        barsTotalWorkload.enter().append("rect")
+            .merge(barsTotalWorkload)
+            .attr("class", "bar-total-workload")
+            .attr("x", width/2 + middleGap/2)
+            .attr("y", d => yScale(d.instructor))
+            .attr("width", d => xScaleRight(d.total_workload) - (width/2 + middleGap/2))
+            .attr("height", yScale.bandwidth())
+            .attr("fill", "lightgreen")
+              // Add mouse event
+            .on("mouseover", function(event, d) {
+                let format = d3.format(".2f");
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+                tooltip.html(`
+                  <div class="tooltip-content">
+                      <strong>${d.instructor}</strong><br>
+                      <span class="tooltip-text">Total Workload: ${format(d.total_workload)}</span><br>
+                      <ul>${d.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                  </div>
+                `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 15) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+              
+        barsTotalWorkload.transition(t)
+            .attr("x", width/2 + middleGap/2)
+            .attr("y", d => yScale(d.instructor))
+            .attr("y", d => yScale(d.instructor))
+            .attr("width",  d => xScaleRight(d.total_workload) - (width/2 + middleGap/2));
+        
+        barsTotalWorkload.exit().remove();
+
+     let barsLectureWorkload = svg.selectAll(".bar-lec-workload")
+                               .data(displayData, d => d.instructor);
+        
+        barsLectureWorkload.enter().append("rect")
+            .attr("class", "bar-lec-workload")
+            .merge(barsLectureWorkload)
+            .attr("x", width/2 + middleGap/2)
+            .attr("y", d => yScale(d.instructor))
+            .attr("width", d => xScaleRight(d.lec_workload) - (width/2 + middleGap/2))
+            .attr("height", yScale.bandwidth())
+            .attr("fill", "green")
+              // Add mouse event
+            .on("mouseover", function(event, d) {
+                let format = d3.format(".2f");
+                tooltip.transition()
+                    .duration(200)
+                    .style("opacity", 0.9);
+                tooltip.html(`
+                  <div class="tooltip-content">
+                      <strong>${d.instructor}</strong><br>
+                      <span class="tooltip-text"> Lecture Workload: ${format(d.lec_workload)}</span><br>
+                      <ul>${d.courses.map(course => `<li>${course}</li>`).join('')}</ul>
+                  </div>
+                `)
+                    .style("left", (event.pageX + 10) + "px")
+                    .style("top", (event.pageY - 15) + "px");
+            })
+            .on("mouseout", function() {
+                tooltip.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });
+        
+          barsLectureWorkload.transition(t)
+              .attr("x", width/2 + middleGap/2)
+              .attr("y", d => yScale(d.instructor))
+              .attr("y", d => yScale(d.instructor))
+              .attr("width", d => xScaleRight(d.lec_workload) - (width/2 + middleGap/2));
+          
+          barsLectureWorkload.exit().remove();
+    
+      // Update instructor labels
+     let instructorLabels = svg.selectAll(".label-instructor")
+                            .data(displayData, d => d.instructor);
+  
+        instructorLabels.enter().append("text")
+            .attr("class", "label-instructor")
+            .merge(instructorLabels) // merge enter and update selections
+            .transition(t)
+            .attr("x", instructorXPosition)
+            .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+            .attr("dy", ".35em")
+            .attr("text-anchor", "end")
+            .text(d => d.instructor)
+            .style("font-size", "10px");
+        
+        instructorLabels.exit().remove();
+      
+      // Update department labels
+      let departmentLabels = svg.selectAll(".label-department")
+                                .data(displayData, d => d.instructor);
+      
+        departmentLabels.enter().append("text")
+            .attr("class", "label-department")
+            .merge(departmentLabels) 
+            .transition(t)
+            .attr("x", departmentXPosition)
+            .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+            .attr("dy", ".35em")
+            .attr("text-anchor", "start")
+            .text(d => d.ins_dept)
+            .style("font-size", "10px");
+        
+        departmentLabels.exit().remove();
+      
+          
+      // Update role labels
+      let roleLabels = svg.selectAll(".label-role")
+                      .data(displayData, d => d.instructor);
+  
+        roleLabels.enter().append("text")
+            .attr("class", "label-role")
+            .merge(roleLabels) 
+            .transition(t)
+            .attr("x", roleXPosition)
+            .attr("y", d => yScale(d.instructor) + yScale.bandwidth() / 2)
+            .attr("dy", ".35em")
+            .attr("text-anchor", "middle")
+            .text(d => `(${d.ins_role})`)
+            .style("font-size", "10px");
+        
+        roleLabels.exit().remove();
+  
+   }
+  
+    // Attach event listeners to filter checkboxes
+    d3.selectAll(".dept-filter, .role-filter").on("change", filterData);
+
+    // Function to apply sorting and filtering
+  function applyCurrentState() {
+    // Apply filter first
+    let displayData = aggregatedData.filter(d => 
+      (currentState.selectedDepartments.size === 0 || currentState.selectedDepartments.has(d.ins_dept)) &&
+      (currentState.selectedRoles.size === 0 || currentState.selectedRoles.has(d.ins_role))
+    );
+  
+    // Then apply sorting
+    if (currentState.sortCriterion) {
+      const sortFunction = currentState.sortOrderAscending
+        ? sortAscending(currentState.sortCriterion)
+        : sortDescending(currentState.sortCriterion);
+      displayData.sort(sortFunction);
+    }
+  
+    // Update the charts with the filtered and sorted data
+    updateChart(displayData);
+  }
+  
+  applyCurrentState();
+
+  // Function to attach event listeners to sorting controls
+  function attachSortingEventListeners() {
+    // Listen for changes on the dropdown menu
+    d3.select("#sorting-criteria").on("change", function() {
+      const selectedCriterion = d3.select(this).node().value;
+      // ascending sort as default action
+      sortData(selectedCriterion, true);
+    });
+  
+    // Attach event listeners for sorting
+    d3.select("#sort-asc").on("click", function() {
+      const selectedCriterion = d3.select("#sorting-criteria").property("value");
+      sortData(selectedCriterion, true); 
+    });
+    
+    d3.select("#sort-desc").on("click", function() {
+      const selectedCriterion = d3.select("#sorting-criteria").property("value");
+      sortData(selectedCriterion, false); 
+    });
+  }
+
+  attachSortingEventListeners();
+
+  return svg.node();
+}
+```
+
