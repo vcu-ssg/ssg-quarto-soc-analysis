@@ -27,6 +27,9 @@ stacked_df = pd.read_csv('stacked_df.csv')
 cols = ['instructor','ins_dept','TERM','COURSE','TITLE','wrkld_sample_type','sum_term_crse_wrkld_sample','wrkld_sample_note']
 terms = [202410,202320]
 
+# Strip whitespace from column names
+stacked_df.columns = stacked_df.columns.str.strip()
+
 df = stacked_df[stacked_df["TERM"].isin(terms)][cols]
 
 bokeh_formatters = {

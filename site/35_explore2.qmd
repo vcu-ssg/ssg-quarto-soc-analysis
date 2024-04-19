@@ -39,6 +39,9 @@ Load the data frame.  The OJS code would like slightly different.
 # Load the data frame
 stacked_df = pd.read_csv('stacked_df.csv')
 
+# Strip whitespace from column names
+stacked_df.columns = stacked_df.columns.str.strip()
+
 # Force types of these columns to be strings
 for col in ['TERM','COURSE','SECT']:
   stacked_df[col] = stacked_df[col].astype(str)
