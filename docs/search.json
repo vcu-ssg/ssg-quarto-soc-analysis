@@ -250,5 +250,12 @@
     "title": "Exploring the data",
     "section": "Javascript code",
     "text": "Javascript code\n\nHTML section"
+  },
+  {
+    "objectID": "test.html",
+    "href": "test.html",
+    "title": "Workloads",
+    "section": "",
+    "text": "import datetime as dt\nimport numpy as np\nimport pandas as pd\nimport panel as pn\n\nnp.random.seed(7)\npn.extension('tabulator')\n\nfrom bokeh.sampledata.periodic_table import elements\n\nperiodic_df = elements[['atomic number', 'name', 'atomic mass', 'metal', 'year discovered']].set_index('atomic number')\n\ndef content_fn( row ):\n    return pn.pane.HTML(\n    f'&lt;iframe src=\"https://en.wikipedia.org/wiki/{row[\"name\"]}?printable=yes\" width=\"100%\" height=\"200px\"&gt;&lt;/iframe&gt;',\n    sizing_mode='stretch_width'\n    )\n\nperiodic_table = pn.widgets.Tabulator(\n    periodic_df, layout='fit_columns', sizing_mode='stretch_width',\n    row_content=content_fn,\n    embed_content=True\n)\n\nperiodic_table"
   }
 ]
