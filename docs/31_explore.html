@@ -1,0 +1,1612 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Analysis of Teaching - Exploring the data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Analysis of Teaching</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./10_download.html"> 
+<span class="menu-text">Download</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./20_clean.html"> 
+<span class="menu-text">Clean</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./30_explore.html"> 
+<span class="menu-text">Explore</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#faculty-comparisons---fall-2023" id="toc-faculty-comparisons---fall-2023" class="nav-link active" data-scroll-target="#faculty-comparisons---fall-2023">Faculty comparisons - Fall 2023</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Exploring the data</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>For this analysis we’ll be using the <em>stacked_df</em> data frame from the cleaning process.</p>
+<p>I haven’t spend much time on this. My effort to date has been spent on developing and documenting the preparing of the data at the instructor level.</p>
+<p>Significant effort was also invested in the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">corresponding google workbook</a>.</p>
+<div id="b40709d6" class="cell" data-execution_count="1">
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+  var py_version = '3.4.1'.replace('rc', '-rc.').replace('.dev', '-dev.');
+  var reloading = false;
+  var Bokeh = root.Bokeh;
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks;
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, js_modules, js_exports, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+    if (js_modules == null) js_modules = [];
+    if (js_exports == null) js_exports = {};
+
+    root._bokeh_onload_callbacks.push(callback);
+
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls.length === 0 && js_modules.length === 0 && Object.keys(js_exports).length === 0) {
+      run_callbacks();
+      return null;
+    }
+    if (!reloading) {
+      console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    }
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+    window._bokeh_on_load = on_load
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    var skip = [];
+    if (window.requirejs) {
+      window.requirejs.config({'packages': {}, 'paths': {'tabulator': 'https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/js/tabulator.min', 'moment': 'https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min'}, 'shim': {}});
+      require(["tabulator"], function(Tabulator) {
+    window.Tabulator = Tabulator
+    on_load()
+      })
+      require(["moment"], function(moment) {
+    window.moment = moment
+    on_load()
+      })
+      root._bokeh_is_loading = css_urls.length + 2;
+    } else {
+      root._bokeh_is_loading = css_urls.length + js_urls.length + js_modules.length + Object.keys(js_exports).length;
+    }
+
+    var existing_stylesheets = []
+    var links = document.getElementsByTagName('link')
+    for (var i = 0; i < links.length; i++) {
+      var link = links[i]
+      if (link.href != null) {
+    existing_stylesheets.push(link.href)
+      }
+    }
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      if (existing_stylesheets.indexOf(url) !== -1) {
+    on_load()
+    continue;
+      }
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }    if (((window.Tabulator !== undefined) && (!(window.Tabulator instanceof HTMLElement))) || window.requirejs) {
+      var urls = ['https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/js/tabulator.min.js'];
+      for (var i = 0; i < urls.length; i++) {
+        skip.push(urls[i])
+      }
+    }    if (((window.moment !== undefined) && (!(window.moment instanceof HTMLElement))) || window.requirejs) {
+      var urls = ['https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/luxon/build/global/luxon.min.js'];
+      for (var i = 0; i < urls.length; i++) {
+        skip.push(urls[i])
+      }
+    }    var existing_scripts = []
+    var scripts = document.getElementsByTagName('script')
+    for (var i = 0; i < scripts.length; i++) {
+      var script = scripts[i]
+      if (script.src != null) {
+    existing_scripts.push(script.src)
+      }
+    }
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (var i = 0; i < js_modules.length; i++) {
+      var url = js_modules[i];
+      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+    for (const name in js_exports) {
+      var url = js_exports[name];
+      if (skip.indexOf(url) >= 0 || root[name] != null) {
+    if (!window.requirejs) {
+      on_load();
+    }
+    continue;
+      }
+      var element = document.createElement('script');
+      element.onerror = on_error;
+      element.async = false;
+      element.type = "module";
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      element.textContent = `
+      import ${name} from "${url}"
+      window.${name} = ${name}
+      window._bokeh_on_load()
+      `
+      document.head.appendChild(element);
+    }
+    if (!js_urls.length && !js_modules.length) {
+      on_load()
+    }
+  };
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+  var js_urls = ["https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/js/tabulator.min.js", "https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/luxon/build/global/luxon.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.1.min.js", "https://cdn.holoviz.org/panel/1.4.2/dist/panel.min.js"];
+  var js_modules = [];
+  var js_exports = {};
+  var css_urls = ["https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css?v=1.4.2"];
+  var inline_js = [    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+function(Bokeh) {} // ensure no trailing comma for IE
+  ];
+
+  function run_inline_js() {
+    if ((root.Bokeh !== undefined) || (force === true)) {
+      for (var i = 0; i < inline_js.length; i++) {
+    try {
+          inline_js[i].call(root, root.Bokeh);
+    } catch(e) {
+      if (!reloading) {
+        throw e;
+      }
+    }
+      }
+      // Cache old bokeh versions
+      if (Bokeh != undefined && !reloading) {
+    var NewBokeh = root.Bokeh;
+    if (Bokeh.versions === undefined) {
+      Bokeh.versions = new Map();
+    }
+    if (NewBokeh.version !== Bokeh.version) {
+      Bokeh.versions.set(NewBokeh.version, NewBokeh)
+    }
+    root.Bokeh = Bokeh;
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    }
+    root._bokeh_is_initializing = false
+  }
+
+  function load_or_wait() {
+    // Implement a backoff loop that tries to ensure we do not load multiple
+    // versions of Bokeh and its dependencies at the same time.
+    // In recent versions we use the root._bokeh_is_initializing flag
+    // to determine whether there is an ongoing attempt to initialize
+    // bokeh, however for backward compatibility we also try to ensure
+    // that we do not start loading a newer (Panel>=1.0 and Bokeh>3) version
+    // before older versions are fully initialized.
+    if (root._bokeh_is_initializing && Date.now() > root._bokeh_timeout) {
+      root._bokeh_is_initializing = false;
+      root._bokeh_onload_callbacks = undefined;
+      console.log("Bokeh: BokehJS was loaded multiple times but one version failed to initialize.");
+      load_or_wait();
+    } else if (root._bokeh_is_initializing || (typeof root._bokeh_is_initializing === "undefined" && root._bokeh_onload_callbacks !== undefined)) {
+      setTimeout(load_or_wait, 100);
+    } else {
+      root._bokeh_is_initializing = true
+      root._bokeh_onload_callbacks = []
+      var bokeh_loaded = Bokeh != null && (Bokeh.version === py_version || (Bokeh.versions !== undefined && Bokeh.versions.has(py_version)));
+      if (!reloading && !bokeh_loaded) {
+    root.Bokeh = undefined;
+      }
+      load_libs(css_urls, js_urls, js_modules, js_exports, function() {
+    console.debug("Bokeh: BokehJS plotting callback run at", now());
+    run_inline_js();
+      });
+    }
+  }
+  // Give older versions of the autoload script a head-start to ensure
+  // they initialize before we start loading newer version.
+  setTimeout(load_or_wait, 100)
+}(window));
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/javascript">
+
+if ((window.PyViz === undefined) || (window.PyViz instanceof HTMLElement)) {
+  window.PyViz = {comms: {}, comm_status:{}, kernels:{}, receivers: {}, plot_index: []}
+}
+
+
+    function JupyterCommManager() {
+    }
+
+    JupyterCommManager.prototype.register_target = function(plot_id, comm_id, msg_handler) {
+      if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        comm_manager.register_target(comm_id, function(comm) {
+          comm.on_msg(msg_handler);
+        });
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        window.PyViz.kernels[plot_id].registerCommTarget(comm_id, function(comm) {
+          comm.onMsg = msg_handler;
+        });
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        google.colab.kernel.comms.registerTarget(comm_id, (comm) => {
+          var messages = comm.messages[Symbol.asyncIterator]();
+          function processIteratorResult(result) {
+            var message = result.value;
+            console.log(message)
+            var content = {data: message.data, comm_id};
+            var buffers = []
+            for (var buffer of message.buffers || []) {
+              buffers.push(new DataView(buffer))
+            }
+            var metadata = message.metadata || {};
+            var msg = {content, buffers, metadata}
+            msg_handler(msg);
+            return messages.next().then(processIteratorResult);
+          }
+          return messages.next().then(processIteratorResult);
+        })
+      }
+    }
+
+    JupyterCommManager.prototype.get_client_comm = function(plot_id, comm_id, msg_handler) {
+      if (comm_id in window.PyViz.comms) {
+        return window.PyViz.comms[comm_id];
+      } else if (window.comm_manager || ((window.Jupyter !== undefined) && (Jupyter.notebook.kernel != null))) {
+        var comm_manager = window.comm_manager || Jupyter.notebook.kernel.comm_manager;
+        var comm = comm_manager.new_comm(comm_id, {}, {}, {}, comm_id);
+        if (msg_handler) {
+          comm.on_msg(msg_handler);
+        }
+      } else if ((plot_id in window.PyViz.kernels) && (window.PyViz.kernels[plot_id])) {
+        var comm = window.PyViz.kernels[plot_id].connectToComm(comm_id);
+        comm.open();
+        if (msg_handler) {
+          comm.onMsg = msg_handler;
+        }
+      } else if (typeof google != 'undefined' && google.colab.kernel != null) {
+        var comm_promise = google.colab.kernel.comms.open(comm_id)
+        comm_promise.then((comm) => {
+          window.PyViz.comms[comm_id] = comm;
+          if (msg_handler) {
+            var messages = comm.messages[Symbol.asyncIterator]();
+            function processIteratorResult(result) {
+              var message = result.value;
+              var content = {data: message.data};
+              var metadata = message.metadata || {comm_id};
+              var msg = {content, metadata}
+              msg_handler(msg);
+              return messages.next().then(processIteratorResult);
+            }
+            return messages.next().then(processIteratorResult);
+          }
+        }) 
+        var sendClosure = (data, metadata, buffers, disposeOnDone) => {
+          return comm_promise.then((comm) => {
+            comm.send(data, metadata, buffers, disposeOnDone);
+          });
+        };
+        var comm = {
+          send: sendClosure
+        };
+      }
+      window.PyViz.comms[comm_id] = comm;
+      return comm;
+    }
+    window.PyViz.comm_manager = new JupyterCommManager();
+    
+
+
+var JS_MIME_TYPE = 'application/javascript';
+var HTML_MIME_TYPE = 'text/html';
+var EXEC_MIME_TYPE = 'application/vnd.holoviews_exec.v0+json';
+var CLASS_NAME = 'output';
+
+/**
+ * Render data to the DOM node
+ */
+function render(props, node) {
+  var div = document.createElement("div");
+  var script = document.createElement("script");
+  node.appendChild(div);
+  node.appendChild(script);
+}
+
+/**
+ * Handle when a new output is added
+ */
+function handle_add_output(event, handle) {
+  var output_area = handle.output_area;
+  var output = handle.output;
+  if ((output.data == undefined) || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+    return
+  }
+  var id = output.metadata[EXEC_MIME_TYPE]["id"];
+  var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+  if (id !== undefined) {
+    var nchildren = toinsert.length;
+    var html_node = toinsert[nchildren-1].children[0];
+    html_node.innerHTML = output.data[HTML_MIME_TYPE];
+    var scripts = [];
+    var nodelist = html_node.querySelectorAll("script");
+    for (var i in nodelist) {
+      if (nodelist.hasOwnProperty(i)) {
+        scripts.push(nodelist[i])
+      }
+    }
+
+    scripts.forEach( function (oldScript) {
+      var newScript = document.createElement("script");
+      var attrs = [];
+      var nodemap = oldScript.attributes;
+      for (var j in nodemap) {
+        if (nodemap.hasOwnProperty(j)) {
+          attrs.push(nodemap[j])
+        }
+      }
+      attrs.forEach(function(attr) { newScript.setAttribute(attr.name, attr.value) });
+      newScript.appendChild(document.createTextNode(oldScript.innerHTML));
+      oldScript.parentNode.replaceChild(newScript, oldScript);
+    });
+    if (JS_MIME_TYPE in output.data) {
+      toinsert[nchildren-1].children[1].textContent = output.data[JS_MIME_TYPE];
+    }
+    output_area._hv_plot_id = id;
+    if ((window.Bokeh !== undefined) && (id in Bokeh.index)) {
+      window.PyViz.plot_index[id] = Bokeh.index[id];
+    } else {
+      window.PyViz.plot_index[id] = null;
+    }
+  } else if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+    var bk_div = document.createElement("div");
+    bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+    var script_attrs = bk_div.children[0].attributes;
+    for (var i = 0; i < script_attrs.length; i++) {
+      toinsert[toinsert.length - 1].childNodes[1].setAttribute(script_attrs[i].name, script_attrs[i].value);
+    }
+    // store reference to server id on output_area
+    output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+  }
+}
+
+/**
+ * Handle when an output is cleared or removed
+ */
+function handle_clear_output(event, handle) {
+  var id = handle.cell.output_area._hv_plot_id;
+  var server_id = handle.cell.output_area._bokeh_server_id;
+  if (((id === undefined) || !(id in PyViz.plot_index)) && (server_id !== undefined)) { return; }
+  var comm = window.PyViz.comm_manager.get_client_comm("hv-extension-comm", "hv-extension-comm", function () {});
+  if (server_id !== null) {
+    comm.send({event_type: 'server_delete', 'id': server_id});
+    return;
+  } else if (comm !== null) {
+    comm.send({event_type: 'delete', 'id': id});
+  }
+  delete PyViz.plot_index[id];
+  if ((window.Bokeh !== undefined) & (id in window.Bokeh.index)) {
+    var doc = window.Bokeh.index[id].model.document
+    doc.clear();
+    const i = window.Bokeh.documents.indexOf(doc);
+    if (i > -1) {
+      window.Bokeh.documents.splice(i, 1);
+    }
+  }
+}
+
+/**
+ * Handle kernel restart event
+ */
+function handle_kernel_cleanup(event, handle) {
+  delete PyViz.comms["hv-extension-comm"];
+  window.PyViz.plot_index = {}
+}
+
+/**
+ * Handle update_display_data messages
+ */
+function handle_update_output(event, handle) {
+  handle_clear_output(event, {cell: {output_area: handle.output_area}})
+  handle_add_output(event, handle)
+}
+
+function register_renderer(events, OutputArea) {
+  function append_mime(data, metadata, element) {
+    // create a DOM node to render to
+    var toinsert = this.create_output_subarea(
+    metadata,
+    CLASS_NAME,
+    EXEC_MIME_TYPE
+    );
+    this.keyboard_manager.register_events(toinsert);
+    // Render to node
+    var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+    render(props, toinsert[0]);
+    element.append(toinsert);
+    return toinsert
+  }
+
+  events.on('output_added.OutputArea', handle_add_output);
+  events.on('output_updated.OutputArea', handle_update_output);
+  events.on('clear_output.CodeCell', handle_clear_output);
+  events.on('delete.Cell', handle_clear_output);
+  events.on('kernel_ready.Kernel', handle_kernel_cleanup);
+
+  OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+    safe: true,
+    index: 0
+  });
+}
+
+if (window.Jupyter !== undefined) {
+  try {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  } catch(err) {
+  }
+}
+
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<style>*[data-root-id],
+*[data-root-id] > * {
+  box-sizing: border-box;
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
+  color: var(--vscode-editor-foreground, var(--jp-ui-font-color1));
+}
+
+/* Override VSCode background color */
+.cell-output-ipywidget-background:has(
+    > .cell-output-ipywidget-background > .lm-Widget > *[data-root-id]
+  ),
+.cell-output-ipywidget-background:has(> .lm-Widget > *[data-root-id]) {
+  background-color: transparent !important;
+}
+</style>
+</div>
+<div class="cell-output cell-output-display">
+<div id="d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9">
+  <div id="e19a29e2-05b3-4379-bea1-53b4bc1e6524" data-root-id="d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"ba8828e2-3f85-46a4-95f4-b8eb3155b2e7":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"45d77d4c-8d93-4f2c-8020-a331c706806b","attributes":{"plot_id":"d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9","comm_id":"2e008ce522f4480eb2964a6eb64cbe57","client_comm_id":"65fae845d01e4a458b7b7a9e7bbaec0d"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"ba8828e2-3f85-46a4-95f4-b8eb3155b2e7","roots":{"d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9":"e19a29e2-05b3-4379-bea1-53b4bc1e6524"},"root_ids":["d6f831ca-d0cb-4e12-8c13-e8d3f1e40ab9"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+<section id="faculty-comparisons---fall-2023" class="level1">
+<h1>Faculty comparisons - Fall 2023</h1>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">CMSC</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">MNE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">ECE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">BME</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">CLSE</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">All</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div id="ff75d15a" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="4">
+<div id="4996c4e5-1a18-4747-affc-50c2122830b8">
+  <div id="a6489354-0363-4bba-8ca8-0e99776ab8b5" data-root-id="4996c4e5-1a18-4747-affc-50c2122830b8" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"011d24fa-dac4-4699-9e9f-b4590705bf42":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"4996c4e5-1a18-4747-affc-50c2122830b8","attributes":{"name":"Row00118","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"97a95ecb-021b-4027-849f-d618542116df","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"82c49635-dd5b-4374-b6ee-d7bad3b65bcc","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"642b16e2-9aab-4929-a7cc-8585832cf9e4","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"dbbbd74b-ee8e-40b3-a65c-4ba71fcf83b8","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"b646afdc-61da-4df0-aea7-cbe102b89e39","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"97a95ecb-021b-4027-849f-d618542116df"},{"type":"object","name":"ImportedStyleSheet","id":"243bc909-8cda-4d98-821b-7c0bd9dd1507","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"642b16e2-9aab-4929-a7cc-8585832cf9e4"},{"id":"dbbbd74b-ee8e-40b3-a65c-4ba71fcf83b8"},{"type":"object","name":"ImportedStyleSheet","id":"55a72582-f24c-4f5a-beab-81372f0dd04a","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"1ef223a4-853a-4fbe-a5ff-d303ff45ea0b","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"e5e7cc5c-f5c0-4768-b1e3-578b3200f418"},"editor":{"type":"object","name":"StringEditor","id":"f912f484-a369-417e-a190-64bfee0fa8e1"}}},{"type":"object","name":"TableColumn","id":"32b31d68-4106-4468-a5bc-fdeb79fdb220","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"125dcd4b-0800-46af-8515-c0c3698fd049"},"editor":{"type":"object","name":"StringEditor","id":"8d75a2d3-c589-4410-abdb-18b872a2dd00"}}},{"type":"object","name":"TableColumn","id":"3c3e8688-3594-4758-809d-7e3b0011bacd","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"0d5fa96d-a2ee-4643-9ec4-bb7da1afa9c9"},"editor":{"type":"object","name":"StringEditor","id":"d4ff92c1-66f4-4a51-a906-e1a491f7c77c"}}},{"type":"object","name":"TableColumn","id":"6cf4de39-4c3e-4848-a5c8-c19d83177068","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"f95816a3-e062-44d1-8761-6d0d33eb19be","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"690c84c7-d60b-4a3a-b373-54277bd24037"}}},{"type":"object","name":"TableColumn","id":"5ab09f57-cd79-4371-8ef7-e565ec547b00","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"57dd3499-f218-4da9-ba99-55d279932d81","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"7902290b-e0f1-4822-90bf-e9e2241dd831"}}},{"type":"object","name":"TableColumn","id":"1864da16-69c4-470b-97ed-ead0dfcfe7a6","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"f8258a81-f132-4a10-bc07-9b3639989ed9","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"f0f3e7db-93f6-4bc8-9654-305a058536d1"}}},{"type":"object","name":"TableColumn","id":"94d4bab9-a71f-47dc-9484-c4fa1ac51644","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"bd0082d3-8f2f-44b9-9697-3edd4ae21b10","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"f255747e-7528-4497-bce1-1b288324f950"}}},{"type":"object","name":"TableColumn","id":"6c5dc8c5-7814-46ed-856d-55c6cc6dad1b","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"5ad164ab-0dc5-40fb-a376-4bfd631a71fc","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"8878ef00-c115-443f-9eb3-c42203370ecf"}}},{"type":"object","name":"TableColumn","id":"e01976f4-248c-4b9f-9ec9-155b086272cd","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"82d560c0-b34f-4c1d-bf3c-05dd566ea73a","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"e03c82e1-6af5-427d-9126-7095c4baa539"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"55f70e5b-aeed-4cd9-a182-998e1f153a17","attributes":{"selected":{"type":"object","name":"Selection","id":"c72bc35c-7af6-4beb-9adc-18fcce0d5b3c","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"3a01d97e-ec7b-4735-a00d-60b510585a71"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAAAFQAAABYAAAAXAAAAGAAAABkAAAAaAAAAGwAAABwAAAAdAAAAHgAAAB8AAAAgAAAA"},"shape":[33],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Ahmed,Irfan","Arodz,Tomasz","Bennett,Jason","Budwell,Caroline","Buffkin,Jonathan","Bulut,Eyuphan","Byram,Abigail","Cano Rojas,Alberto","Chaitankar,Vijender","Cranston,Daniel","Dahlberg,Robert","Damevski,Kostadin","Dinh,Thang","Duke,Debra","Ghosh,Preetam","Gill,Satinder","Grove,Ralph","Gusukuma,Luke","Kurgan,Lukasz","Lee,Aaron","Leonard,John","Luo,Changqing","Manic,Milos","Nadeem,Tamer","Nishi,Manziba","Sands,Allison","Sonmez,Ahmet","Sparks,Claire","Spinola,Rodrigo","Thomson-McInnes,Bridget","Traub,Adam","Zhao,Yanxiao","Zhou,Hongsheng"],"shape":[33],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["CMSC","CMSC","COAR","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","EGRB","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","CMSC","EGRE","CMSC"],"shape":[33],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["TTT","TTT","Adjct","Term","Adjct","TTT","Adjct","TTT","Adjct","TTT","Term","TTT","TTT","Term","TTT","Adjct","Adjct","Term","TTT","Adjct","TTT","TTT","TTT","TTT","Adjct","Adjct","Term","Term","TTT","TTT","Adjct","Adjct","TTT"],"shape":[33],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"XMRFXMRFAkB4d3d3d3cLQAAAAAAAAOA/zczMzMzMCkAAAAAAAADwP8ZyLMdyLA9AAAAAAAAAAEBLtmRLtmQBQAAAAAAAAAxA8RVf8RVfAUDNzMzMzMzwP97ard3arQ1AzczMzMzMAED///////8PQEiJlEiJlAJAmpmZmZmZqT8ZwiEcwiHcP8EYjMEYjANAS7ZkS7ZkAUDNzMzMzMzwP83MzMzMzARASImUSImUAkBcxEVcxEUCQMEe7MEe7Pk/AAAAAAAA8D+JndiJndjZPwAAAAAAAABAFmiBFmiBDkBLtmRLtmQBQOZe7uVe7hJAAAAAAAAA0D8AAAAAAADwP83MzMzMzABA"},"shape":[33],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAIkAAAAAAAAAYQAAAAAAAAOA/AAAAAAAAIEAAAAAAAADwPwAAAAAAACtAAAAAAAAAAEAAAAAAAAAYQAAAAAAAABBAAAAAAAAAGEAAAAAAAAAAQAAAAAAAACFAAAAAAAAAEEAAAAAAAAAaQAAAAAAAAChAAAAAAAAA8D8AAAAAAAAAQAAAAAAAACBAAAAAAAAAGEAAAAAAAAAAQAAAAAAAABZAAAAAAAAAJEAAAAAAAAAiQAAAAAAAACJAAAAAAAAA8D8AAAAAAAAAQAAAAAAAABhAAAAAAAAAIUAAAAAAAAAYQAAAAAAAAC5AAAAAAAAA8D8AAAAAAADwPwAAAAAAABBA"},"shape":[33],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAADAUUAAAAAAAABpQAAAAAAAADFAAAAAAACQe0AAAAAAAIBCQAAAAAAA0GhAAAAAAABAUEAAAAAAAIBZQAAAAAAAAIJAAAAAAABgckAAAAAAAMBlQAAAAAAAEGxAAAAAAACASEAAAAAAAJiJQAAAAAAAQG9AAAAAAAAAKEAAAAAAAEBkQAAAAAAAoIBAAAAAAACAU0AAAAAAAIBBQAAAAAAA0HRAAAAAAACATkAAAAAAAABRQAAAAAAAwGpAAAAAAAAARUAAAAAAAEBmQAAAAAAA4HlAAAAAAAAQhkAAAAAAAHBxQAAAAAAAAF9AAAAAAACAU0AAAAAAAAAiQAAAAAAAgEVA"},"shape":[33],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAABAb0AAAAAAAFiCQAAAAAAAgElAAAAAAAAskkAAAAAAAMBbQAAAAAAATIJAAAAAAABgaEAAAAAAAGByQAAAAAAAAJtAAAAAAABAi0AAAAAAAGBnQAAAAAAABIRAAAAAAABgYEAAAAAAAEydQAAAAAAAaIdAAAAAAAAAOEAAAAAAAEB0QAAAAAAAEJNAAAAAAADAa0AAAAAAAABXQAAAAAAA+I1AAAAAAAAgZ0AAAAAAAIBoQAAAAAAAGINAAAAAAACAX0AAAAAAAEB2QAAAAAAAcJFAAAAAAADcmUAAAAAAAAiKQAAAAAAAQHRAAAAAAACAY0AAAAAAAAA7QAAAAAAAgF1A"},"shape":[33],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"VVVVVVVVBUCqqqqqqqoOQAAAAAAAAOA/VVVVVVVVH0AAAAAAAADwP1VVVVVVVRFAAAAAAAAAAECqqqqqqqoKQAAAAAAAABhAVVVVVVVVE0CqqqqqqqoKQFVVVVVVVRVAVVVVVVVVDUCqqqqqqqokQFVVVVVVVRNAAAAAAAAA8D9VVVVVVVUFQAAAAAAAAB5AAAAAAAAACECqqqqqqqoCQFRVVVVVVR9AAAAAAAAACECqqqqqqqoKQFRVVVVVVRlAAAAAAAAA8D9VVVVVVVUFQFVVVVVVVRdAVVVVVVVVKkCrqqqqqqoUQFVVVVVVVRFAVVVVVVVV9T8AAAAAAADgPwAAAAAAAAhA"},"shape":[33],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAEAAAAAAAAAEQAAAAAAAAOA/AAAAAAAAGkAAAAAAAADwPwAAAAAAAARAAAAAAAAAAEAAAAAAAAAAQAAAAAAAABhAAAAAAAAADEAAAAAAAAAAQAAAAAAAAAxAAAAAAAAAAEAAAAAAAAAiQAAAAAAAAAxAAAAAAAAAAAAAAAAAAAAAQAAAAAAAABZAAAAAAAAAAEAAAAAAAADwPwAAAAAAABJAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAhAAAAAAAAA8D8AAAAAAAAAQAAAAAAAABJAAAAAAAAAKUAAAAAAAAAMQAAAAAAAAABAAAAAAAAA8D8AAAAAAADgPwAAAAAAAABA"},"shape":[33],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","3de06231051b49edb3f93fc93ba9f955"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"9c104110-d548-4e53-a459-2c3f749a93ce","attributes":{"plot_id":"4996c4e5-1a18-4747-affc-50c2122830b8","comm_id":"8d5f104612a7499d8ce178af434fea7b","client_comm_id":"f5762dd014e44a469909b24082d18ba5"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"011d24fa-dac4-4699-9e9f-b4590705bf42","roots":{"4996c4e5-1a18-4747-affc-50c2122830b8":"a6489354-0363-4bba-8ca8-0e99776ab8b5"},"root_ids":["4996c4e5-1a18-4747-affc-50c2122830b8"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div id="b19ded93" class="cell" data-execution_count="5">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="7253849c-7ca5-44b0-8e0d-a95c06dd3378">
+  <div id="d33e2a9d-ac54-49a1-8c47-84e741d35806" data-root-id="7253849c-7ca5-44b0-8e0d-a95c06dd3378" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"0bee24de-daf0-4a47-ba5c-7143da1853a5":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"7253849c-7ca5-44b0-8e0d-a95c06dd3378","attributes":{"name":"Row00124","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"2ba24af2-b585-4fd6-9aa2-efe09e4af110","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"466987ef-e724-44cc-a783-6e4e5e8decc5","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"15e3520a-e0dc-4745-beb3-83389b317f45","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"9f7bca37-4464-49bd-8cfb-92236ae2183b","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"ab552b7f-acac-4065-8a31-8f0ea8f0ff29","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"2ba24af2-b585-4fd6-9aa2-efe09e4af110"},{"type":"object","name":"ImportedStyleSheet","id":"18309d79-4ee7-4719-a1f6-b6645285e160","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"15e3520a-e0dc-4745-beb3-83389b317f45"},{"id":"9f7bca37-4464-49bd-8cfb-92236ae2183b"},{"type":"object","name":"ImportedStyleSheet","id":"86f30971-183c-49a3-99d9-1d57fa4c90b3","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"527e3643-0454-4bb0-a6ba-61141d3b4784","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"e11f09d2-e43c-46c6-8972-2f0e4bab34ef"},"editor":{"type":"object","name":"StringEditor","id":"331df113-e4dc-4d13-b101-9841434d26b8"}}},{"type":"object","name":"TableColumn","id":"24c6c2c5-02b6-40a0-b53e-541fc3d4af8b","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"7caea8a7-b401-4c40-9225-60585597143e"},"editor":{"type":"object","name":"StringEditor","id":"99e30630-9187-46d5-9880-4d9d7de00a39"}}},{"type":"object","name":"TableColumn","id":"1120bf38-1448-4e21-ad0e-3a457a9e804b","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"2d08ead8-951a-45d7-bd28-dcbd3eb954b8"},"editor":{"type":"object","name":"StringEditor","id":"e34a80f2-a8e4-4946-a701-e9160346a1ca"}}},{"type":"object","name":"TableColumn","id":"210b34f5-6b68-4189-ba22-af60b54b0c0a","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"aa3d6e64-f311-4f2e-8e1f-92e7618c656b","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"31c26c75-131e-4300-9f76-18f7d9633ee4"}}},{"type":"object","name":"TableColumn","id":"77581bf0-1dc0-444b-8267-2dab08703769","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"20558e7f-7d3f-4bc9-b2e4-111b9362d997","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"ecc1ffd9-2123-43e9-8206-a62841520089"}}},{"type":"object","name":"TableColumn","id":"a21693ea-b775-4fd5-ab64-85439d3fc53b","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"9cee0e62-e80b-4b4e-be3f-3db74b28bc40","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"7ac6f1c1-06c2-4116-ba12-b3e9d93133ae"}}},{"type":"object","name":"TableColumn","id":"a646b368-a43a-4768-af8e-032017d8c1ce","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"17928a8f-91a9-4b51-b237-9cbb137b6dc1","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"8eea3cba-ba44-4e69-ad70-ae444fba8883"}}},{"type":"object","name":"TableColumn","id":"eab227bf-c2cf-49fe-a8e9-b02d7bc6d7d3","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"113dd77d-cd1c-4318-a899-444e1a373ea6","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"838eb680-ebec-4501-84bc-cd82f80f33db"}}},{"type":"object","name":"TableColumn","id":"5ef4daff-d3b4-4c8c-a4c2-fdb6438cee77","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"800d661c-141a-43b6-a0e1-00a5f750879b","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"74e587df-ba36-42bd-a45b-a569089ba12f"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"1adf7aef-ff3b-4226-bc8e-18bf074156d7","attributes":{"selected":{"type":"object","name":"Selection","id":"2710bdae-7e83-4ceb-807b-450b64048891","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"3fbfc10f-3577-433c-aade-f4845a52f847"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAAAFQAAABYAAAAXAAAAGAAAABkAAAAaAAAAGwAAABwAAAAdAAAAHgAAAB8AAAA="},"shape":[32],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Almasri,Thaer","Alobaidi,Wissam","Atulasimha,Jayasimha","Barua,Radhika","Carasik,Lane","Cartin,Charles","Castano Londono,Carlos","Chen,Daren","Chen,Sheng-Chieh","Da Silva Soares,Joao Filipe","Goddard,Braden","Golshahi,Laleh","Grey,Casey","Gulla,Frank","Guven,Ibrahim","Hadimani,Ravi","Longest,Philip","Meinweiser,Gregory","Miller,Gerald","Miller,James","Miloshevsky,Gennady","Mohammadi,Reza","Mossi,Karla","Nichols,Bradley","Phongikaroon,Supathorn","Rojas Marin,Jessika","Speich,John","Tepper,Gary","Vance,Robert","Wang,Weining","Wu,Zeyun","Zhao,Hong"],"shape":[32],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM","EGRM"],"shape":[32],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["Adjct","Adjct","TTT","TTT","TTT","Term","TTT","TTT","TTT","TTT","TTT","TTT","Adjct","Term","TTT","TTT","TTT","Adjct","Term","Term","TTT","TTT","TTT","Term","TTT","TTT","TTT","TTT","Adjct","TTT","TTT","TTT"],"shape":[32],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAEAAAAAAAADwP/Dw8PDw8Ok/M0qnG+1SEkBunVdA4+4BQGOTTTbZZAtA7Em+j9Xs+j+66KKLLvoAQLrooosuOvE/MmEbBKdyAUAyYRsEp7INQOxJvo/VbPI/U1VVVVVVxT+66KKLLroAQGTCNghOZfM/MWEbBKeyDUB00UUXXXTiPwAAAAAAAPA/zczMzMzM3D9ddNFFF10UQB998cIIoPU/MmEbBKfyAUBkwjYITuX6P1SCPCXIUwpAeHh4eHj4BEBjwjYITuXzPwAAAAAAAAhA4eHh4eHh0z8AAAAAAADwP/Yk38dq9gJAMmEbBKeyAUAyYRsEp7IBQA=="},"shape":[32],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAEAAAAAAAADwPwAAAAAAABBAAAAAAAAAKkAAAAAAAAAiQAAAAAAAACJAAAAAAAAAHEAAAAAAAAAcQAAAAAAAAAhAAAAAAAAAIkAAAAAAAAAoQAAAAAAAABRAAAAAAAAA8D8AAAAAAAAkQAAAAAAAABxAAAAAAAAAKEAAAAAAAAAIQAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAiQAAAAAAAABxAAAAAAAAAIkAAAAAAAAAcQAAAAAAAABhAAAAAAAAAIEAAAAAAAAAmQAAAAAAAAAhAAAAAAAAACEAAAAAAAADwPwAAAAAAABhAAAAAAAAAIkAAAAAAAAAgQA=="},"shape":[32],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAPUAAAAAAAAA8QAAAAAAAAC5AAAAAAAAgYUAAAAAAAABJQAAAAAAAOHhAAAAAAADAYkAAAAAAAKBgQAAAAAAAAD9AAAAAAACAbEAAAAAAAEBSQAAAAAAAAElAAAAAAAAANkAAAAAAAIBpQAAAAAAAgFNAAAAAAABga0AAAAAAAABIQAAAAAAAADpAAAAAAACAS0AAAAAAAIBaQAAAAAAA4GJAAAAAAAAAZUAAAAAAAABqQAAAAAAAYHBAAAAAAACAV0AAAAAAAOBcQAAAAAAA0HdAAAAAAAAAN0AAAAAAAAA2QAAAAAAAAFZAAAAAAAAAXkAAAAAAAABeQA=="},"shape":[32],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAADAVUAAAAAAAABVQAAAAAAAAEtAAAAAAAAgeUAAAAAAACBkQAAAAAAAGHlAAAAAAAAQfEAAAAAAAKB4QAAAAAAAwFdAAAAAAABge0AAAAAAAABpQAAAAAAAwGRAAAAAAAAANkAAAAAAAFBzQAAAAAAAcHBAAAAAAACAeEAAAAAAAIBkQAAAAAAAgFNAAAAAAACgZEAAAAAAABByQAAAAAAAgGpAAAAAAACQf0AAAAAAAOBwQAAAAAAA8IdAAAAAAAAwckAAAAAAADBqQAAAAAAABJFAAAAAAAAAUkAAAAAAAIBQQAAAAAAAAGhAAAAAAADgdkAAAAAAAPB2QA=="},"shape":[32],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAEAAAAAAAADwPwAAAAAAAPA/VVVVVVVVGUBVVVVVVVUFQP///////w9AVVVVVVVVCUBVVVVVVVUNQFVVVVVVVfU/qqqqqqqqCkAAAAAAAAAQQKqqqqqqqvo/U1VVVVVV1T+qqqqqqqoKQKqqqqqqqvo/////////D0BVVVVVVVX1PwAAAAAAAPA/AAAAAAAAAEBVVVVVVVUZQAAAAAAAAAhAVVVVVVVVCUBVVVVVVVURQAAAAAAAABhAAAAAAAAAEEBUVVVVVVUFQAAAAAAAABJAAAAAAAAA8D8AAAAAAADwP1VVVVVVVQ1AVVVVVVVVDUBVVVVVVVUFQA=="},"shape":[32],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAAEAAAAAAAADwPwAAAAAAAPA/AAAAAAAAFEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABEAAAAAAAAAIQAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAIQAAAAAAAAPA/AAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA/AAAAAAAAAEAAAAAAAADwPwAAAAAAAPA/AAAAAAAAAEAAAAAAAAAUQAAAAAAAAPA/AAAAAAAABEAAAAAAAAAIQAAAAAAAABBAAAAAAAAAEEAAAAAAAADwPwAAAAAAAAxAAAAAAAAA8D8AAAAAAADwPwAAAAAAAABAAAAAAAAACEAAAAAAAAAAQA=="},"shape":[32],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","b187c3314af147d0b486ca56e37b70a2"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"5b06bbc7-001f-4248-9b1f-c7cab8fcdd81","attributes":{"plot_id":"7253849c-7ca5-44b0-8e0d-a95c06dd3378","comm_id":"e097320b029149448fd363c4b66d118c","client_comm_id":"59fb84e49a354a669a919d68e13d387b"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"0bee24de-daf0-4a47-ba5c-7143da1853a5","roots":{"7253849c-7ca5-44b0-8e0d-a95c06dd3378":"d33e2a9d-ac54-49a1-8c47-84e741d35806"},"root_ids":["7253849c-7ca5-44b0-8e0d-a95c06dd3378"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div id="693d7456" class="cell" data-execution_count="6">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="3a828d19-a886-4845-8a8f-39fa4225183a">
+  <div id="d36b778b-6be1-4053-990d-e6abe9ce39b6" data-root-id="3a828d19-a886-4845-8a8f-39fa4225183a" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"fb4ddda2-8ac4-4a0d-92c4-5b6ad9f0ed54":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"3a828d19-a886-4845-8a8f-39fa4225183a","attributes":{"name":"Row00130","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"9c630a3f-84b4-4f34-a7b4-38d86775361c","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"997ec57f-180c-45a4-894c-211801dac37d","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b08b8ff3-3288-4458-940d-b6f1ba3bf0b9","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b52044fe-f09c-42c6-a54e-dd021358ac55","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"be9fe250-dfe9-4e16-ba5b-2a423b766c9f","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"9c630a3f-84b4-4f34-a7b4-38d86775361c"},{"type":"object","name":"ImportedStyleSheet","id":"fcfc112f-4910-4a28-98ea-11fb17ad2091","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"b08b8ff3-3288-4458-940d-b6f1ba3bf0b9"},{"id":"b52044fe-f09c-42c6-a54e-dd021358ac55"},{"type":"object","name":"ImportedStyleSheet","id":"6acbfbf2-2dc0-4a90-b754-672ba52341e6","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"6227118b-93de-4cc0-9669-4cec10a55dc7","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"4750c6bd-9bf4-4dc5-acaf-bc7861579158"},"editor":{"type":"object","name":"StringEditor","id":"7103e5e9-51d7-4708-85b2-95b0b30ff629"}}},{"type":"object","name":"TableColumn","id":"3e7cc56f-44f0-4f59-a98e-a2e6f42b371b","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"b015fc86-2839-4475-a9e0-522e7f570e42"},"editor":{"type":"object","name":"StringEditor","id":"c6a6759a-8bf0-4709-a234-b0bdd6ba0ee6"}}},{"type":"object","name":"TableColumn","id":"ee35129b-7a8e-4471-b254-8abb4a456dc9","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"32e867be-0aef-4635-b977-4e730ec7d831"},"editor":{"type":"object","name":"StringEditor","id":"c690ac53-0be3-4c03-9b13-a0774a8fe041"}}},{"type":"object","name":"TableColumn","id":"53de8cd8-ab67-47e7-b321-7e9c0b8cd71f","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"a62bb2b8-08e9-40e6-a6ab-486e9a35c913","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"2827631b-a83f-416f-925b-4148123fee9d"}}},{"type":"object","name":"TableColumn","id":"512de630-de28-4cd0-9053-f33ece96e998","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"03311121-6452-4d33-b7c0-5948d70c0233","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"01efb084-2bb1-4ff9-91a2-3643b3ff2c2b"}}},{"type":"object","name":"TableColumn","id":"15f677f0-0e2b-4582-80fb-5d9c12590235","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"3740ccbd-3d3a-47ea-8f17-57dddcb20736","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"56eb9d8c-6da5-41e6-bc75-067d11f0aae2"}}},{"type":"object","name":"TableColumn","id":"183e8b7f-5b77-490b-9726-a0ef8541fae6","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"2fe84b46-82ee-4512-b0a2-c061692dda74","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"bc4ddab4-f3ce-4434-aa4f-19e06381fc1f"}}},{"type":"object","name":"TableColumn","id":"f2ac5f19-32c9-4e1a-8623-cadcdd973491","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"f1a3a445-a84e-4358-b8b5-953280a03c5e","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"a4a7e436-ce63-4b43-813f-1b47acbbdca2"}}},{"type":"object","name":"TableColumn","id":"89a7fc3f-0d3c-459d-8b65-c5071c4d3d75","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"2541eff4-044a-41a9-bec3-6c1dac563f50","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"3214f91f-44a8-48c9-9558-b148326cb9c3"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"6e302daf-b691-4979-a080-d247ee174b7d","attributes":{"selected":{"type":"object","name":"Selection","id":"27a4cd9c-d3ac-4528-b974-d97639877b7d","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"6369691e-64a1-47f7-ab54-ce3b7ad1d62c"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAAAFQAAABYAAAAXAAAAGAAAAA=="},"shape":[25],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Abdelwahed,Sherif","Ahmad,Masroor","Atkinson,Gary","Avrutin,Vitaliy","Bandyopadhyay,Supriyo","Cabral,Michael","Dhar,Nibir","Docef,Alen","Elks,Carl","Filippas,Afroditi","Freer,Bruce","Iyer,Ashok","Kinsey,Nathaniel","Klenke,Robert","Lundquist,Jonathan","Morkoc,Hadis","Motai,Yuichi","Niu,Ruixin","Ozgur,Umit","Resler,Dan","Topsakal,Erdem","Wang,Zhifang","Will,Alexander","Xiao,Weijun","Zhao,Yanxiao"],"shape":[25],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE","EGRE"],"shape":[25],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["TTT","Adjct","Term","Term","TTT","Term","TTT","TTT","TTT","Term","Adjct","TTT","TTT","TTT","Adjct","TTT","TTT","TTT","TTT","TTT","TTT","TTT","Adjct","Adjct","Adjct"],"shape":[25],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"e/DBBx98BEAAAAAAAADgP/7//////w9AdNFFF110AUBddNFFF10AQFNVVVVVVRVA6KKLLrro8j8AAAAAAADwP5JNNtlkkwlA6KKLLrro4j8AAAAAAAAAQP3//////wtAyCabbLLJDkCDDz744IP/PwAAAAAAAABAAAAAAAAACEAAAAAAAAAEQLrooosuughAueiiiy66CECrqqqqqqoKQEw22WSTTf4/XXTRRRddCEAAAAAAAADwP7rooosuugRAXHTRRRddCEA="},"shape":[25],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAIEAAAAAAAADwPwAAAAAAACZAAAAAAAAAGEAAAAAAAAAIQP///////ytAAAAAAAAAFEAAAAAAAAAIQAAAAAAAAChAAAAAAAAAEEAAAAAAAAAAQP///////xdAAAAAAAAAJEAAAAAAAAAYQAAAAAAAAABAAAAAAAAACEAAAAAAAAAIQAAAAAAAABRAAAAAAAAAGEAAAAAAAAAYQAAAAAAAACBAAAAAAAAAEEAAAAAAAADwPwAAAAAAABhAAAAAAAAAGEA="},"shape":[25],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAUEAAAAAAAIBAQAAAAAAAQHdAAAAAAABAVkAAAAAAAIBLQAAAAAAAjIRAAAAAAAAAKEAAAAAAAABgQAAAAAAAYGFAAAAAAABAWEAAAAAAAAA1QAAAAAAAaHZAAAAAAADAXkAAAAAAAEBeQAAAAAAAACpAAAAAAAAAGEAAAAAAAAAkQAAAAAAAAEtAAAAAAAAAV0AAAAAAAMBpQAAAAAAAgENAAAAAAAAAP0AAAAAAAABEQAAAAAAAgFZAAAAAAABAVkA="},"shape":[25],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAYEAAAAAAAIBQQAAAAAAAgIRAAAAAAAAAXkAAAAAAAEBRQAAAAAAAII9AAAAAAACASUAAAAAAAABwQAAAAAAAQGlAAAAAAADgaEAAAAAAAIBPQAAAAAAAIINAAAAAAACgY0AAAAAAAABvQAAAAAAAgENAAAAAAAAAKEAAAAAAAAA4QAAAAAAAYGVAAAAAAACAXEAAAAAAAFB2QAAAAAAAgGBAAAAAAAAAWEAAAAAAAABeQAAAAAAAgGZAAAAAAACgZ0A="},"shape":[25],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAEECqqqqqqqrqPwAAAAAAACBAVVVVVVVVBUBVVVVVVVUFQKmqqqqqqi5AAAAAAAAA8D+qqqqqqqr6P1VVVVVVVQFAqqqqqqqq6j8AAAAAAAAAQFRVVVVVVRVAqqqqqqqqEkBVVVVVVVUJQAAAAAAAAABAVVVVVVVVDUCqqqqqqqoCQAAAAAAAAAhAAAAAAAAAEECqqqqqqqoWQAAAAAAAAPA/AAAAAAAACEAAAAAAAADwPwAAAAAAAAxAAAAAAAAADEA="},"shape":[25],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAEEAAAAAAAADgPwAAAAAAABBAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAARAAAAAAAAA8D8AAAAAAADwPwAAAAAAAOA/AAAAAAAA4D8AAAAAAAAAQAAAAAAAAAxAAAAAAAAACEAAAAAAAAAEQAAAAAAAAABAAAAAAAAACEAAAAAAAAAAQAAAAAAAAAhAAAAAAAAACEAAAAAAAAAQQAAAAAAAAPA/AAAAAAAACEAAAAAAAADwPwAAAAAAAARAAAAAAAAABEA="},"shape":[25],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","9accc17a81ec422cbf124c030c0f802d"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"5026749d-aa16-436f-af5a-7d636bf2a691","attributes":{"plot_id":"3a828d19-a886-4845-8a8f-39fa4225183a","comm_id":"d79a548e96ca4672b58afdc729172248","client_comm_id":"ad0c04cdae474542987028f010e9e513"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"fb4ddda2-8ac4-4a0d-92c4-5b6ad9f0ed54","roots":{"3a828d19-a886-4845-8a8f-39fa4225183a":"d36b778b-6be1-4053-990d-e6abe9ce39b6"},"root_ids":["3a828d19-a886-4845-8a8f-39fa4225183a"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div id="22d78c1d" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="7">
+<div id="fe64f7eb-6fb3-4012-84ef-bd3a031757b4">
+  <div id="b27caa46-3860-4f1f-a72c-a85b800f7541" data-root-id="fe64f7eb-6fb3-4012-84ef-bd3a031757b4" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"cf954f6d-b08b-4d16-b552-f27fcf224a4a":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"fe64f7eb-6fb3-4012-84ef-bd3a031757b4","attributes":{"name":"Row00136","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"73761276-8ca9-42af-af4b-71a6024b8835","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"5448d6f1-7191-4e18-bf6e-07842770849b","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"2c06994c-edb8-4966-9f67-d6d34e87222f","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"4d93b254-acb3-417f-ab2a-e7fde5dc64a1","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"3098752e-9160-46af-8b42-a068eda53a08","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"73761276-8ca9-42af-af4b-71a6024b8835"},{"type":"object","name":"ImportedStyleSheet","id":"da8a6ffa-2123-4af6-97ab-f93f6320d9f2","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"2c06994c-edb8-4966-9f67-d6d34e87222f"},{"id":"4d93b254-acb3-417f-ab2a-e7fde5dc64a1"},{"type":"object","name":"ImportedStyleSheet","id":"5e3e7866-bc6a-43ef-b7b7-be646ed48d97","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"a3feba0e-93f6-4691-b0ba-b6dd573480b6","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"31d8d33d-7e91-40f1-93cf-a4e52363d971"},"editor":{"type":"object","name":"StringEditor","id":"86db1d44-7416-49d4-9004-fe5c89328d2d"}}},{"type":"object","name":"TableColumn","id":"63f43d1a-9fb9-438c-a374-6f3f3255b795","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"0cbcaf49-055e-47b7-a46a-c5e0de37ebb9"},"editor":{"type":"object","name":"StringEditor","id":"918b68a2-3885-45f9-88d1-86f06e0f6ea9"}}},{"type":"object","name":"TableColumn","id":"7805afe6-bf8e-4a3c-a995-c39f7471e7a8","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"e3aa30f1-8a5c-436f-b026-a39669e7607a"},"editor":{"type":"object","name":"StringEditor","id":"014cb4e3-416b-4225-bc03-3244d44c304e"}}},{"type":"object","name":"TableColumn","id":"23b8793d-c146-41fc-a075-4cd4aa3ef01b","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"34cffb5b-d0bc-4017-a80b-0f092a2ae822","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"05b01fb1-ce0b-4cf5-8d89-79bbb7984ec1"}}},{"type":"object","name":"TableColumn","id":"4d09714d-bad4-4132-a71d-5308227d76f9","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"e3212416-4919-416d-a41d-4eb09e614a27","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"91a78f0d-b7ba-4984-8f91-7953a263fcfa"}}},{"type":"object","name":"TableColumn","id":"26010777-2366-43f2-af63-f9b3aafe4417","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"70ca47b4-e1f1-40d4-9938-137f2636c0d0","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"3af30e22-1c9b-45c4-8cde-1b8166c2151b"}}},{"type":"object","name":"TableColumn","id":"a4f3ca1d-1ab2-4140-9f99-6c69e55c518a","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"57c03dff-a7a2-4903-b5c5-8a5dbbf8c883","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"c07f66a4-7ab7-4aa6-987d-d35265154c3f"}}},{"type":"object","name":"TableColumn","id":"9f7d6439-5303-414d-b5cc-7fa5d03abf9c","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"14114fe3-9d54-4c1f-8729-55bbc6639350","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"02c6d9ee-3bc8-4c70-8d70-6ef1ff6f24e4"}}},{"type":"object","name":"TableColumn","id":"93d54fc3-1d79-4608-a3da-867e195a417e","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"7efdbd70-445f-439f-961d-68d4c9618756","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"4c287170-4604-4531-953c-6e81d03ea454"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"07025384-0571-4531-ad60-618f2356cff4","attributes":{"selected":{"type":"object","name":"Selection","id":"26d0c241-83c3-4e94-8a10-4a9f2ec302b6","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"76f6bf5f-e5e3-4219-a5aa-23a0dd1ec2f7"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAAA=="},"shape":[19],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Boyan,Barbara","Cohen,David","Donahue,Henry","Eason,James","Gill,Satinder","Heise,Rebecca","Hwang,Priscilla","Jordan,Jennifer","Krusienski,Dean","Lemmon,Christopher","McClure,Michael","Olivares-Navarrete,Rene","Pawluk,Dianne","Pepperl,Anathea","Peterson,Carrie","Puetzer,Jennifer","Speich,John","Wetzel,Paul","Zhang,Ning"],"shape":[19],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRB","EGRM","EGRB","EGRB"],"shape":[19],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["TTT","Term","TTT","Adjct","Adjct","TTT","TTT","TTT","TTT","TTT","TTT","TTT","TTT","Term","TTT","TTT","TTT","TTT","TTT"],"shape":[19],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"UrgehetRCUAAAAAAAADYP/xiyS+WfBFAAAAAAAAA4D8AAAAAAAASQFK4HoXrURFAR+F6FK5H+z9SuB6F61EEQJw20GkDnQRA8Islv1jy+T/4xZJfLPkEQAAAAAAAAAhAUrgehetRDkAAAAAAAAAIQEt+seQXSwhAThvotIFOCUDktIFOG+i0P6cNdNpApxhAq6qqqqqqA0A="},"shape":[19],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAHEAAAAAAAAAAQAAAAAAAACBAAAAAAAAA4D8AAAAAAAASQAAAAAAAACRAAAAAAAAAGEAAAAAAAAAYQAAAAAAAACVA////////FUAAAAAAAAAeQAAAAAAAAAhAAAAAAAAAIkAAAAAAAAAIQAAAAAAAACZAAAAAAAAAHEAAAAAAAAAAQAAAAAAAAChAAAAAAAAAEEA="},"shape":[19],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAABAUUAAAAAAAAAAQAAAAAAAAF9AAAAAAACAREAAAAAAAEBtQAAAAAAAAFdAAAAAAACAREAAAAAAAIBGQAAAAAAAgEJAAAAAAADAZEAAAAAAAMBvQAAAAAAAgEFAAAAAAAAAXEAAAAAAAKBgQAAAAAAAAEdAAAAAAADAXUAAAAAAAAAAQAAAAAAAAF9AAAAAAAAAPEA="},"shape":[19],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAakAAAAAAAAAYQAAAAAAAoGxAAAAAAADATkAAAAAAAIh6QAAAAAAAYHJAAAAAAADAYkAAAAAAAKBjQAAAAAAAIGhAAAAAAAAQdEAAAAAAABB8QAAAAAAAQFpAAAAAAACgaEAAAAAAAOBuQAAAAAAA4GRAAAAAAABQdUAAAAAAAAAcQAAAAAAAIHBAAAAAAAAAVUA="},"shape":[19],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAACEAAAAAAAAAAQAAAAAAAABRAAAAAAAAA8D+qqqqqqqoWQAAAAAAAABBAAAAAAAAACEAAAAAAAAAIQAAAAAAAABBAVFVVVVVVAUCqqqqqqqoQQAAAAAAAAAhAq6qqqqqqFkCqqqqqqqoaQAAAAAAAABBAqqqqqqqqCkAAAAAAAAAAAFVVVVVVVRFAAAAAAAAACEA="},"shape":[19],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAACEAAAAAAAAAAQAAAAAAAAAhAAAAAAAAA8D8AAAAAAAAUQAAAAAAAABBAAAAAAAAACEAAAAAAAAAIQAAAAAAAABBA////////9z8AAAAAAAAEQAAAAAAAAAhAAAAAAAAAFEAAAAAAAADwPwAAAAAAABBAAAAAAAAACEAAAAAAAAAAAAAAAAAAAAhAAAAAAAAACEA="},"shape":[19],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","11cd11bf13aa400bb668d22b8dd3d903"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"5f2c7482-b1ce-4c46-af48-55a066eb720e","attributes":{"plot_id":"fe64f7eb-6fb3-4012-84ef-bd3a031757b4","comm_id":"77cdcbc60dd74a809398f6d987a72a0c","client_comm_id":"9a450277aa784e92b1a81350db2d12d1"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"cf954f6d-b08b-4d16-b552-f27fcf224a4a","roots":{"fe64f7eb-6fb3-4012-84ef-bd3a031757b4":"b27caa46-3860-4f1f-a72c-a85b800f7541"},"root_ids":["fe64f7eb-6fb3-4012-84ef-bd3a031757b4"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
+<div id="52373ece" class="cell" data-execution_count="8">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="8">
+<div id="48ddd52f-4c57-457c-8fc0-506b68d0ec55">
+  <div id="b5ab7579-ca67-4328-a402-db8b8cf11f61" data-root-id="48ddd52f-4c57-457c-8fc0-506b68d0ec55" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"b56f0387-ac39-4bcb-b5e2-6e9de3b93ae6":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"48ddd52f-4c57-457c-8fc0-506b68d0ec55","attributes":{"name":"Row00142","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"2ce7a6ac-0800-42eb-883d-49467481c6b8","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"86ae554f-9458-4cc8-bedc-52b92a587560","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b7bec5da-f26d-4fce-855d-fba3d2b9608d","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"f90655e6-ba4e-41db-9d68-4757bfb6e4cd","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"0cb96068-5be8-481e-a050-3560a919e4c0","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"2ce7a6ac-0800-42eb-883d-49467481c6b8"},{"type":"object","name":"ImportedStyleSheet","id":"3218a478-7971-428a-97ff-0282ca93107d","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"b7bec5da-f26d-4fce-855d-fba3d2b9608d"},{"id":"f90655e6-ba4e-41db-9d68-4757bfb6e4cd"},{"type":"object","name":"ImportedStyleSheet","id":"9f19ebbe-49bd-487e-9b24-db72f043555c","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"5bd96533-1f18-4b13-a7b2-18a7170b721b","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"4aca2906-a80f-41de-81d2-f1e599ded7d0"},"editor":{"type":"object","name":"StringEditor","id":"27c091c4-b695-47c4-86d8-d4698ca64e89"}}},{"type":"object","name":"TableColumn","id":"2db61c49-4053-4d2e-bc99-1c677bc9a7d6","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"a5476273-9c24-4a82-ba8b-386bd889d04a"},"editor":{"type":"object","name":"StringEditor","id":"4e4873c3-62d5-4138-bf7a-b73f5303fc3d"}}},{"type":"object","name":"TableColumn","id":"2b9f6174-3e03-4344-9d10-80bf7753b3a4","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"ddca9667-1633-4e4f-b9d7-6f66ae1e5b52"},"editor":{"type":"object","name":"StringEditor","id":"0a2268cd-c69e-4887-bc5a-6ea37e366bb2"}}},{"type":"object","name":"TableColumn","id":"6e9df0e6-4e29-453e-9855-17d2fe73339b","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"9c7993a5-333a-4544-bef5-e780ef0a171c","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"db4a0e9c-eb0a-4f57-9efb-729825c62eec"}}},{"type":"object","name":"TableColumn","id":"585f3a25-2efd-46b5-bee8-80b6d2749547","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"9f5ef8ab-316d-4278-aebe-c305c89f0e3f","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"55a6f225-3bde-41f0-b4d6-7ac14a078719"}}},{"type":"object","name":"TableColumn","id":"2df8b029-74bc-49f1-bcca-1a817443af0f","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"e0362b9c-0a76-4c28-916b-1f9ecc406aa6","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"871bcb3d-7ac2-4963-ade0-f938e23cbc92"}}},{"type":"object","name":"TableColumn","id":"604ac36c-b277-4c48-a9ef-c44ddc8ff12e","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"a88c274b-8a9d-4f7e-b812-42d0a3d8bd4d","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"f86fdff5-da91-4ce1-b205-71231d3cbe00"}}},{"type":"object","name":"TableColumn","id":"b8826af3-40e3-494a-9858-7415982f4605","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"e6177a62-bfd4-4d51-a683-ffe38f6bdf06","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"189479be-ec30-4912-a565-fdee52a63f9a"}}},{"type":"object","name":"TableColumn","id":"991c0c8a-b24a-43c8-81a0-43409815e2f1","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"cad6b20f-38f7-4c9e-939a-d5b77686f2fb","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"1f6ebca5-881a-410d-9869-dce264de08d7"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"c303897e-6b02-4955-9ade-59ea239c8652","attributes":{"selected":{"type":"object","name":"Selection","id":"1d7dd456-11d3-4938-bc8a-1a35c004ca08","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"b9db3098-147a-4760-9016-c6894e53dacf"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAA"},"shape":[15],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Ferri,James","Fong,Stephen","Gupta,Ram","Gupton,Bernard","Jensen,Cory","Jiang,Mo","Kuhn,Andrew","Lewinski,Nastassja","McGill,Charles","Peters,Michael","Roper,Thomas","Spangler,Leah","Tang,Christina","Wen,Xuejun","Yadavalli,Vamsi"],"shape":[15],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["EGRC","EBRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC","EGRC"],"shape":[15],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["TTT","TTT","TTT","TTT","Adjct","TTT","Term","TTT","Adjct","TTT","Term","Adjct","TTT","TTT","TTT"],"shape":[15],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"LDRTz7+B9T9VVVVVVVXxPwUmopJUXNs/xMPDw8PD8z9TVVVVVVW1P878tp9CzgpAU1VVVVVVAUBlwjYITmX+P6vZk3wfqwVA5DiO4ziOAUAKOfPbfgrhP3JLsEORxwpAAAAAAAAAAkAAAAAAAAAIQHIcx3Ecx/E/"},"shape":[15],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAFEAAAAAAAAAAQAAAAAAAABBAAAAAAAAAFEAAAAAAAADgPwAAAAAAACBAAAAAAAAAHkAAAAAAAAAWQAAAAAAAACJAAAAAAAAAEEAAAAAAAAAcQAAAAAAAACVAAAAAAAAAEEAAAAAAAAAIQAAAAAAAAABA"},"shape":[15],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAACAR0AAAAAAAABEQAAAAAAAABBAAAAAAAAAREAAAAAAAAD4PwAAAAAAgFdAAAAAAAAwYkAAAAAAACBRQAAAAAAAAFdAAAAAAAAAVUAAAAAAAAAiQAAAAAAAoFJAAAAAAAAAVEAAAAAAAAAyQAAAAAAAAENA"},"shape":[15],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAADgYEAAAAAAAABdQAAAAAAAADhAAAAAAAAAWUAAAAAAAAAIQAAAAAAAYGVAAAAAAACga0AAAAAAAGBhQAAAAAAA4GlAAAAAAAAAZkAAAAAAAIBFQAAAAAAAgGpAAAAAAAAgZEAAAAAAAABLQAAAAAAAgFxA"},"shape":[15],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"VVVVVVVV9T9VVVVVVVX1PwAAAAAAAAAAVVVVVVVV1T9TVVVVVVXFP1VVVVVVVRFAVVVVVVVVB0BVVVVVVVUBQKqqqqqqqgJAVVVVVVVVBUBVVVVVVVXVP6qqqqqqqgZAVVVVVVVVBUAAAAAAAAAIQAAAAAAAAPA/"},"shape":[15],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAA8D8AAAAAAADwPwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPA/AAAAAAAAAAAAAAAAAAD4PwAAAAAAAABAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAEAAAAAAAAAIQAAAAAAAAPA/"},"shape":[15],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","d79710694c834dd7a3826ba5d4676d25"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"ad71e18e-56e2-497b-9637-50c8cb708cfb","attributes":{"plot_id":"48ddd52f-4c57-457c-8fc0-506b68d0ec55","comm_id":"fb75e13ae7e0448abd6ab4ed67fffea7","client_comm_id":"46da9f37b045415586631644b3a9663d"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"b56f0387-ac39-4bcb-b5e2-6e9de3b93ae6","roots":{"48ddd52f-4c57-457c-8fc0-506b68d0ec55":"b5ab7579-ca67-4328-a402-db8b8cf11f61"},"root_ids":["48ddd52f-4c57-457c-8fc0-506b68d0ec55"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+<div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
+<div id="665670a6" class="cell" data-execution_count="9">
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<div id="1e4f3704-1621-4c1f-994b-0ba4a949ef22">
+  <div id="d6bcec44-d259-4283-bbca-4aca1d814c55" data-root-id="1e4f3704-1621-4c1f-994b-0ba4a949ef22" style="display: contents;"></div>
+</div>
+<script type="application/javascript">(function(root) {
+  var docs_json = {"9dbb9529-fc6a-4689-b13d-6b91c9079683":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"Row","id":"1e4f3704-1621-4c1f-994b-0ba4a949ef22","attributes":{"name":"Row00148","stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"560a91c8-db07-4e6f-97e8-75d75989d82b","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"d2de6ea2-31a1-461b-8292-02a72fb99455","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/listpanel.css"}},{"type":"object","name":"ImportedStyleSheet","id":"3926813d-3eec-4391-84c0-609a945a2c08","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"b9c4a217-4d13-4626-94a4-6e01eb578ed9","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}}],"margin":0,"align":"start","children":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"8e04aab1-e211-4ba2-a2e1-e98a8d90646f","attributes":{"subscribed_events":{"type":"set","entries":["table-edit","cell-click","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"id":"560a91c8-db07-4e6f-97e8-75d75989d82b"},{"type":"object","name":"ImportedStyleSheet","id":"d857af96-ea8f-4a2f-be17-f9254db12e6c","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"id":"3926813d-3eec-4391-84c0-609a945a2c08"},{"id":"b9c4a217-4d13-4626-94a4-6e01eb578ed9"},{"type":"object","name":"ImportedStyleSheet","id":"d57b95a1-2bca-4165-8000-8e78b13bfc05","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"margin":[5,10],"align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","Instructor"]]},{"type":"map","entries":[["field","Dept"]]},{"type":"map","entries":[["field","Role"]]},{"type":"map","entries":[["field","Crse"],["sorter","number"]]},{"type":"map","entries":[["field","CRNs"],["sorter","number"]]},{"type":"map","entries":[["field","Stdnts"],["sorter","number"]]},{"type":"map","entries":[["field","Hours"],["sorter","number"]]},{"type":"map","entries":[["field","Wrkld"],["sorter","number"]]},{"type":"map","entries":[["field","W.Lec"],["sorter","number"]]}]],["dataTree",false]]},"columns":[{"type":"object","name":"TableColumn","id":"12af8ab9-5a32-47c2-a425-6e0f8c141a98","attributes":{"field":"Instructor","title":"Instructor","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"1cd2c036-a144-47d5-a6c8-4b40d5b12412"},"editor":{"type":"object","name":"StringEditor","id":"35fc4733-377c-4423-8e2d-f93354bbdd81"}}},{"type":"object","name":"TableColumn","id":"924ce9dc-7ad3-48b3-aa67-e4b1570cf1d3","attributes":{"field":"Dept","title":"Dept","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"9ed426a5-6ff7-4e40-a2e4-200c7008c698"},"editor":{"type":"object","name":"StringEditor","id":"afdd4451-0ddb-4535-a4a2-f5c52625613c"}}},{"type":"object","name":"TableColumn","id":"097f3bed-493c-4a17-afb2-7d95e28d4b87","attributes":{"field":"Role","title":"Role","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"0941fc48-4d5a-4362-bb10-5ed94d34fdf7"},"editor":{"type":"object","name":"StringEditor","id":"dd633500-4af8-4913-9e00-37260ed4d11c"}}},{"type":"object","name":"TableColumn","id":"7bf790a3-4927-42fc-9501-d60721e326d3","attributes":{"field":"Crse","title":"Crse","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"7f3efadc-0f04-4184-83ca-817eeff4e66a","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"ef88a70b-4f6e-4ceb-b28a-5398ad513127"}}},{"type":"object","name":"TableColumn","id":"7a0db199-b2af-4499-8f1f-0c638baffccb","attributes":{"field":"CRNs","title":"CRNs","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"f9212113-54f6-4431-8416-6b27187436a1","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"509891af-b311-4ee6-b065-61bf23b744cf"}}},{"type":"object","name":"TableColumn","id":"7b7e875a-01c6-46ac-b4fc-a12ca60df1a3","attributes":{"field":"Stdnts","title":"Stdnts","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"853e609f-4d3e-45ad-a8bd-5dff8647d5a0","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"0a5f4c36-df8b-43b8-9311-b324d4abdf53"}}},{"type":"object","name":"TableColumn","id":"ec517839-98f7-47dd-9f93-1473b6b6bcf0","attributes":{"field":"Hours","title":"Hours","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"a8913dea-1158-4575-9b1a-1cac6b60edba","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.0"}},"editor":{"type":"object","name":"NumberEditor","id":"18b024c3-d49b-444f-8424-92a0ea2a7d95"}}},{"type":"object","name":"TableColumn","id":"53ed2a25-e87b-4ab5-b007-9b045abab3de","attributes":{"field":"Wrkld","title":"Wrkld","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"178b3b39-7e7f-4d46-b7c1-400ec218cb90","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"89c47450-2d56-4d61-8fb9-60f8559d426d"}}},{"type":"object","name":"TableColumn","id":"51f84d0d-b7b2-47f5-a829-8f432fd69a06","attributes":{"field":"W.Lec","title":"W.Lec","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"bc6b01c0-5fb0-47a0-93cd-73674bfffde1","attributes":{"text_align":{"type":"value","value":"center"},"format":"0.00"}},"editor":{"type":"object","name":"NumberEditor","id":"a08ed18a-2eee-4142-8afc-6156b24c906b"}}}],"editable":false,"hidden_columns":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"ff54850c-5db9-4b27-8e09-3b916d9ab2cb","attributes":{"selected":{"type":"object","name":"Selection","id":"447bb948-40f7-43cd-825f-68602c4e29ba","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"d000da4f-e2d5-4825-8fcf-8acadf620331"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAAAwAAAAQAAAAFAAAABgAAAAcAAAAIAAAACQAAAAoAAAALAAAADAAAAA0AAAAOAAAADwAAABAAAAARAAAAEgAAABMAAAAUAAAAFQAAABYAAAAXAAAAGAAAABkAAAAaAAAAGwAAABwAAAAdAAAAHgAAAB8AAAAgAAAAIQAAACIAAAAjAAAAJAAAACUAAAAmAAAAJwAAACgAAAApAAAAKgAAACsAAAAsAAAALQAAAC4AAAAvAAAAMAAAADEAAAAyAAAAMwAAADQAAAA1AAAANgAAADcAAAA4AAAAOQAAADoAAAA7AAAAPAAAAD0AAAA+AAAAPwAAAEAAAABBAAAAQgAAAEMAAABEAAAARQAAAEYAAABHAAAASAAAAEkAAABKAAAASwAAAEwAAABNAAAATgAAAE8AAABQAAAAUQAAAFIAAABTAAAAVAAAAFUAAABWAAAAVwAAAFgAAABZAAAAWgAAAFsAAABcAAAAXQAAAF4AAABfAAAAYAAAAGEAAABiAAAAYwAAAGQAAABlAAAAZgAAAGcAAABoAAAAaQAAAGoAAABrAAAAbAAAAG0AAABuAAAAbwAAAHAAAABxAAAAcgAAAHMAAAB0AAAAdQAAAHYAAAB3AAAAeAAAAA=="},"shape":[121],"dtype":"int32","order":"little"}],["Instructor",{"type":"ndarray","array":["Abdelwahed,Sherif","Ahmad,Masroor","Ahmed,Irfan","Almasri,Thaer","Alobaidi,Wissam","Arodz,Tomasz","Atkinson,Gary","Atulasimha,Jayasimha","Avrutin,Vitaliy","Bandyopadhyay,Supriyo","Barua,Radhika","Bennett,Jason","Boyan,Barbara","Budwell,Caroline","Buffkin,Jonathan","Bulut,Eyuphan","Byram,Abigail","Cabral,Michael","Cano Rojas,Alberto","Carasik,Lane","Cartin,Charles","Castano Londono,Carlos","Chaitankar,Vijender","Chen,Daren","Chen,Sheng-Chieh","Cohen,David","Cranston,Daniel","Da Silva Soares,Joao Filipe","Dahlberg,Robert","Damevski,Kostadin","Dhar,Nibir","Dinh,Thang","Docef,Alen","Donahue,Henry","Duke,Debra","Eason,James","Elks,Carl","Ferri,James","Filippas,Afroditi","Fong,Stephen","Freer,Bruce","Ghosh,Preetam","Gill,Satinder","Goddard,Braden","Golshahi,Laleh","Grey,Casey","Grove,Ralph","Gulla,Frank","Gupta,Ram","Gupton,Bernard","Gusukuma,Luke","Guven,Ibrahim","Hadimani,Ravi","Heise,Rebecca","Hwang,Priscilla","Iyer,Ashok","Jensen,Cory","Jiang,Mo","Jordan,Jennifer","Kinsey,Nathaniel","Klenke,Robert","Krusienski,Dean","Kuhn,Andrew","Kurgan,Lukasz","Lee,Aaron","Lemmon,Christopher","Leonard,John","Lewinski,Nastassja","Longest,Philip","Lundquist,Jonathan","Luo,Changqing","Manic,Milos","McClure,Michael","McGill,Charles","Meinweiser,Gregory","Miller,Gerald","Miller,James","Miloshevsky,Gennady","Mohammadi,Reza","Morkoc,Hadis","Mossi,Karla","Motai,Yuichi","Nadeem,Tamer","Nichols,Bradley","Nishi,Manziba","Niu,Ruixin","Olivares-Navarrete,Rene","Ozgur,Umit","Pawluk,Dianne","Pepperl,Anathea","Peters,Michael","Peterson,Carrie","Phongikaroon,Supathorn","Puetzer,Jennifer","Resler,Dan","Rojas Marin,Jessika","Roper,Thomas","Sands,Allison","Sonmez,Ahmet","Spangler,Leah","Sparks,Claire","Speich,John","Spinola,Rodrigo","Tang,Christina","Tepper,Gary","Thomson-McInnes,Bridget","Topsakal,Erdem","Traub,Adam","Vance,Robert","Wang,Weining","Wang,Zhifang","Wen,Xuejun","Wetzel,Paul","Will,Alexander","Wu,Zeyun","Xiao,Weijun","Yadavalli,Vamsi","Zhang,Ning","Zhao,Hong","Zhao,Yanxiao","Zhou,Hongsheng"],"shape":[121],"dtype":"object","order":"little"}],["Dept",{"type":"ndarray","array":["EGRE","EGRE","CMSC","EGRM","EGRM","CMSC","EGRE","EGRM","EGRE","EGRE","EGRM","COAR","EGRB","CMSC","CMSC","CMSC","CMSC","EGRE","CMSC","EGRM","EGRM","EGRM","CMSC","EGRM","EGRM","EGRB","CMSC","EGRM","CMSC","CMSC","EGRE","CMSC","EGRE","EGRB","CMSC","EGRB","EGRE","EGRC","EGRE","EBRC","EGRE","CMSC","EGRB","EGRM","EGRM","EGRM","CMSC","EGRM","EGRC","EGRC","CMSC","EGRM","EGRM","EGRB","EGRB","EGRE","EGRC","EGRC","EGRB","EGRE","EGRE","EGRB","EGRC","CMSC","CMSC","EGRB","CMSC","EGRC","EGRM","EGRE","CMSC","CMSC","EGRB","EGRC","EGRM","EGRM","EGRM","EGRM","EGRM","EGRE","EGRM","EGRE","CMSC","EGRM","CMSC","EGRE","EGRB","EGRE","EGRB","EGRB","EGRC","EGRB","EGRM","EGRB","EGRE","EGRM","EGRC","CMSC","CMSC","EGRC","CMSC","EGRM","CMSC","EGRC","EGRM","CMSC","EGRE","CMSC","EGRM","EGRM","EGRE","EGRC","EGRB","EGRE","EGRM","EGRE","EGRC","EGRB","EGRM","EGRE","CMSC"],"shape":[121],"dtype":"object","order":"little"}],["Role",{"type":"ndarray","array":["TTT","Adjct","TTT","Adjct","Adjct","TTT","Term","TTT","Term","TTT","TTT","Adjct","TTT","Term","Adjct","TTT","Adjct","Term","TTT","TTT","Term","TTT","Adjct","TTT","TTT","Term","TTT","TTT","Term","TTT","TTT","TTT","TTT","TTT","Term","Adjct","TTT","TTT","Term","TTT","Adjct","TTT","Adjct","TTT","TTT","Adjct","Adjct","Term","TTT","TTT","Term","TTT","TTT","TTT","TTT","TTT","Adjct","TTT","TTT","TTT","TTT","TTT","Term","TTT","Adjct","TTT","TTT","TTT","TTT","Adjct","TTT","TTT","TTT","Adjct","Adjct","Term","Term","TTT","TTT","TTT","TTT","TTT","TTT","Term","Adjct","TTT","TTT","TTT","TTT","Term","TTT","TTT","TTT","TTT","TTT","TTT","Term","Adjct","Term","Adjct","Term","TTT","TTT","TTT","TTT","TTT","TTT","Adjct","Adjct","TTT","TTT","TTT","TTT","Adjct","TTT","Adjct","TTT","TTT","TTT","Adjct","TTT"],"shape":[121],"dtype":"object","order":"little"}],["Crse",{"type":"ndarray","array":{"type":"bytes","data":"e/DBBx98BEAAAAAAAADgP1zERVzERQJAAAAAAAAAAEAAAAAAAADwP3h3d3d3dwtA/v//////D0Dw8PDw8PDpP3TRRRdddAFAXXTRRRddAEAzSqcb7VISQAAAAAAAAOA/UrgehetRCUDNzMzMzMwKQAAAAAAAAPA/xnIsx3IsD0AAAAAAAAAAQFNVVVVVVRVAS7ZkS7ZkAUBunVdA4+4BQGOTTTbZZAtA7Em+j9Xs+j8AAAAAAAAMQLrooosu+gBAuuiiiy468T8AAAAAAADYP/EVX/EVXwFAMmEbBKdyAUDNzMzMzMzwP97ard3arQ1A6KKLLrro8j/NzMzMzMwAQAAAAAAAAPA//GLJL5Z8EUD///////8PQAAAAAAAAOA/kk022WSTCUAsNFPPv4H1P+iiiy666OI/VVVVVVVV8T8AAAAAAAAAQEiJlEiJlAJAMzMzMzMzEkAyYRsEp7INQOxJvo/VbPI/U1VVVVVVxT8ZwiEcwiHcP7rooosuugBABSaiklRc2z/Ew8PDw8PzP8EYjMEYjANAZMI2CE5l8z8xYRsEp7INQFK4HoXrURFAR+F6FK5H+z/9//////8LQFNVVVVVVbU/zvy2n0LOCkBSuB6F61EEQMgmm2yyyQ5Agw8++OCD/z+cNtBpA50EQFNVVVVVVQFAS7ZkS7ZkAUDNzMzMzMzwP/CLJb9Y8vk/zczMzMzMBEBlwjYITmX+P3TRRRdddOI/AAAAAAAAAEBIiZRIiZQCQFzERVzERQJA+MWSXyz5BECr2ZN8H6sFQAAAAAAAAPA/zczMzMzM3D9ddNFFF10UQB998cIIoPU/MmEbBKfyAUAAAAAAAAAIQGTCNghO5fo/AAAAAAAABEDBHuzBHuz5P1SCPCXIUwpAAAAAAAAA8D+66KKLLroIQAAAAAAAAAhAueiiiy66CEBSuB6F61EOQAAAAAAAAAhA5DiO4ziOAUBLfrHkF0sIQHh4eHh4+ARAThvotIFOCUCrqqqqqqoKQGPCNghO5fM/Cjnz234K4T+JndiJndjZPwAAAAAAAABAckuwQ5HHCkAWaIEWaIEOQKcNdNpApwhAS7ZkS7ZkAUAAAAAAAAACQOHh4eHh4dM/5l7u5V7uEkBMNtlkk03+PwAAAAAAANA/AAAAAAAA8D/2JN/HavYCQF100UUXXQhAAAAAAAAACECnDXTaQKcYQAAAAAAAAPA/MmEbBKeyAUC66KKLLroEQHIcx3Ecx/E/q6qqqqqqA0AyYRsEp7IBQC666KKLLhBAzczMzMzMAEA="},"shape":[121],"dtype":"float64","order":"little"}],["CRNs",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAIEAAAAAAAADwPwAAAAAAACJAAAAAAAAAAEAAAAAAAADwPwAAAAAAABhAAAAAAAAAJkAAAAAAAAAQQAAAAAAAABhAAAAAAAAACEAAAAAAAAAqQAAAAAAAAOA/AAAAAAAAHEAAAAAAAAAgQAAAAAAAAPA/AAAAAAAAK0AAAAAAAAAAQP///////ytAAAAAAAAAGEAAAAAAAAAiQAAAAAAAACJAAAAAAAAAHEAAAAAAAAAQQAAAAAAAABxAAAAAAAAACEAAAAAAAAAAQAAAAAAAABhAAAAAAAAAIkAAAAAAAAAAQAAAAAAAACFAAAAAAAAAFEAAAAAAAAAQQAAAAAAAAAhAAAAAAAAAIEAAAAAAAAAaQAAAAAAAAOA/AAAAAAAAKEAAAAAAAAAUQAAAAAAAABBAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAChAAAAAAAAAFkAAAAAAAAAoQAAAAAAAABRAAAAAAAAA8D8AAAAAAAAAQAAAAAAAACRAAAAAAAAAEEAAAAAAAAAUQAAAAAAAACBAAAAAAAAAHEAAAAAAAAAoQAAAAAAAACRAAAAAAAAAGED///////8XQAAAAAAAAOA/AAAAAAAAIEAAAAAAAAAYQAAAAAAAACRAAAAAAAAAGEAAAAAAAAAlQAAAAAAAAB5AAAAAAAAAGEAAAAAAAAAAQP///////xVAAAAAAAAAFkAAAAAAAAAWQAAAAAAAAAhAAAAAAAAAAEAAAAAAAAAkQAAAAAAAACJAAAAAAAAAHkAAAAAAAAAiQAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAiQAAAAAAAABxAAAAAAAAAIkAAAAAAAAAIQAAAAAAAABxAAAAAAAAACEAAAAAAAAAiQAAAAAAAABhAAAAAAAAA8D8AAAAAAAAUQAAAAAAAAAhAAAAAAAAAGEAAAAAAAAAiQAAAAAAAAAhAAAAAAAAAEEAAAAAAAAAmQAAAAAAAACBAAAAAAAAAHEAAAAAAAAAYQAAAAAAAACZAAAAAAAAAHEAAAAAAAAAAQAAAAAAAABhAAAAAAAAAJUAAAAAAAAAhQAAAAAAAABRAAAAAAAAAGEAAAAAAAAAQQAAAAAAAAAhAAAAAAAAALkAAAAAAAAAgQAAAAAAAAPA/AAAAAAAA8D8AAAAAAAAYQAAAAAAAABBAAAAAAAAACEAAAAAAAAAoQAAAAAAAAPA/AAAAAAAAIkAAAAAAAAAYQAAAAAAAAABAAAAAAAAAEEAAAAAAAAAgQAAAAAAAABxAAAAAAAAAEEA="},"shape":[121],"dtype":"float64","order":"little"}],["Stdnts",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAUEAAAAAAAIBAQAAAAAAAwFFAAAAAAAAAPUAAAAAAAAA8QAAAAAAAAGlAAAAAAABAd0AAAAAAAAAuQAAAAAAAQFZAAAAAAACAS0AAAAAAACBhQAAAAAAAADFAAAAAAABAUUAAAAAAAJB7QAAAAAAAgEJAAAAAAADQaEAAAAAAAEBQQAAAAAAAjIRAAAAAAACAWUAAAAAAAABJQAAAAAAAOHhAAAAAAADAYkAAAAAAAACCQAAAAAAAoGBAAAAAAAAAP0AAAAAAAAAAQAAAAAAAYHJAAAAAAACAbEAAAAAAAMBlQAAAAAAAEGxAAAAAAAAAKEAAAAAAAIBIQAAAAAAAAGBAAAAAAAAAX0AAAAAAAJiJQAAAAAAAgERAAAAAAABgYUAAAAAAAIBHQAAAAAAAQFhAAAAAAAAAREAAAAAAAAA1QAAAAAAAQG9AAAAAAADAbkAAAAAAAEBSQAAAAAAAAElAAAAAAAAANkAAAAAAAEBkQAAAAAAAgGlAAAAAAAAAEEAAAAAAAABEQAAAAAAAoIBAAAAAAACAU0AAAAAAAGBrQAAAAAAAAFdAAAAAAACAREAAAAAAAGh2QAAAAAAAAPg/AAAAAACAV0AAAAAAAIBGQAAAAAAAwF5AAAAAAABAXkAAAAAAAIBCQAAAAAAAMGJAAAAAAACAU0AAAAAAAIBBQAAAAAAAwGRAAAAAAADQdEAAAAAAACBRQAAAAAAAAEhAAAAAAAAAKkAAAAAAAIBOQAAAAAAAAFFAAAAAAADAb0AAAAAAAABXQAAAAAAAADpAAAAAAACAS0AAAAAAAIBaQAAAAAAA4GJAAAAAAAAAZUAAAAAAAAAYQAAAAAAAAGpAAAAAAAAAJEAAAAAAAMBqQAAAAAAAYHBAAAAAAAAARUAAAAAAAABLQAAAAAAAgEFAAAAAAAAAV0AAAAAAAABcQAAAAAAAoGBAAAAAAAAAVUAAAAAAAABHQAAAAAAAgFdAAAAAAADAXUAAAAAAAMBpQAAAAAAA4FxAAAAAAAAAIkAAAAAAAEBmQAAAAAAA4HlAAAAAAACgUkAAAAAAABCGQAAAAAAA8HdAAAAAAABwcUAAAAAAAABUQAAAAAAAADdAAAAAAAAAX0AAAAAAAIBDQAAAAAAAgFNAAAAAAAAANkAAAAAAAABWQAAAAAAAAD9AAAAAAAAAMkAAAAAAAABfQAAAAAAAAERAAAAAAAAAXkAAAAAAAIBWQAAAAAAAAENAAAAAAAAAPEAAAAAAAABeQAAAAAAAgFhAAAAAAACARUA="},"shape":[121],"dtype":"float64","order":"little"}],["Hours",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAYEAAAAAAAIBQQAAAAAAAQG9AAAAAAADAVUAAAAAAAABVQAAAAAAAWIJAAAAAAACAhEAAAAAAAABLQAAAAAAAAF5AAAAAAABAUUAAAAAAACB5QAAAAAAAgElAAAAAAAAAakAAAAAAACySQAAAAAAAwFtAAAAAAABMgkAAAAAAAGBoQAAAAAAAII9AAAAAAABgckAAAAAAACBkQAAAAAAAGHlAAAAAAAAQfEAAAAAAAACbQAAAAAAAoHhAAAAAAADAV0AAAAAAAAAYQAAAAAAAQItAAAAAAABge0AAAAAAAGBnQAAAAAAABIRAAAAAAACASUAAAAAAAGBgQAAAAAAAAHBAAAAAAACgbEAAAAAAAEydQAAAAAAAwE5AAAAAAABAaUAAAAAAAOBgQAAAAAAA4GhAAAAAAAAAXUAAAAAAAIBPQAAAAAAAaIdAAAAAAAAIfEAAAAAAAABpQAAAAAAAwGRAAAAAAAAANkAAAAAAAEB0QAAAAAAAUHNAAAAAAAAAOEAAAAAAAABZQAAAAAAAEJNAAAAAAABwcEAAAAAAAIB4QAAAAAAAYHJAAAAAAADAYkAAAAAAACCDQAAAAAAAAAhAAAAAAABgZUAAAAAAAKBjQAAAAAAAoGNAAAAAAAAAb0AAAAAAACBoQAAAAAAAoGtAAAAAAADAa0AAAAAAAABXQAAAAAAAEHRAAAAAAAD4jUAAAAAAAGBhQAAAAAAAgGRAAAAAAACAQ0AAAAAAACBnQAAAAAAAgGhAAAAAAAAQfEAAAAAAAOBpQAAAAAAAgFNAAAAAAACgZEAAAAAAABByQAAAAAAAgGpAAAAAAACQf0AAAAAAAAAoQAAAAAAA4HBAAAAAAAAAOEAAAAAAABiDQAAAAAAA8IdAAAAAAACAX0AAAAAAAGBlQAAAAAAAQFpAAAAAAACAXEAAAAAAAKBoQAAAAAAA4G5AAAAAAAAAZkAAAAAAAOBkQAAAAAAAMHJAAAAAAABQdUAAAAAAAFB2QAAAAAAAMGpAAAAAAACARUAAAAAAAEB2QAAAAAAAcJFAAAAAAACAakAAAAAAANyZQAAAAAAAIJFAAAAAAAAIikAAAAAAACBkQAAAAAAAAFJAAAAAAABAdEAAAAAAAIBgQAAAAAAAgGNAAAAAAACAUEAAAAAAAABoQAAAAAAAAFhAAAAAAAAAS0AAAAAAACBwQAAAAAAAAF5AAAAAAADgdkAAAAAAAIBmQAAAAAAAgFxAAAAAAAAAVUAAAAAAAPB2QAAAAAAAAGtAAAAAAACAXUA="},"shape":[121],"dtype":"float64","order":"little"}],["Wrkld",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAEECqqqqqqqrqP1VVVVVVVQVAAAAAAAAAAEAAAAAAAADwP6qqqqqqqg5AAAAAAAAAIEAAAAAAAADwP1VVVVVVVQVAVVVVVVVVBUBVVVVVVVUZQAAAAAAAAOA/AAAAAAAACEBVVVVVVVUfQAAAAAAAAPA/VVVVVVVVEUAAAAAAAAAAQKmqqqqqqi5AqqqqqqqqCkBVVVVVVVUFQP///////w9AVVVVVVVVCUAAAAAAAAAYQFVVVVVVVQ1AVVVVVVVV9T8AAAAAAAAAQFVVVVVVVRNAqqqqqqqqCkCqqqqqqqoKQFVVVVVVVRVAAAAAAAAA8D9VVVVVVVUNQKqqqqqqqvo/AAAAAAAAFECqqqqqqqokQAAAAAAAAPA/VVVVVVVVAUBVVVVVVVX1P6qqqqqqquo/VVVVVVVV9T8AAAAAAAAAQFVVVVVVVRNAqqqqqqqqGkAAAAAAAAAQQKqqqqqqqvo/U1VVVVVV1T9VVVVVVVUFQKqqqqqqqgpAAAAAAAAAAABVVVVVVVXVPwAAAAAAAB5Aqqqqqqqq+j////////8PQAAAAAAAABBAAAAAAAAACEBUVVVVVVUVQFNVVVVVVcU/VVVVVVVVEUAAAAAAAAAIQKqqqqqqqhJAVVVVVVVVCUAAAAAAAAAQQFVVVVVVVQdAAAAAAAAACECqqqqqqqoCQFRVVVVVVQFAVFVVVVVVH0BVVVVVVVUBQFVVVVVVVfU/AAAAAAAAAEAAAAAAAAAIQKqqqqqqqgpAqqqqqqqqEECqqqqqqqoCQAAAAAAAAPA/AAAAAAAAAEBVVVVVVVUZQAAAAAAAAAhAVVVVVVVVCUBVVVVVVVUNQFVVVVVVVRFAqqqqqqqqAkBUVVVVVVUZQAAAAAAAABhAAAAAAAAA8D8AAAAAAAAIQAAAAAAAAAhAAAAAAAAAEECrqqqqqqoWQKqqqqqqqhpAVVVVVVVVBUAAAAAAAAAQQAAAAAAAABBAqqqqqqqqCkCqqqqqqqoWQFRVVVVVVQVAVVVVVVVV1T9VVVVVVVUFQFVVVVVVVRdAqqqqqqqqBkBVVVVVVVUqQAAAAAAAABJAq6qqqqqqFEBVVVVVVVUFQAAAAAAAAPA/VVVVVVVVEUAAAAAAAADwP1VVVVVVVfU/AAAAAAAA8D9VVVVVVVUNQAAAAAAAAAhAAAAAAAAACEBVVVVVVVURQAAAAAAAAPA/VVVVVVVVDUAAAAAAAAAMQAAAAAAAAPA/AAAAAAAACEBVVVVVVVUFQAAAAAAAABBAAAAAAAAACEA="},"shape":[121],"dtype":"float64","order":"little"}],["W.Lec",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAAAEEAAAAAAAADgPwAAAAAAAABAAAAAAAAAAEAAAAAAAADwPwAAAAAAAARAAAAAAAAAEEAAAAAAAADwPwAAAAAAAABAAAAAAAAAAEAAAAAAAAAUQAAAAAAAAOA/AAAAAAAACEAAAAAAAAAaQAAAAAAAAPA/AAAAAAAABEAAAAAAAAAAQAAAAAAAAARAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAAAAAAAAAAABEAAAAAAAAAYQAAAAAAAAAhAAAAAAAAA8D8AAAAAAAAAQAAAAAAAAAxAAAAAAAAAAEAAAAAAAAAAQAAAAAAAAAxAAAAAAAAA8D8AAAAAAAAAQAAAAAAAAPA/AAAAAAAACEAAAAAAAAAiQAAAAAAAAPA/AAAAAAAA4D8AAAAAAADwPwAAAAAAAOA/AAAAAAAA8D8AAAAAAAAAQAAAAAAAAAxAAAAAAAAAFEAAAAAAAAAIQAAAAAAAAPA/AAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABZAAAAAAAAA8D8AAAAAAAAAQAAAAAAAABBAAAAAAAAACEAAAAAAAAAMQAAAAAAAAAAAAAAAAAAA8D8AAAAAAAAIQAAAAAAAAAhAAAAAAAAABEAAAAAAAAAQQAAAAAAAAAAAAAAAAAAAAEAAAAAAAADwP/////////c/AAAAAAAAEkAAAAAAAAD4PwAAAAAAAPA/AAAAAAAAAEAAAAAAAAAAQAAAAAAAAABAAAAAAAAABEAAAAAAAAAAQAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAUQAAAAAAAAPA/AAAAAAAABEAAAAAAAAAIQAAAAAAAAAhAAAAAAAAAAEAAAAAAAAAIQAAAAAAAABBAAAAAAAAA8D8AAAAAAAAIQAAAAAAAAAhAAAAAAAAACEAAAAAAAAAUQAAAAAAAAPA/AAAAAAAAAEAAAAAAAAAQQAAAAAAAABBAAAAAAAAACEAAAAAAAAAQQAAAAAAAAPA/AAAAAAAAAAAAAAAAAAAAQAAAAAAAABJAAAAAAAAABEAAAAAAAAApQAAAAAAAAAxAAAAAAAAADEAAAAAAAAAAQAAAAAAAAPA/AAAAAAAAAEAAAAAAAADwPwAAAAAAAPA/AAAAAAAA8D8AAAAAAAAAQAAAAAAAAAhAAAAAAAAACEAAAAAAAAAIQAAAAAAAAPA/AAAAAAAACEAAAAAAAAAEQAAAAAAAAPA/AAAAAAAACEAAAAAAAAAAQAAAAAAAAAhAAAAAAAAAAEA="},"shape":[121],"dtype":"float64","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","514cb7151a5b40e68522e3db465ae4d6"],["data",{"type":"map"}]]},"page":1,"page_size":20,"sorters":[{"type":"map","entries":[["field","Wrkld"],["dir","desc"]]},{"type":"map","entries":[["field","Hours"],["dir","desc"]]}],"select_mode":true,"selectable_rows":null}}]}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"b264e05b-a9d0-4dc9-8fd2-4bc6f0812ff9","attributes":{"plot_id":"1e4f3704-1621-4c1f-994b-0ba4a949ef22","comm_id":"d5a0d11f4172476f947af7abfa4d9ad1","client_comm_id":"79969018a08d417fa9da0c9a7b791030"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
+  var render_items = [{"docid":"9dbb9529-fc6a-4689-b13d-6b91c9079683","roots":{"1e4f3704-1621-4c1f-994b-0ba4a949ef22":"d6bcec44-d259-4283-bbca-4aca1d814c55"},"root_ids":["1e4f3704-1621-4c1f-994b-0ba4a949ef22"]}];
+  var docs = Object.values(docs_json)
+  if (!docs) {
+    return
+  }
+  const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
+  function embed_document(root) {
+    var Bokeh = get_bokeh(root)
+    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    for (const render_item of render_items) {
+      for (const root_id of render_item.root_ids) {
+    const id_el = document.getElementById(root_id)
+    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+      const root_el = id_el.children[0]
+      root_el.id = root_el.id + '-rendered'
+    }
+      }
+    }
+  }
+  function get_bokeh(root) {
+    if (root.Bokeh === undefined) {
+      return null
+    } else if (root.Bokeh.version !== py_version) {
+      if (root.Bokeh.versions === undefined || !root.Bokeh.versions.has(py_version)) {
+    return null
+      }
+      return root.Bokeh.versions.get(py_version);
+    } else if (root.Bokeh.version === py_version) {
+      return root.Bokeh
+    }
+    return null
+  }
+  function is_loaded(root) {
+    var Bokeh = get_bokeh(root)
+    return (Bokeh != null && Bokeh.Panel !== undefined && ( root.Tabulator !== undefined) && ( root.Tabulator !== undefined))
+  }
+  if (is_loaded(root)) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (is_loaded(root)) {
+        clearInterval(timer);
+        embed_document(root);
+      } else if (document.readyState == "complete") {
+        attempts++;
+        if (attempts > 200) {
+          clearInterval(timer);
+      var Bokeh = get_bokeh(root)
+      if (Bokeh == null || Bokeh.Panel == null) {
+            console.warn("Panel: ERROR: Unable to run Panel code because Bokeh or Panel library is missing");
+      } else {
+        console.warn("Panel: WARNING: Attempting to render but not all required libraries could be resolved.")
+        embed_document(root)
+      }
+        }
+      }
+    }, 25, root)
+  }
+})(window);</script>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

@@ -1,0 +1,131 @@
+---
+title: Exploring the data
+---
+
+For this analysis we'll be using the *stacked_df* data frame from the cleaning process.
+
+I haven't spend much time on this.  My effort to date has been spent on developing 
+and documenting the preparing of the data at the instructor level.
+
+Significant effort was also invested in the [corresponding google workbook](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377).
+
+
+```{python}
+#| echo: false
+import os
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+import panel as pn
+from bokeh.models.widgets.tables import NumberFormatter
+pn.extension('tabulator')
+
+```
+
+```{python}
+#| echo: false
+# Load the CSV file into a pandas data frame.
+
+stacked_df = pd.read_csv('stacked_df.csv')
+
+# Ensure that these 3 columns are treated as strings and not as numbers.
+for col in ['TERM','COURSE','SECT']:
+  stacked_df[col] = stacked_df[col].astype(str)
+
+
+```
+
+# Faculty comparisons - Fall 2023
+
+```{python}
+#| echo: false
+
+def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'] ):
+    """ load data """
+    df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['DEPT'].isin(dept))]
+
+    summary_df = df.groupby(['instructor','ins_dept','ins_role']).agg({'sum_term_crse':'sum',
+    'sum_term_crse_crn':'sum',
+    'sum_term_crse_crn_mtg_students':'sum',
+    'sum_term_crse_crn_hours':'sum',
+    'sum_term_crse_wrkld_sample':'sum',
+    'sum_term_crse_wrkld_sample_lec':'sum'}).reset_index()
+
+    summary_df = summary_df.rename(columns={
+        'TERM': 'Term',
+        'instructor':'Instructor',
+        'ins_dept':'Dept',
+        'ins_role': 'Role',
+        'sum_term_crse': 'Crse',
+        'sum_term_crse_crn': 'CRNs',
+        'sum_term_crse_crn_mtg_students': 'Stdnts',
+        'sum_term_crse_crn_hours': 'Hours',
+        'sum_term_crse_wrkld_sample':'Wrkld',
+        'sum_term_crse_wrkld_sample_lec': 'W.Lec'
+    })
+
+    df_widget = pn.widgets.Tabulator(
+        summary_df,
+        show_index = False,
+        sorters=[
+            {'field':'Wrkld','dir': 'desc'},
+            {'field':'Hours','dir': 'desc'}
+        ],
+        formatters={
+            'Crse': NumberFormatter( format="0.0",text_align='center'),
+            'CRNs': NumberFormatter( format="0.0",text_align='center'),
+            'Stdnts': NumberFormatter( format="0.0",text_align='center'),
+            'Hours': NumberFormatter( format="0.0",text_align='center'),
+            'Wrkld': NumberFormatter( format="0.00",text_align='center'),
+            'W.Lec': NumberFormatter( format="0.00",text_align='center'),
+        }
+    )
+
+    df_widget.disabled = True
+
+    panel = pn.Row(df_widget)
+    return panel
+```
+::: {.panel-tabset}
+
+## CMSC
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['CMSC'])
+```
+
+## MNE
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['EGRM'])
+```
+
+## ECE
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['EGRE'])
+```
+
+## BME
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['EGRB'])
+```
+
+## CLSE
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['EGRC'])
+```
+
+## All
+```{python}
+#| echo: false
+get_tabulator_table( stacked_df,['202410','202420'],['EGRM','EGRE','EGRC','EGRB','CMSC'])
+```
+
+:::
