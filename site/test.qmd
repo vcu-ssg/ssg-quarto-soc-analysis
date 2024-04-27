@@ -2,31 +2,66 @@
 title: Workloads 
 ---
 
+```{=html}
+<script>
+console.log("hello in my adding code!");
+const MyFormatFunc = function (cell, formatterParams, onRendered){
+    console.log("hello world!");
+    var value1 = cell.getRow().getData().Value1;
+    var value2 = cell.getRow().getData().Value2;
+    var maxVal = Math.max(...cell.getTable().getData().map(row => row.Value1 + row.Value2));
+    var width1 = 100 * (value1 / maxVal);
+    var width2 = 100 * (value2 / maxVal);
+    return '<div style="width: 100%; display: flex; height: 100%; align-items: center;">' +
+        '<div style="width:' + width1 + '%; background-color: blue; height: 100%"></div>' +
+        '<div style="width:' + width2 + '%; background-color: red; height: 100%"></div>' +
+        '</div>';
+}
+</script>
+```
+
 
 ```{python}
-import datetime as dt
-import numpy as np
 import pandas as pd
 import panel as pn
+from panel.interact import interact
+from panel.widgets import DataFrame
 
-np.random.seed(7)
 pn.extension('tabulator')
 
-from bokeh.sampledata.periodic_table import elements
+# Sample DataFrame
+data = {'Name': ['Alice', 'Bob', 'Charlie'],
+        'Value1': [10, 20, 30],
+        'Value2': [3, 2, 5],
+        }
+df = pd.DataFrame(data)
 
-periodic_df = elements[['atomic number', 'name', 'atomic mass', 'metal', 'year discovered']].set_index('atomic number')
+def generate_bar_html(row, dataframe):
+    value1 = row['Value1']
+    value2 = row['Value2']
+    max_val = dataframe[['Value1', 'Value2']].sum(axis=1).max()
+    width1 = 100 * (value1 / max_val)
+    width2 = 100 * (value2 / max_val)
+    
+    html_content = f"""
+    <div style="width: 100%; display: flex; height: 100%; align-items: center;">
+        <div style="width: {width1}%; background-color: blue; height: 100%;"></div>
+        <div style="width: {width2}%; background-color: red; height: 100%;"></div>
+    </div>
+    """
+    return html_content
 
-def content_fn( row ):
-    return pn.pane.HTML(
-    f'<iframe src="https://en.wikipedia.org/wiki/{row["name"]}?printable=yes" width="100%" height="200px"></iframe>',
-    sizing_mode='stretch_width'
-    )
+df['Bar'] = df.apply(generate_bar_html, dataframe=df, axis=1)
 
-periodic_table = pn.widgets.Tabulator(
-    periodic_df, layout='fit_columns', sizing_mode='stretch_width',
-    row_content=content_fn,
-    embed_content=True
-)
+# Setting up the Tabulator widget
+tabulator = pn.widgets.Tabulator(df, width=400, height=200,
+                                  formatters={
+                                    'Value1' : {'type': 'progress','max' : '40'},
+                                    'Value2' : {'type': 'star','stars' : '5'},
+                                    'Bar': {'type':'html'}
+                                   })
 
-periodic_table
+# Show the panel
+tabulator.servable()
+
 ```

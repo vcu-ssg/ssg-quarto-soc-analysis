@@ -1,5 +1,5 @@
 ---
-title: Exploring the data
+title: Instructor workloads
 ---
 
 For this analysis we'll be using the *stacked_df* data frame from the cleaning process.
@@ -21,7 +21,7 @@ import pandas as pd
 import numpy as np
 
 import panel as pn
-from bokeh.models.widgets.tables import NumberFormatter
+from bokeh.models.widgets.tables import NumberFormatter, StringFormatter
 pn.extension('tabulator')
 
 ```
@@ -39,21 +39,84 @@ for col in ['TERM','COURSE','SECT']:
 
 ```
 
-# Faculty comparisons - Fall 2023
+# Instructor workloads - Fall 2023/Spring 2024
 
 ```{python}
 #| echo: false
 
+def generate_hour_bar_html(row, dataframe):
+    value1 = row['sum_term_crse_crn_hours_lec']
+    value2 = row['sum_term_crse_crn_hours'] - value1
+    max_val = dataframe[['sum_term_crse_crn_hours']].sum(axis=1).max()
+    width1 = 100 * (value1 / max_val)
+    width2 = 100 * (value2 / max_val)
+    
+    median_hours = dataframe['sum_term_crse_crn_hours'].median()
+    median_value = 100 * (median_hours / max_val)
+
+    html_content = f"""
+    <div style="width: 100%; display: flex; height: 100%; align-items: center;">
+        <div style="width: {width1}%; background-color: blue; height: 100%;"></div>
+        <div style="width: {width2}%; background-color: red; height: 100%;"></div>
+        <div style="position: absolute; left: {median_value}%; top: 0; bottom: 0; width: 1px; background-color: black;"></div>
+    </div>
+    """
+    return html_content
+
+def generate_workload_bar_html(row, dataframe):
+    value1 = row['sum_term_crse_wrkld_sample_lec']
+    value2 = row['sum_term_crse_wrkld_sample'] - value1
+    max_val = dataframe[['sum_term_crse_wrkld_sample']].sum(axis=1).max()
+    width1 = 100 * (value1 / max_val)
+    width2 = 100 * (value2 / max_val)
+
+    median = dataframe['sum_term_crse_wrkld_sample'].median()
+    median_value = 100 * (median / max_val)
+
+    # Calculate the unused space (if any) to keep bars aligned to the right
+    remaining_space = 100 - (width1 + width2)
+
+    html_content = f"""
+    <div style="width: 100%; display: flex; height: 100%; align-items: center; justify-content: flex-end;">
+        <div style="width: 100%; display: flex; height: 100%; align-items: center">
+            <div style="width: {remaining_space}%; height: 100%;"></div>
+            <div style="width: {width2}%; background-color: red; height: 100%;"></div>
+            <div style="width: {width1}%; background-color: blue; height: 100%;"></div>
+           <div style="position: absolute; left: {100-median_value}%; top: 0; bottom: 0; width: 1px; background-color: black;"></div>
+        </div>
+    </div>
+    """
+    return html_content
+
+
 def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'] ):
     """ load data """
-    df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['DEPT'].isin(dept))]
+    df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['ins_dept'].isin(dept))]
 
-    summary_df = df.groupby(['instructor','ins_dept','ins_role']).agg({'sum_term_crse':'sum',
+    summary_df = df.groupby(['instructor','ins_dept','ins_role']).agg({
+    'sum_term_crse':'sum',
     'sum_term_crse_crn':'sum',
     'sum_term_crse_crn_mtg_students':'sum',
     'sum_term_crse_crn_hours':'sum',
+    'sum_term_crse_crn_hours_lec':'sum',
     'sum_term_crse_wrkld_sample':'sum',
-    'sum_term_crse_wrkld_sample_lec':'sum'}).reset_index()
+    'sum_term_crse_wrkld_sample_lec':'sum'
+    }).reset_index()
+
+    summary_df = summary_df[[
+        'instructor','ins_dept','ins_role',
+        'sum_term_crse_wrkld_sample_lec',
+        'sum_term_crse_wrkld_sample',
+        'sum_term_crse_crn_hours_lec',
+        'sum_term_crse_crn_hours',
+        'sum_term_crse_crn',
+        'sum_term_crse_crn_mtg_students',
+    ]]
+
+
+    summary_df['Wrkld Bar'] = summary_df.apply(generate_workload_bar_html, dataframe=summary_df, axis=1)
+    summary_df['Hour Bar'] = summary_df.apply(generate_hour_bar_html, dataframe=summary_df, axis=1)
+
 
     summary_df = summary_df.rename(columns={
         'TERM': 'Term',
@@ -65,52 +128,76 @@ def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'] ):
         'sum_term_crse_crn_mtg_students': 'Stdnts',
         'sum_term_crse_crn_hours': 'Hours',
         'sum_term_crse_wrkld_sample':'Wrkld',
-        'sum_term_crse_wrkld_sample_lec': 'W.Lec'
+        'sum_term_crse_wrkld_sample_lec': 'W.Lec',
+        'sum_term_crse_crn_hours_lec': 'Hr.Lec'
     })
 
 
     def content_fn( row ):
-        ins_df = stacked_df[(stacked_df['TERM'].isin(terms))  & (stacked_df['DEPT'].isin(dept)) & (stacked_df['instructor']==row["Instructor"])]
-        ins_df = ins_df.groupby(['period_name','COURSE','TITLE']).agg({
+        ins_df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['instructor']==row["Instructor"])]
+        ins_df = ins_df.groupby(['period_name','CRN','COURSE','TITLE','wrkld_sample_type','wrkld_sample_note']).agg(
+            {
             'sum_term_crse_crn':'sum',
             'sum_term_crse_crn_mtg_students':'sum',
             'sum_term_crse_crn_hours':'sum',
+            'sum_term_crse_crn_hours_lec' : 'sum',
             'sum_term_crse_wrkld_sample':'sum',
             'sum_term_crse_wrkld_sample_lec':'sum'}).reset_index()
+        ins_df = ins_df[ ['period_name','CRN','COURSE','TITLE','wrkld_sample_type','sum_term_crse_wrkld_sample_lec',
+        'sum_term_crse_wrkld_sample','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours','sum_term_crse_crn_hours_lec','wrkld_sample_note'] ]
         ins_df = ins_df.rename(columns={
             'period_name' : 'Term',
+            'COURSE' : 'Crse',
+            'TITLE' : 'Crse Title',
+            'wrkld_sample_type' : 'W.Type',
+            'wrkld_sample_note' : 'Wrkld note',
             'sum_term_crse': 'Crse',
             'sum_term_crse_crn': 'CRNs',
             'sum_term_crse_crn_mtg_students': 'Stdnts',
             'sum_term_crse_crn_hours': 'Hours',
-            'sum_term_crse_wrkld_sample':'Wrkld',
+            'sum_term_crse_crn_hours_lec': 'Hr.Lec',
+            'sum_term_crse_wrkld_sample':'W.Tot',
             'sum_term_crse_wrkld_sample_lec': 'W.Lec'
         })
         df2 = pn.widgets.Tabulator(ins_df,show_index=False,
+            sorters=[
+            {'field':'W.Type','dir': 'desc'},
+            {'field':'CRN','dir': 'asc'},
+            {'field':'Crse','dir': 'asc'},
+            {'field':'Term','dir': 'asc'},
+            ],
             formatters={
+            'CRN': StringFormatter( text_align='center'),
+            'W.Type': StringFormatter( text_align='center'),
             'CRNs': NumberFormatter( format="0.0",text_align='center'),
             'Stdnts': NumberFormatter( format="0.0",text_align='center'),
             'Hours': NumberFormatter( format="0.0",text_align='center'),
-            'Wrkld': NumberFormatter( format="0.00",text_align='center'),
-            'W.Lec': NumberFormatter( format="0.00",text_align='center'),
+            'Hr.Lec': NumberFormatter( format="0.0",text_align='center'),
+            'W.Tot': NumberFormatter( format="0.00",text_align='center'),
+            'W.Lec': NumberFormatter( format="0.00",text_align='center')
             },
         )
         return pn.Row( df2 )
+
 
     df_widget = pn.widgets.Tabulator(
         summary_df,
         show_index = False,
         sorters=[
             {'field':'Wrkld','dir': 'desc'},
-            {'field':'Hours','dir': 'desc'}
+            {'field':'Hours','dir': 'desc'},
         ],
+        widths={'Hour Bar':'20px','Wrkld Bar':'20px'},
         formatters={
             'Crse': NumberFormatter( format="0.0",text_align='center'),
             'CRNs': NumberFormatter( format="0.0",text_align='center'),
             'Stdnts': NumberFormatter( format="0.0",text_align='center'),
             'Hours': NumberFormatter( format="0.0",text_align='center'),
+            'Hr.Lec': NumberFormatter( format="0.0",text_align='center'),
             'Wrkld': NumberFormatter( format="0.00",text_align='center'),
             'W.Lec': NumberFormatter( format="0.00",text_align='center'),
+            'Wrkld Bar': {'type':'html'},
+            'Hour Bar': {'type':'html'}
         },
         row_content=content_fn,
         embed_content=True
@@ -121,6 +208,8 @@ def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'] ):
     panel = pn.Row(df_widget)
     return panel
 ```
+::: {.column-screen-inset-right}
+
 ::: {.panel-tabset}
 
 ## CMSC
@@ -160,3 +249,5 @@ get_tabulator_table( stacked_df,['202410','202420'],['EGRM','EGRE','EGRC','EGRB'
 ```
 
 :::
+:::
+

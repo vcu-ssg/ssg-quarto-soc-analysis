@@ -33,7 +33,7 @@ from gspread_dataframe import set_with_dataframe, get_as_dataframe
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from oauth2client.service_account import ServiceAccountCredentials
-
+from gspread.exceptions import SpreadsheetNotFound, APIError
 
 directory_path = './data'
 file_list = os.listdir(directory_path)
@@ -102,7 +102,7 @@ for file_name in xlsx_df['file_name']:
     term_index = df.index[df.iloc[:, 0] == "TERM"].tolist()[0]
     
     # Find the row index where "N=" is in the first column
-    n_index = df.index[df.iloc[:, 0].str.startswith("N =").fillna(False)].tolist()[0]
+    n_index = df.index[df.iloc[:, 0].fillna('x').astype(str).str.startswith("N =")].tolist()[0]
 
     # Clip the desired block and add column names
     trimmed_df = df.loc[term_index + 1 : n_index - 1]
@@ -125,6 +125,16 @@ sections_df['SECT'] = sections_df['SECT'].astype(str)
 sections_df['TERM'] = sections_df['TERM'].astype(str)
 xlsx_df['term_code'] = xlsx_df['term_code'].astype(str)
 sections_df = pd.merge(sections_df,xlsx_df,left_on='TERM', right_on='term_code', how='left')
+```
+
+### Remove duplicate instructor1 and instructor2
+
+```{python}
+def replace_matches(row):
+    if row['PRIMARY INSTRUCTOR FIRST NAME'] == row['SECONDARY INSTRUCTOR FIRST NAME'] and row['PRIMARY INSTRUCTOR LAST NAME'] == row['SECONDARY INSTRUCTOR LAST NAME']:
+        row['SECONDARY INSTRUCTOR FIRST NAME'], row['SECONDARY INSTRUCTOR LAST NAME'] = '', ''
+    return row
+sections_df = sections_df.apply( replace_matches,axis=1)
 ```
 
 ### Fix known errors
@@ -173,16 +183,10 @@ fix_sections(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRI
 # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
 fix_sections(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
-fix_sections(3,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40553'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix_sections(4,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40554'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix_sections(5,"Remove Duke as 2nd instructor",{'TERM':'202410','CRN':'40555'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-
-fix_sections(6,"Remove Sparks as 2nd instructor",{'TERM':'202320','CRN':'17442'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix_sections(7,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'33698'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix_sections(8,"Remove Duke as 2nd instructor",{'TERM':'202320','CRN':'41891'},{'SECONDARY INSTRUCTOR FIRST NAME':'','SECONDARY INSTRUCTOR LAST NAME':''})
-fix_sections(9,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
+fix_sections(3,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
 
 ```
+
 
 ### Reshape the data
 
@@ -201,8 +205,8 @@ sections_df['ins2_last'] = sections_df['SECONDARY INSTRUCTOR LAST NAME']
 sections_df['ins2_first'] = sections_df['SECONDARY INSTRUCTOR FIRST NAME']
 sections_df['instructor_1'] = sections_df['ins1_last']+sections_df['ins1_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins1_first']
 sections_df['instructor_2'] = sections_df['ins2_last']+sections_df['ins2_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins2_first']
-sections_df['instructor_1'].fillna('',inplace=True)
-sections_df['instructor_2'].fillna('',inplace=True)
+sections_df['instructor_1'].astype(str).fillna('',inplace=True)
+sections_df['instructor_2'].astype(str).fillna('',inplace=True)
 
 stacked_df = pd.melt(sections_df,
     id_vars=cols,
@@ -219,9 +223,10 @@ The process above introduces records with missing instructor_2.  This
 code removes records missing instructor_2.
 
 ```{python}
-# remove rows with empty instructor 1.  Keep rows with empty instructor 1.
-stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor']=='')) ]
+# remove rows with empty instructor 2.  Keep rows with empty instructor 1.
+stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor'].isna() | (stacked_df['instructor']==''))) ]
 ```
+
 In some summer courses an instructor was not listed in the data.  An instructor
 name is generated using the course and semester. This can be cleaned later.
 
@@ -271,7 +276,7 @@ It's getting old adding new columns, then having to rework the formuluas in the 
 
 ```{python}
 stacked_df["lec_only_course_list"] = ""
-stacked_df["spare_col_2"] = 0
+stacked_df["sum_term_crse_crn_hours_lec"] = 0  # used 4/27/2024. Search for "Store LEC-only workload", below, after workload calcs.
 stacked_df["spare_col_3"] = 0
 stacked_df["spare_col_4"] = 0
 stacked_df["spare_col_5"] = 0
@@ -308,15 +313,22 @@ client = gspread.authorize(creds)
 
 spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"
 worksheet_name = "Instructor data"
-sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
-instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
 
+sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
+instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True)
+
+```
+
+```{python}
 stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor',right_on='instructor',how='left')
 
 worksheet_name = "Instructor notes"
 sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
 instructor_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
+instructor_notes_df = instructor_notes_df.dropna(subset=['instructor'])
+```
 
+```{python}
 stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor',right_on='instructor',how='left')
 
 ```
@@ -330,7 +342,11 @@ stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor',right
 worksheet_name = "Course notes"
 sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
 course_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
+course_notes_df = course_notes_df.dropna(subset=['crse'])
 
+```
+
+```{python}
 stacked_df = pd.merge( stacked_df,course_notes_df,left_on='COURSE',right_on='crse',how='left')
 
 ```
@@ -391,7 +407,7 @@ def concat_courses(group):
 
 temp_df = pd.DataFrame();
 keys = ['TERM','instructor','time_code']
-temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses)
+temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses,include_groups=False)
 temp_df["list"] = temp_df["concat"].apply( lambda x :  list(set(x.split(","))) )
 temp_df["combined_count"] = temp_df["list"].apply( lambda x :  len(x) )
 temp_df["combined_sections"] = temp_df["list"].apply( lambda x :  ",".join(x) )
@@ -735,6 +751,11 @@ for threshhold,weight in model_sample['large_classes']:
 stacked_df['sum_term_crse_wrkld_sample_lec'] = 0.0
 stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_wrkld_sample_lec'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_wrkld_sample']
 
+# Also, store lecture-only hours (based on workload assignment) to spare value
+
+stacked_df['sum_term_crse_crn_hours_lec'] = 0.0
+stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_crn_hours_lec'] = stacked_df.loc[(stacked_df['wrkld_sample_type']=='LEC'),'sum_term_crse_crn_hours']
+
 ```
 
 ### Store list of LECT-only courses 
@@ -900,10 +921,26 @@ worksheet_name = "Source data"
 data_to_write = stacked_df.to_records(index=False)
 try:
     sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
-except:
+except SpreadsheetNotFound as e:
     sheet = client.open_by_key(spreadsheet_key).add_worksheet( 
         title = worksheet_name,nrows=100,ncols=10
     )
+except APIError as e:
+    if 'insufficient permissions' in str(e).lower():
+        print(f"Permission denied error: {e}")
+        raise PermissionError(f"Permission denied: {e}")  # Creating a new PermissionError
+    else:
+        print(f"Failed to fetch data due to API error: {e}")
+    raise
+except ValueError as e:
+    print(f"Data retrieval issue: {e}")
+    raise
+except Exception as e:
+    # A generic catch-all to handle unexpected errors
+    print(f"An unexpected error occurred: {e}")
+    raise
+
+
 try:
     sheet.clear()
     set_with_dataframe(worksheet=sheet, dataframe=stacked_df, include_index=False,include_column_header=True, resize=True)
