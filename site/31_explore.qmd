@@ -119,6 +119,12 @@ def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'], fi
     """ load data """
     df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['ins_dept'].isin(dept))]
 
+    if filters is None:
+        filters = {
+    'Role':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True }
+}
+
+
     summary_df = df.groupby(['instructor','ins_dept','ins_role']).agg({
     'sum_term_crse':'sum',
     'sum_term_crse_crn':'sum',
