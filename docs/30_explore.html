@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.553">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -138,6 +138,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <a class="nav-link active" href="./30_explore.html" aria-current="page"> 
 <span class="menu-text">Explore</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./31_explore.html"> 
+<span class="menu-text">Workloads</span></a>
+  </li>  
 </ul>
           </div> <!-- /navcollapse -->
           <div class="quarto-navbar-tools">
@@ -187,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Significant effort was also invested in the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">corresponding google workbook</a>.</p>
 <section id="columns-in-the-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="columns-in-the-dataframe">Columns in the dataframe</h2>
-<div id="5b10a20e" class="cell" data-execution_count="2">
+<div id="b8d3f878" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the CSV file into a pandas data frame.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.read_csv(<span class="st">'stacked_df.csv'</span>)</span>
@@ -213,7 +217,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="college-wide-measures-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="college-wide-measures-over-time">College-wide measures over time</h2>
 <p>This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.</p>
-<div id="0493de2d" class="cell" data-execution_count="3">
+<div id="ef1dcfd2" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
 <table class="table table-sm table-striped small">
 <thead>
@@ -231,17 +235,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">202110</td>
 <td style="text-align: left;">Fall 2020</td>
 <td style="text-align: right;">149</td>
-<td style="text-align: right;">416</td>
+<td style="text-align: right;">419</td>
 <td style="text-align: right;">7967</td>
-<td style="text-align: right;">15929</td>
+<td style="text-align: right;">16353</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202120</td>
 <td style="text-align: left;">Spring 2021</td>
 <td style="text-align: right;">137</td>
-<td style="text-align: right;">444</td>
+<td style="text-align: right;">445</td>
 <td style="text-align: right;">7393</td>
-<td style="text-align: right;">16400</td>
+<td style="text-align: right;">16518</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202130</td>
@@ -255,33 +259,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">202210</td>
 <td style="text-align: left;">Fall 2021</td>
 <td style="text-align: right;">154</td>
-<td style="text-align: right;">422</td>
+<td style="text-align: right;">425</td>
 <td style="text-align: right;">7362</td>
-<td style="text-align: right;">16329</td>
+<td style="text-align: right;">16689</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202220</td>
 <td style="text-align: left;">Spring 2022</td>
 <td style="text-align: right;">146</td>
-<td style="text-align: right;">448</td>
+<td style="text-align: right;">449</td>
 <td style="text-align: right;">7327</td>
-<td style="text-align: right;">16677</td>
+<td style="text-align: right;">16801</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202230</td>
 <td style="text-align: left;">Summer 2022</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">107</td>
-<td style="text-align: right;">626</td>
-<td style="text-align: right;">1343</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">624</td>
+<td style="text-align: right;">1341</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202310</td>
 <td style="text-align: left;">Fall 2022</td>
 <td style="text-align: right;">159</td>
-<td style="text-align: right;">434</td>
+<td style="text-align: right;">438</td>
 <td style="text-align: right;">8306</td>
-<td style="text-align: right;">18012</td>
+<td style="text-align: right;">18396</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202320</td>
@@ -303,23 +307,23 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">202410</td>
 <td style="text-align: left;">Fall 2023</td>
 <td style="text-align: right;">157</td>
-<td style="text-align: right;">451</td>
+<td style="text-align: right;">452</td>
 <td style="text-align: right;">9497</td>
-<td style="text-align: right;">21222</td>
+<td style="text-align: right;">21298</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202420</td>
 <td style="text-align: left;">Spring 2024</td>
 <td style="text-align: right;">154</td>
-<td style="text-align: right;">464</td>
+<td style="text-align: right;">466</td>
 <td style="text-align: right;">8735</td>
-<td style="text-align: right;">20102</td>
+<td style="text-align: right;">20358</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="87fae4eb" class="cell" data-execution_count="4">
+<div id="9ca51d50" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -331,7 +335,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="teaching-for-fall-2023-by-subject" class="level2">
 <h2 class="anchored" data-anchor-id="teaching-for-fall-2023-by-subject">Teaching for Fall 2023 by subject</h2>
-<div id="623fc754" class="cell" data-execution_count="5">
+<div id="af852ac6" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="5">
 <table class="table table-sm table-striped small">
 <thead>
@@ -354,9 +358,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td style="text-align: left;">EGRB</td>
 <td style="text-align: right;">31</td>
-<td style="text-align: right;">64</td>
+<td style="text-align: right;">65</td>
 <td style="text-align: right;">994</td>
-<td style="text-align: right;">2211</td>
+<td style="text-align: right;">2287</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">EGRC</td>
@@ -390,7 +394,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<div id="9ef06480" class="cell" data-execution_count="6">
+<div id="2f8162ae" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">

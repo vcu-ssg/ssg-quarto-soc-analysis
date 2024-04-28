@@ -14,6 +14,8 @@ website:
         text: Clean
       - href: 30_explore.qmd
         text: Explore
+      - href: 31_explore.qmd
+        text: Workloads
 
 format:
   html:

@@ -639,11 +639,11 @@ LAB sections require effort on the part of the faculty member, but at a reduced 
 Identifying lab sections is tricky.  The College often codes lab sections differently across departments.  Some are coded properly as LAB 
 sections.  
 
-In other cases, LAB sections are coded as LEC because they share the same CRN as their owner lecture.  To capture these
-cases a special logic is introduced.  If a section is taught once per week (e.g., M or W or TH) and the CRN has more than one meeting period, then the section with one meeting period is designated a LAB section. 
+In other cases, LAB sections are coded as LEC because they share the same CRN as their owner lecture.  To capture these cases a special logic is introduced.  If a section is taught once per week (e.g., M or W or TH) and the CRN has more than one meeting period, then the section with one meeting period is designated a LAB section. 
 
 In reviewing the data I found some really odd coding. To accomodate this, I added an override
-block to turn specific tuples into lab sections.
+block to turn specific tuples into lab sections.  This logic must be maintained manually until
+the College decides to rework the schedule.
 
 ```{python}
 #| eval: true
