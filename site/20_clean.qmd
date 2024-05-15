@@ -172,6 +172,27 @@ def fix_sections( id, note, key, data ):
     sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),"fixes"] += f";FIX{id:03}"
     sections_df.loc[(sections_df["TERM"]==key["TERM"])&(sections_df["CRN"]==key["CRN"]),"fix_notes"] += ";" + note
 
+def fix_names( id, note, old_name, new_name ):
+    """ replace instructor old_name with instructor new_name """
+    # find all sections with the old name, then update these sections.
+    # You can't simply change old name to new name using old name as key!
+
+    section_terms = sections_df[
+        (sections_df["PRIMARY INSTRUCTOR FIRST NAME"]==old_name["first_name"])&(sections_df["PRIMARY INSTRUCTOR LAST NAME"]==old_name["last_name"]) ]
+
+    for i,section in section_terms.iterrows():
+        fix_sections( id, note, section,
+        {"PRIMARY INSTRUCTOR FIRST NAME":new_name["first_name"],
+        "PRIMARY INSTRUCTOR LAST NAME":new_name["last_name"]})
+
+    section_terms = sections_df[
+        (sections_df["SECONDARY INSTRUCTOR FIRST NAME"]==old_name["first_name"])&(sections_df["SECONDARY INSTRUCTOR LAST NAME"]==old_name["last_name"]) ]
+
+    for i,section in section_terms.iterrows():
+        fix_sections( id, note, section,
+        {"SECONDARY INSTRUCTOR FIRST NAME":new_name["first_name"],
+        "SECONDARY INSTRUCTOR LAST NAME":new_name["last_name"]})
+
 ```
 
 ```{python}
@@ -184,6 +205,9 @@ fix_sections(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRI
 fix_sections(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
 fix_sections(3,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
+
+fix_names(4,"Rename instructor",
+{'first_name':'Sheng-Chieh','last_name':'Chen'},{'first_name':'Shawn','last_name':'Chen'})
 
 ```
 
