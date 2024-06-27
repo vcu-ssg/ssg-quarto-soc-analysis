@@ -209,6 +209,25 @@ fix_sections(3,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'4
 fix_names(4,"Rename instructor",
 {'first_name':'Sheng-Chieh','last_name':'Chen'},{'first_name':'Shawn','last_name':'Chen'})
 
+fix_names(5,"Rename instructor",
+{'first_name':'Bernard','last_name':'Gupton'},{'first_name':'Frank','last_name':'Gupton'})
+
+fix_names(6,"Rename instructor",
+{'first_name':'Anathea','last_name':'Pepperl'},{'first_name':'Thea','last_name':'Pepperl'})
+
+fix_names(7,"Rename instructor",
+{'first_name':'Robert','last_name':'Dahlberg'},{'first_name':'Bob','last_name':'Dahlberg'})
+
+fix_names(8,"Rename instructor",
+{'first_name':'Philip','last_name':'Longest'},{'first_name':'Worth','last_name':'Longest'})
+
+fix_names(9,"Rename instructor",
+{'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
+
+fix_names(10,"Rename instructor",
+{'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
+
+
 ```
 
 
@@ -345,7 +364,14 @@ instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True)
 
 ```{python}
 stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor',right_on='instructor',how='left')
+```
 
+```{python}
+missing_records = stacked_df[stacked_df['ins_dept'].isna()]
+missing_records[['instructor','COURSE','TERM']].drop_duplicates(subset='instructor')
+```
+
+```{python}
 worksheet_name = "Instructor notes"
 sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
 instructor_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
@@ -354,7 +380,6 @@ instructor_notes_df = instructor_notes_df.dropna(subset=['instructor'])
 
 ```{python}
 stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor',right_on='instructor',how='left')
-
 ```
 
 ### Merge persistent course data
@@ -367,12 +392,15 @@ worksheet_name = "Course notes"
 sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
 course_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
 course_notes_df = course_notes_df.dropna(subset=['crse'])
-
 ```
 
 ```{python}
 stacked_df = pd.merge( stacked_df,course_notes_df,left_on='COURSE',right_on='crse',how='left')
+```
 
+```{python}
+missing_records = stacked_df[stacked_df['crse_url'].isna()].drop_duplicates(subset='COURSE')
+missing_records[['COURSE','TERM']]
 ```
 
 ### Identify shared rooms
