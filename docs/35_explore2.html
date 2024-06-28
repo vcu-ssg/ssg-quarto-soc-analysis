@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.555">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -205,7 +205,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="columns-in-the-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="columns-in-the-dataframe">Columns in the dataframe</h2>
 <p>Load the data frame. The OJS code would like slightly different.</p>
-<div id="965e23a3" class="cell" data-execution_count="2">
+<div id="dfd2b18f" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the data frame</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.read_csv(<span class="st">'stacked_df.csv'</span>)</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -240,7 +240,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Hours Sum : There are several ways to calculate this variable. In general, this is calculated on a PER CRN basis, multiplying the unique headcount in the CRN time the credit-hour value of a course (usually, 2, 3 or 4).</li>
 </ul>
 <p>The table below shows these key measures accumulated by all semesters in the data set.</p>
-<div id="24a226a3" class="cell" data-execution_count="3">
+<div id="a50a6086" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create my four desired columns</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># lecture hours and non-lecture hours</span></span>
@@ -253,7 +253,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample_lec'</span>] <span class="op">=</span> stacked_df[<span class="st">'sum_term_crse_wrkld_sample_lec'</span>]</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample_non_lec'</span>] <span class="op">=</span> stacked_df[<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">-</span> stacked_df[<span class="st">'sum_term_crse_wrkld_sample_lec'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="81a2d79a" class="cell" data-execution_count="4">
+<div id="1281d7c8" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'period_name'</span>]).agg(</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  {<span class="st">'sum_term_crse'</span>:<span class="st">'sum'</span>,</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">'sum_term_crse_crn'</span>:<span class="st">'sum'</span>,</span>
@@ -270,7 +270,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  floatfmt<span class="op">=</span><span class="st">".0f"</span>  <span class="co"># Format numbers without decimals</span></span>
 <span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="4">
-<table class="caption-top table table-sm table-striped small">
+<table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th></th>
@@ -421,7 +421,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="aggregate-measures-over-all-semesters" class="level2">
 <h2 class="anchored" data-anchor-id="aggregate-measures-over-all-semesters">Aggregate measures over all semesters</h2>
-<div id="3d79de5d" class="cell" data-execution_count="5">
+<div id="7f0af7ba" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -433,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="instructor-measures-for-spring-2023-and-fall-2023." class="level2">
 <h2 class="anchored" data-anchor-id="instructor-measures-for-spring-2023-and-fall-2023.">Instructor measures for Spring 2023 and Fall 2023.</h2>
-<div id="df4b7d2f" class="cell" data-execution_count="6">
+<div id="9527409d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter stacked data frame for the two desired terms and desired department</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'TERM'</span>].isin([<span class="st">'202320'</span>,<span class="st">'202410'</span>])]</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[df[<span class="st">'DEPT'</span>].isin([<span class="st">'CMSC'</span>])]</span>
@@ -573,7 +573,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="show-summary-table" class="level2">
 <h2 class="anchored" data-anchor-id="show-summary-table">Show summary table</h2>
-<div id="06a9eefa" class="cell" data-execution_count="7">
+<div id="6c2e99b9" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Print table</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>Markdown(tabulate(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  summary_df, </span>
@@ -583,7 +583,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  floatfmt<span class="op">=</span><span class="st">".1f"</span>  <span class="co"># Format numbers without decimals</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="7">
-<table class="caption-top table table-sm table-striped small">
+<table class="table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Instructor</th>
@@ -936,7 +936,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="plot-total-hours-without-colors" class="level2">
 <h2 class="anchored" data-anchor-id="plot-total-hours-without-colors">Plot total hours without colors</h2>
-<div id="d2f1b011" class="cell" data-execution_count="8">
+<div id="7b1f3e8b" class="cell" data-execution_count="8">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -948,7 +948,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="hours-lec-and-non-lec-by-instructor" class="level2">
 <h2 class="anchored" data-anchor-id="hours-lec-and-non-lec-by-instructor">Hours (lec and non-lec) by instructor</h2>
-<div id="1e3cb978" class="cell" data-execution_count="9">
+<div id="5d57f04e" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> summary_df.sort_values(by<span class="op">=</span><span class="st">'sum_term_crse_crn_hours_lec'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
@@ -982,7 +982,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="workload-by-instructor-and-non-instructor" class="level2">
 <h2 class="anchored" data-anchor-id="workload-by-instructor-and-non-instructor">Workload by instructor and non-instructor</h2>
-<div id="86e53b9d" class="cell" data-execution_count="10">
+<div id="52fc60ee" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>summary_df <span class="op">=</span> summary_df.sort_values(by<span class="op">=</span><span class="st">'sum_term_crse_wrkld_sample_lec'</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
@@ -1016,7 +1016,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="practice-with-multiple-bars" class="level2">
 <h2 class="anchored" data-anchor-id="practice-with-multiple-bars">Practice with multiple bars</h2>
-<div id="94b0fe8f" class="cell" data-execution_count="11">
+<div id="99ff6f65" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> random</span>
@@ -1071,7 +1071,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb10-52"><a href="#cb10-52" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the plot</span></span>
 <span id="cb10-53"><a href="#cb10-53" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\jdleonard\AppData\Local\Temp\ipykernel_28988\2059536265.py:28: UserWarning:
+<pre><code>C:\Users\JohnLeonard\AppData\Local\Temp\ipykernel_38924\2059536265.py:28: UserWarning:
 
 set_ticklabels() should only be used with a fixed number of ticks, i.e. after set_ticks() or using a FixedLocator.
 </code></pre>

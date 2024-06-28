@@ -18,6 +18,8 @@ import panel as pn
 from bokeh.models.widgets.tables import NumberFormatter, StringFormatter
 pn.extension('tabulator')
 
+TERMS = ['202420','202510']
+
 ```
 
 ```{python}
@@ -115,7 +117,7 @@ def generate_workload_bar_html(row, dataframe):
     return html_content
 
 
-def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'], filters=None ):
+def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
     """ load data """
     df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['ins_dept'].isin(dept))]
 
@@ -254,31 +256,31 @@ def get_tabulator_table(stacked_df, terms=['202410','202420'], dept=['CMSC'], fi
 ## CMSC
 ```{python}
 #| echo: false
-get_tabulator_table( stacked_df,['202410','202420'],['CMSC'])
+get_tabulator_table( stacked_df,TERMS,['CMSC'])
 ```
 
 ## MNE
 ```{python}
 #| echo: false
-get_tabulator_table( stacked_df,['202410','202420'],['EGRM'])
+get_tabulator_table( stacked_df,TERMS,['EGRM'])
 ```
 
 ## ECE
 ```{python}
 #| echo: false
-get_tabulator_table( stacked_df,['202410','202420'],['EGRE'])
+get_tabulator_table( stacked_df,TERMS,['EGRE'])
 ```
 
 ## BME
 ```{python}
 #| echo: false
-get_tabulator_table( stacked_df,['202410','202420'],['EGRB'])
+get_tabulator_table( stacked_df,TERMS,['EGRB'])
 ```
 
 ## CLSE
 ```{python}
 #| echo: false
-get_tabulator_table( stacked_df,['202410','202420'],['EGRC'])
+get_tabulator_table( stacked_df,TERMS,['EGRC'])
 ```
 
 ## All
@@ -290,7 +292,7 @@ filters = {
     'Dept':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True },
     'Role':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True }
 }
-get_tabulator_table( stacked_df,['202410','202420'],['EGRM','EGRE','EGRC','EGRB','CMSC'],filters=filters)
+get_tabulator_table( stacked_df,TERMS,['EGRM','EGRE','EGRC','EGRB','CMSC'],filters=filters)
 ```
 
 ## Model
