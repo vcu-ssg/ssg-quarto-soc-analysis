@@ -15,7 +15,7 @@ format:
     <option value="lec_workload">Lecture Workload</option>
     <option value="alphabet">Alphabet</option>
   </select>
-
+</div>
 
 <div id="sort-buttons">
 <button class="sort-btn" id="sort-asc"><span class="arrow-up">&#9650;</span></button>
