@@ -24,7 +24,7 @@ stacked_df = pd.read_csv('stacked_df.csv')
 ## Explore tabular data
 
 ```{python}
-cols = ['instructor','ins_dept','TERM','COURSE','TITLE','wrkld_sample_type','sum_term_crse_wrkld_sample','wrkld_sample_note']
+cols = ['instructor_name','ins_dept','TERM','COURSE','TITLE','wrkld_sample_type','sum_term_crse_wrkld_sample','wrkld_sample_note']
 terms = [202410,202320]
 
 # Strip whitespace from column names

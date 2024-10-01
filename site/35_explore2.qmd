@@ -125,7 +125,7 @@ df = stacked_df[stacked_df['TERM'].isin(['202320','202410'])]
 df = df[df['DEPT'].isin(['CMSC'])]
 
 # Create summary data frame by instructor for key measures.
-summary_df = df.groupby(['instructor']).agg({
+summary_df = df.groupby(['instructor_name']).agg({
   'sum_term_crse':'sum',
   'sum_term_crse_crn_hours':'sum',
   'sum_term_crse_wrkld_sample_lec':'sum',
@@ -145,7 +145,7 @@ print(summary_df)
 # Print table
 Markdown(tabulate(
   summary_df, 
-  headers=['Instructor','Crses','Hours','Wrkld LEC','Wrkld NON','Hours LEC','Hours NON'],
+  headers=['instructor_name','Crses','Hours','Wrkld LEC','Wrkld NON','Hours LEC','Hours NON'],
   numalign="right",stralign="left",
   showindex=False,
   floatfmt=".1f"  # Format numbers without decimals
@@ -159,7 +159,7 @@ Markdown(tabulate(
 #| echo: false
 #| eval: true
 #| 
-X_column = 'instructor'
+X_column = 'instructor_name'
 Y_column = 'sum_term_crse_crn_hours'
 
 plt.barh(summary_df[X_column], summary_df[Y_column])
@@ -184,7 +184,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 
 summary_df = summary_df.sort_values(by='sum_term_crse_crn_hours_lec', ascending=False)
 
-instructors = summary_df['instructor'].str.split(",").str[0]
+instructors = summary_df['instructor_name'].str.split(",").str[0]
 lec_hours = summary_df['sum_term_crse_crn_hours_lec']
 non_lec_hours = summary_df['sum_term_crse_crn_hours_non_lec']
 
@@ -194,7 +194,7 @@ p1 = ax.barh(instructors, lec_hours, label='LEC', color='blue')
 p2 = ax.barh(instructors, non_lec_hours, left=lec_hours, label='Non-LEC', color='orange')
 
 ax.set_xlabel('Total Hours')
-ax.set_ylabel('Instructor')
+ax.set_ylabel('instructor_name')
 ax.set_title('Instructor Hours by LEC and Non-LEC')
 ax.legend()
 
@@ -211,7 +211,7 @@ fig, ax = plt.subplots(figsize=(10, 6))
 
 summary_df = summary_df.sort_values(by='sum_term_crse_wrkld_sample_lec', ascending=False)
 
-instructors = summary_df['instructor'].str.split(",").str[0]
+instructors = summary_df['instructor_name'].str.split(",").str[0]
 lec = summary_df['sum_term_crse_wrkld_sample_lec']
 non_lec = summary_df['sum_term_crse_wrkld_sample_non_lec']
 
@@ -221,7 +221,7 @@ p1 = ax.barh(instructors, lec, label='LEC', color='blue')
 p2 = ax.barh(instructors, non_lec, left=lec, label='Non-LEC', color='orange')
 
 ax.set_xlabel('Total Hours')
-ax.set_ylabel('Instructor')
+ax.set_ylabel('instructor_name')
 ax.set_title('Instructor Workload by LEC and Non-LEC')
 ax.legend()
 
@@ -243,7 +243,7 @@ values1 = [random.uniform(0., 7.) for _ in range(25)]
 values2 = [random.uniform(0., 7,) for _ in range(25)]
 
 data = {
-    'Instructor': instructors,
+    'instructor_name': instructors,
     'Value1': values1,
     'Value2': values2,
 }
@@ -257,11 +257,11 @@ plt.figure(figsize=(8, 4))
 
 # Create the left subplot (left bar)
 ax1 = plt.subplot(121)
-ax1.barh(df['Instructor'], -1.0 * df['Value1'], color='green', label='Left Bar')
+ax1.barh(df['instructor_name'], -1.0 * df['Value1'], color='green', label='Left Bar')
 ax1.set_xlim(-7, 0)  # Set x-axis limits
 ax1.set_xlabel('Values')
 ax1.set_title('Left Bar')
-ax1.set_yticklabels([""] * len(df['Instructor']))
+ax1.set_yticklabels([""] * len(df['instructor_name']))
 ax1.yaxis.tick_right()  # Move y-axis ticks to the right
 #ax1.set_yticklabels([])  # Remove y-axis labels
 
@@ -271,7 +271,7 @@ ax1.spines['right'].set_visible(False)
 
 # Create the right subplot (right bar)
 ax2 = plt.subplot(122)
-ax2.barh(df['Instructor'], df['Value2'], color='blue', label='Right Bar')
+ax2.barh(df['instructor_name'], df['Value2'], color='blue', label='Right Bar')
 ax2.set_xlim(0, 7)  # Set x-axis limits
 ax2.set_xlabel('Values')
 ax2.set_title('Right Bar')

@@ -22,6 +22,7 @@ import sys
 import json
 import gspread
 import pathlib
+import warnings
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -93,22 +94,27 @@ We're assuming that all xlsx workbooks share the same columns and names.
 trimmed_dfs = []
 
 # Iterate through the list of XLSX file names
+
+warnings.filterwarnings("ignore", category=UserWarning, message="Cannot parse header or footer so it will be ignored")
+
 for file_name in xlsx_df['file_name']:
     # Load the XLSX file into a DataFrame
     full_path = os.path.join(directory_path, file_name)
-    df = pd.read_excel(full_path)
-    
+    df = pd.read_excel(full_path )
+    trimmed_df = df
+
+    if (0):
     # Find the row index where "TERM" is in the first column
-    term_index = df.index[df.iloc[:, 0] == "TERM"].tolist()[0]
-    
-    # Find the row index where "N=" is in the first column
-    n_index = df.index[df.iloc[:, 0].fillna('x').astype(str).str.startswith("N =")].tolist()[0]
+        term_index = df.index[df.iloc[:, 0] == "TERM"].tolist()[0]
+        
+    #    # Find the row index where "N=" is in the first column
+    #    n_index = df.index[df.iloc[:, 0].fillna('x').astype(str).str.startswith("N =")].tolist()[0]
 
-    # Clip the desired block and add column names
-    trimmed_df = df.loc[term_index + 1 : n_index - 1]
-    trimmed_df.columns = df.iloc[term_index].values
+        # Clip the desired block and add column names
+        trimmed_df = df.loc[term_index + 1 : n_index - 1]
+        trimmed_df.columns = df.iloc[term_index].values
 
-    # Append the trimmed DataFrame to the list
+        # Append the trimmed DataFrame to the list
     trimmed_dfs.append(trimmed_df)
 
 # Combine the individual dataframes into one big one.
@@ -126,21 +132,45 @@ sections_df['TERM'] = sections_df['TERM'].astype(str)
 xlsx_df['term_code'] = xlsx_df['term_code'].astype(str)
 sections_df = pd.merge(sections_df,xlsx_df,left_on='TERM', right_on='term_code', how='left')
 ```
+### Clean up column names
 
+The new VCU report added new-line characters to a few of the
+column names.  This code cleans them up.
+
+```{python}
+sections_df.columns = sections_df.columns.str.replace('\n', ' ')
+sections_df["TITLE"] = sections_df["TITLE"].str.replace("\n"," ")
+sections_df["CROSS-LIST"] = sections_df["CROSS-LIST"].str.replace("\n"," ")
+sections_df["MODALITY TEXT"] = sections_df["MODALITY TEXT"].str.replace("\n"," ")
+```
 ### Remove duplicate instructor1 and instructor2
 
 ```{python}
 def replace_matches(row):
-    if row['PRIMARY INSTRUCTOR FIRST NAME'] == row['SECONDARY INSTRUCTOR FIRST NAME'] and row['PRIMARY INSTRUCTOR LAST NAME'] == row['SECONDARY INSTRUCTOR LAST NAME']:
-        row['SECONDARY INSTRUCTOR FIRST NAME'], row['SECONDARY INSTRUCTOR LAST NAME'] = '', ''
+    if row["PRIMARY INSTRUCTOR ID"] == row["SECONDARY INSTRUCTOR ID"]:
+        row['SECONDARY INSTRUCTOR ID'], row['SECONDARY INSTRUCTOR LAST NAME'] = '', ''
     return row
 sections_df = sections_df.apply( replace_matches,axis=1)
 ```
 
+### Add instructor first name columns in appropriate spot
+
+These fields were dropped when the report changed layouts in Fall 2024.  Instructor
+first name is good to have, so these fields were added back and can be remapped later.
+
+```{python}
+insert_position = sections_df.columns.get_loc("PRIMARY INSTRUCTOR LAST NAME") + 1
+sections_df.insert(insert_position, "PRIMARY INSTRUCTOR FIRST NAME", "")
+insert_position = sections_df.columns.get_loc("SECONDARY INSTRUCTOR LAST NAME") + 1
+sections_df.insert(insert_position, "SECONDARY INSTRUCTOR FIRST NAME", "")
+
+```
+
+The logic for identifying instructors throughout the report will need to be fixed.
+
 ### Fix known errors
 
-The data in Banner doesn't always reflect reality.  This step corrects
-known errors in the data.
+The data in Banner doesn't always reflect reality.  This step corrects known errors in the data.
 
 Note that the section data are stored one row per term-crn-meeting period.
 
@@ -196,36 +226,38 @@ def fix_names( id, note, old_name, new_name ):
 ```
 
 ```{python}
-# Spring 2023: CMSC475 John Leonard taught for David Shepherd
-fix_sections(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
-# Fall 2024: CMSC391 is cross listed with COAR463.
-# Total enrollment 34 across two instructors (Bennett and Leonard)
-# Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
-fix_sections(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
+if (0):
+    # Spring 2023: CMSC475 John Leonard taught for David Shepherd
+    fix_sections(1,'Swap Leonard for Shepherd',{'TERM':'202320','CRN':'43471'},{'PRIMARY INSTRUCTOR FIRST NAME':'John','PRIMARY INSTRUCTOR LAST NAME':'Leonard'})
 
-fix_sections(3,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
+    # Fall 2024: CMSC391 is cross listed with COAR463.
+    # Total enrollment 34 across two instructors (Bennett and Leonard)
+    # Currently Banner shows only 20 in the JL section and doesn't mention the COAR section.
+    fix_sections(2,'Fix incorrect cross listing',{'TERM':'202410','CRN':'46263'},{'ACTUAL ENROLLMENT':34})
 
-fix_names(4,"Rename instructor",
-{'first_name':'Sheng-Chieh','last_name':'Chen'},{'first_name':'Shawn','last_name':'Chen'})
+    fix_sections(3,"Capstone common course is LEC not SEM",{'TERM':'202320','CRN':'45290'},{'TYPE':'LEC'})
 
-fix_names(5,"Rename instructor",
-{'first_name':'Bernard','last_name':'Gupton'},{'first_name':'Frank','last_name':'Gupton'})
+    fix_names(4,"Rename instructor",
+    {'first_name':'Sheng-Chieh','last_name':'Chen'},{'first_name':'Shawn','last_name':'Chen'})
 
-fix_names(6,"Rename instructor",
-{'first_name':'Anathea','last_name':'Pepperl'},{'first_name':'Thea','last_name':'Pepperl'})
+    fix_names(5,"Rename instructor",
+    {'first_name':'Bernard','last_name':'Gupton'},{'first_name':'Frank','last_name':'Gupton'})
 
-fix_names(7,"Rename instructor",
-{'first_name':'Robert','last_name':'Dahlberg'},{'first_name':'Bob','last_name':'Dahlberg'})
+    fix_names(6,"Rename instructor",
+    {'first_name':'Anathea','last_name':'Pepperl'},{'first_name':'Thea','last_name':'Pepperl'})
 
-fix_names(8,"Rename instructor",
-{'first_name':'Philip','last_name':'Longest'},{'first_name':'Worth','last_name':'Longest'})
+    fix_names(7,"Rename instructor",
+    {'first_name':'Robert','last_name':'Dahlberg'},{'first_name':'Bob','last_name':'Dahlberg'})
 
-fix_names(9,"Rename instructor",
-{'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
+    fix_names(8,"Rename instructor",
+    {'first_name':'Philip','last_name':'Longest'},{'first_name':'Worth','last_name':'Longest'})
 
-fix_names(10,"Rename instructor",
-{'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
+    fix_names(9,"Rename instructor",
+    {'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
+
+    fix_names(10,"Rename instructor",
+    {'first_name':'Jonathan','last_name':'Buffkin'},{'first_name':'Seth','last_name':'Buffkin'})
 
 
 ```
@@ -239,24 +271,46 @@ While we're here we can combine instructor first and last name, and drop verbose
 
 ```{python}
 cols = sections_df.columns
-values_to_remove = ['PRIMARY INSTRUCTOR FIRST NAME','PRIMARY INSTRUCTOR LAST NAME','SECONDARY INSTRUCTOR FIRST NAME','SECONDARY INSTRUCTOR LAST NAME']
+values_to_remove = ['PRIMARY INSTRUCTOR ID','PRIMARY INSTRUCTOR FIRST NAME','PRIMARY INSTRUCTOR LAST NAME','SECONDARY INSTRUCTOR ID','SECONDARY INSTRUCTOR FIRST NAME','SECONDARY INSTRUCTOR LAST NAME']
 cols = [x for x in cols if x not in values_to_remove]
 
+sections_df["ins1_id"] = sections_df['PRIMARY INSTRUCTOR ID']
 sections_df['ins1_last'] = sections_df['PRIMARY INSTRUCTOR LAST NAME']
 sections_df['ins1_first'] = sections_df['PRIMARY INSTRUCTOR FIRST NAME']
+sections_df["ins2_id"] = sections_df['SECONDARY INSTRUCTOR ID']
 sections_df['ins2_last'] = sections_df['SECONDARY INSTRUCTOR LAST NAME']
 sections_df['ins2_first'] = sections_df['SECONDARY INSTRUCTOR FIRST NAME']
 sections_df['instructor_1'] = sections_df['ins1_last']+sections_df['ins1_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins1_first']
 sections_df['instructor_2'] = sections_df['ins2_last']+sections_df['ins2_first'].apply(lambda x: ',' if x != "" else "")+sections_df['ins2_first']
-sections_df['instructor_1'].astype(str).fillna('',inplace=True)
-sections_df['instructor_2'].astype(str).fillna('',inplace=True)
 
-stacked_df = pd.melt(sections_df,
+sections_df = sections_df.fillna( {'instructor_1':'','instructor_2':''})
+
+```
+
+We've got two variable we'd like to stack: ins1_id and ins2_id into instructor_id and instructor_1 and instructor_2 into instructor_name.
+
+We do this by melting each individually, then concatenating the data frames.
+
+```{python}
+df1 = pd.melt(sections_df,
     id_vars=cols,
     value_vars=['instructor_1','instructor_2'],
     var_name='instructor source',
-    value_name='instructor'
+    value_name='instructor_name_banner'
 )
+```
+
+```{python}
+df2 = pd.melt(sections_df,
+    id_vars=cols,
+    value_vars=['ins1_id','ins2_id'],
+    var_name='instructor id source',
+    value_name='instructor_id'
+)
+```
+
+```{python}
+stacked_df = pd.concat([df2[cols+["instructor_id"]], df1[['instructor_name_banner','instructor source']]], axis=1)
 
 ```
 
@@ -267,7 +321,7 @@ code removes records missing instructor_2.
 
 ```{python}
 # remove rows with empty instructor 2.  Keep rows with empty instructor 1.
-stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor'].isna() | (stacked_df['instructor']==''))) ]
+stacked_df = stacked_df[ ~ ((stacked_df['instructor source']=='instructor_2') & (stacked_df['instructor_id'].isna() | (stacked_df['instructor_id']==''))) ]
 ```
 
 In some summer courses an instructor was not listed in the data.  An instructor
@@ -276,7 +330,7 @@ name is generated using the course and semester. This can be cleaned later.
 
 ```{python}
 # replace any missing instructors with note
-stacked_df.loc[stacked_df["instructor"].isin(['']),"instructor"] = stacked_df[stacked_df["instructor"].isin([''])]['COURSE']+' '+stacked_df[stacked_df["instructor"].isin([''])]['TERM']+' '+stacked_df[stacked_df["instructor"].isin([''])]['CRN']
+stacked_df.loc[stacked_df["instructor_id"].isna(),"instructor_id"] = stacked_df[stacked_df["instructor_id"].isna()]['COURSE']+'-'+stacked_df[stacked_df["instructor_id"].isna()]['TERM']+'-'+stacked_df[stacked_df["instructor_id"].isna()]['CRN']
 ```
 
 Some sections, for example RES sections or cancelled sections have zero enrollments. These are removed, keeping only sections with positive enrollments.
@@ -291,11 +345,23 @@ pretty when saved to a CSV.
 
 ```{python}
 # Sort the data frame so it looks pretty in the output file.
-stacked_df = stacked_df.sort_values(['TERM','DEPT','COURSE','SECT','instructor source','instructor'])
+stacked_df = stacked_df.sort_values(['TERM','DEPT','COURSE','SECT','instructor_name_banner'])
 
 ```
 
 ### Add additional data columns
+
+Here I'll add a few buffer columns, in case the structure of the report changes, I can add or delete columns
+here to keep the spreadsheet from breaking.
+
+```{python}
+stacked_df["buffer_1"] = ""
+stacked_df["buffer_2"] = ""
+stacked_df["buffer_3"] = ""
+stacked_df["buffer_4"] = ""
+stacked_df["buffer_5"] = ""
+stacked_df["buffer_6"] = ""
+```
 
 We may need the subject and the course number in the workload model analysis.
 
@@ -309,7 +375,7 @@ this section.  This helps with workload and other computations later.
 
 ```{python}
 # Number of instructors sharing a common CRN.
-stacked_df["instructor_cnt"] = stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count') / stacked_df.groupby(['TERM','COURSE','CRN','instructor'])['instructor'].transform('count') 
+stacked_df["instructor_cnt"] = stacked_df.groupby(['TERM','COURSE','CRN'])['CRN'].transform('count') / stacked_df.groupby(['TERM','COURSE','CRN','instructor_id'])['instructor_id'].transform('count') 
 
 stacked_df["capstone_cnt"] = 0.0  # used downstream to provide an actual capstone count rather than an estimated count of capstone sections.
 
@@ -327,6 +393,13 @@ stacked_df["spare_col_6"] = 0
 
 ```
 
+### Save instructor names to file for later use
+
+```{python}
+if (0):
+    unique_instructors = stacked_df[["instructor_id","instructor_name_banner"]].drop_duplicates().sort_values(by="instructor_name_banner")
+    unique_instructors.to_csv("unique_instructors.csv",index=False)
+```
 
 ### Merge persistent instructor data
 
@@ -363,23 +436,23 @@ instructor_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True)
 ```
 
 ```{python}
-stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor',right_on='instructor',how='left')
+stacked_df = pd.merge( stacked_df,instructor_df,left_on='instructor_id',right_on='instructor_id',how='left')
 ```
 
 ```{python}
 missing_records = stacked_df[stacked_df['ins_dept'].isna()]
-missing_records[['instructor','COURSE','TERM']].drop_duplicates(subset='instructor')
+missing_records[['instructor_id','COURSE','TERM']].drop_duplicates(subset='instructor_id')
 ```
 
 ```{python}
 worksheet_name = "Instructor notes"
 sheet = client.open_by_key(spreadsheet_key).worksheet(worksheet_name)
 instructor_notes_df = get_as_dataframe(worksheet=sheet, evaluate_formulas=True )
-instructor_notes_df = instructor_notes_df.dropna(subset=['instructor'])
+instructor_notes_df = instructor_notes_df.dropna(subset=['instructor_id'])
 ```
 
 ```{python}
-stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor',right_on='instructor',how='left')
+stacked_df = pd.merge( stacked_df,instructor_notes_df,left_on='instructor_id',right_on='instructor_id',how='left')
 ```
 
 ### Merge persistent course data
@@ -439,10 +512,10 @@ stacked_df["BEGIN TIME"] = stacked_df["BEGIN TIME"].replace(".","0")
 stacked_df["END TIME"] = stacked_df["END TIME"].replace(".","0")
 stacked_df['mtg_length'] = stacked_df["END TIME"].astype(int) - stacked_df["BEGIN TIME"].astype(int)
 
-stacked_df['shared_mtgs_cnt'] =  stacked_df.groupby(['TERM','instructor','time_id'])['time_id'].transform('count')
+stacked_df['shared_mtgs_cnt'] =  stacked_df.groupby(['TERM','instructor_id','time_id'])['time_id'].transform('count')
 stacked_df.loc[(stacked_df['time_code'].isin(['.........'])),'shared_mtgs_cnt'] = 1
 
-stacked_df['mtgs_per_crn'] =  stacked_df.groupby(['TERM','CRN','instructor'])['CRN'].transform('count')
+stacked_df['mtgs_per_crn'] =  stacked_df.groupby(['TERM','CRN','instructor_id'])['CRN'].transform('count')
 
 ```
 
@@ -458,14 +531,14 @@ def concat_courses(group):
     return ','.join(group['COURSE'])
 
 temp_df = pd.DataFrame();
-keys = ['TERM','instructor','time_code']
+keys = ['TERM','instructor_id','time_code']
 temp_df["concat"] = stacked_df.groupby(keys).apply(concat_courses,include_groups=False)
 temp_df["list"] = temp_df["concat"].apply( lambda x :  list(set(x.split(","))) )
 temp_df["combined_count"] = temp_df["list"].apply( lambda x :  len(x) )
 temp_df["combined_sections"] = temp_df["list"].apply( lambda x :  ",".join(x) )
 temp_df = temp_df.reset_index()
 temp_df = temp_df[ (temp_df['time_code']!='.........')&(temp_df['combined_count']>1)]
-temp_df = temp_df[['TERM','instructor','time_code','combined_count','combined_sections']]
+temp_df = temp_df[['TERM','instructor_id','time_code','combined_count','combined_sections']]
 stacked_df = pd.merge(stacked_df,temp_df,left_on=keys, right_on=keys,how="left")
 
 ```
@@ -725,10 +798,11 @@ stacked_df.loc[(stacked_df['mtgs_per_crn']>1)&(stacked_df['wrkld_sample_type']==
 
 # Apply overrides for LAB sections
 
-fix_stacked(100,"2x lab mtg",
- {'TERM':'202410','CRN':12151,'time_code':'.T.R...14511559','instructor':'Abdelwahed,Sherif'},
- {'wrkld_sample_type':'LAB'}
-)
+if (0):
+    fix_stacked(100,"2x lab mtg",
+    {'TERM':'202410','CRN':12151,'time_code':'.T.R...14511559','instructor_id':'Abdelwahed,Sherif'},
+    {'wrkld_sample_type':'LAB'}
+    )
 
 # Create a note for all LAB sections
 stacked_df.loc[stacked_df['wrkld_sample_type'].isin(['LAB']),'wrkld_sample_note'] = f"RULE: [wrkld]={(1.0/labs_per_lecture):0.2f} for LAB"
@@ -821,10 +895,11 @@ def list_courses( x ):
 temp  = stacked_df.copy()
 temp["lec-only-course"] = ""
 temp.loc[temp['wrkld_sample_type']=='LEC',"lec-only-course"] = temp.loc[temp['wrkld_sample_type']=='LEC',"COURSE"]
-stacked_df['lec_only_course_list'] = temp.groupby(['TERM','instructor'])['lec-only-course'].transform( list_courses )
+stacked_df['lec_only_course_list'] = temp.groupby(['TERM','instructor_id'])['lec-only-course'].transform( list_courses )
 
-stacked_df[(stacked_df['instructor']=='Leonard,John')&(stacked_df['TERM'].isin(['202410','202320']))][['TERM','COURSE','lec_only_course_list']]
-
+## Do fixes
+if (0):
+    stacked_df[(stacked_df['instructor_id']=='Leonard,John')&(stacked_df['TERM'].isin(['202410','202320']))][['TERM','COURSE','lec_only_course_list']]
 ```
 
 ### Summary
@@ -857,7 +932,7 @@ def show_block( df,keys,cols):
 
 show_block(stacked_df,
     {'TERM':'202410','COURSE':'EGMN416'},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code',
+    ['COURSE','CRN','TYPE','TITLE','instructor_id','instructor_name','time_code',
     'sum_term_crse_crn',
     'sum_term_crse_crn_mtg_students',
     'sum_term_crse_crn_hours',
@@ -878,8 +953,8 @@ In this example, two CRN are sharing a common teaching time and their workloads 
 ```{python}
 
 show_block(stacked_df,
-    {'TERM':'202320','instructor':"Heise,Rebecca"},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+    {'TERM':'202320','instructor_name':"Heise,Rebecca"},
+    ['COURSE','CRN','TYPE','TITLE','instructor_id','instructor_name','time_code','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 
 ```
@@ -890,8 +965,8 @@ show_block(stacked_df,
 This record shows two CRN overlapping in teaching time, but not exactly matching teaching times.  Is this for real? Is this a miscode?  My initial guess is that this is a miscode and the times should be corrected.  This can be accomplished with a FIX record above.
 ```{python}
 show_block(stacked_df,
-    {'TERM':'202310','instructor':"Ferri,James"},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+    {'TERM':'202310','instructor_name':"Ferri,James"},
+    ['COURSE','CRN','TYPE','TITLE','instructor_name','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 ```
 
@@ -902,8 +977,8 @@ case I can only imagine that no students enrolled in the RINP/face-to-face secti
 
 ```{python}
 show_block(stacked_df,
-    {'TERM':'202320','instructor':"Manic,Milos"},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+    {'TERM':'202320','instructor_name':"Manic,Milos"},
+    ['COURSE','CRN','TYPE','TITLE','instructor_name','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 
 ```
@@ -914,8 +989,8 @@ This second example shows a doubleton ROND+RINP section.
 
 ```{python}
 show_block(stacked_df,
-    {'TERM':'202410','instructor':"Ghosh,Preetam"},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
+    {'TERM':'202410','instructor_name':"Ghosh,Preetam"},
+    ['COURSE','CRN','TYPE','TITLE','instructor_name','time_code','MODALITY CODE','sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 
 ```
@@ -926,22 +1001,8 @@ Verifying actual enrollment vs sum_term_crse_wrkld_sample
 
 ```{python}
 show_block(stacked_df,
-    {'TERM':'202410','instructor':"Duke,Debra",'COURSE':'CMSC256'},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','ACTUAL ENROLLMENT','MAX CREDITS','time_code','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours',
-    'sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
-)
-
-```
-
-
-### Example: odd counting 
-
-Verifying actual enrollment vs sum_term_crse_wrkld_sample
-
-```{python}
-show_block(stacked_df,
-    {'TERM':'202410','instructor':"Duke,Debra",'COURSE':'CMSC256'},
-    ['COURSE','CRN','TYPE','TITLE','instructor','time_code','MODALITY CODE','ACTUAL ENROLLMENT','MAX CREDITS','time_code','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours',
+    {'TERM':'202410','instructor_name':"Duke,Debra",'COURSE':'CMSC256'},
+    ['COURSE','CRN','TYPE','TITLE','instructor_name','time_code','MODALITY CODE','ACTUAL ENROLLMENT','MAX CREDITS','time_code','sum_term_crse_crn_mtg_students','sum_term_crse_crn_hours',
     'sum_term_crse_wrkld_sample','wrkld_sample_type','wrkld_sample_note']
 )
 

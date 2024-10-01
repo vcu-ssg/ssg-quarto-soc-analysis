@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -196,7 +196,7 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
         '</div>';
 }
 </script>
-<div id="d3ad7b66" class="cell" data-execution_count="1">
+<div id="ae9cd570" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> panel <span class="im">as</span> pn</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> panel.interact <span class="im">import</span> interact</span>
@@ -239,18 +239,37 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
 <span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a><span class="co"># Show the panel</span></span>
 <span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>tabulator.servable()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
+<script type="esms-options">{"shimMode": true}</script><style>*[data-root-id],
+*[data-root-id] > * {
+  box-sizing: border-box;
+  font-family: var(--jp-ui-font-family);
+  font-size: var(--jp-ui-font-size1);
+  color: var(--vscode-editor-foreground, var(--jp-ui-font-color1));
+}
+
+/* Override VSCode background color */
+.cell-output-ipywidget-background:has(
+    > .cell-output-ipywidget-background > .lm-Widget > *[data-root-id]
+  ),
+.cell-output-ipywidget-background:has(> .lm-Widget > *[data-root-id]) {
+  background-color: transparent !important;
+}
+</style>
+</div>
+<div class="cell-output cell-output-display">
 <script type="application/javascript">
 (function(root) {
   function now() {
     return new Date();
   }
 
-  var force = true;
-  var py_version = '3.4.1'.replace('rc', '-rc.').replace('.dev', '-dev.');
-  var reloading = false;
-  var Bokeh = root.Bokeh;
+  const force = true;
+  const py_version = '3.6.0'.replace('rc', '-rc.').replace('.dev', '-dev.');
+  const reloading = false;
+  const Bokeh = root.Bokeh;
 
-  if (typeof (root._bokeh_timeout) === "undefined" || force) {
+  // Set a timeout for this load but only if we are not already initializing
+  if (typeof (root._bokeh_timeout) === "undefined" || (force || !root._bokeh_is_initializing)) {
     root._bokeh_timeout = Date.now() + 5000;
     root._bokeh_failed_load = false;
   }
@@ -276,15 +295,13 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
     root._bokeh_onload_callbacks.push(callback);
 
     if (root._bokeh_is_loading > 0) {
+      // Don't load bokeh if it is still initializing
       console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
       return null;
-    }
-    if (js_urls.length === 0 && js_modules.length === 0 && Object.keys(js_exports).length === 0) {
+    } else if (js_urls.length === 0 && js_modules.length === 0 && Object.keys(js_exports).length === 0) {
+      // There is nothing to load
       run_callbacks();
       return null;
-    }
-    if (!reloading) {
-      console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
     }
 
     function on_load() {
@@ -296,39 +313,41 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
     }
     window._bokeh_on_load = on_load
 
-    function on_error() {
-      console.error("failed to load " + url);
+    function on_error(e) {
+      const src_el = e.srcElement
+      console.error("failed to load " + (src_el.href || src_el.src));
     }
 
-    var skip = [];
+    const skip = [];
     if (window.requirejs) {
-      window.requirejs.config({'packages': {}, 'paths': {'tabulator': 'https://cdn.jsdelivr.net/npm/tabulator-tables@5.5.0/dist/js/tabulator.min', 'moment': 'https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min'}, 'shim': {}});
+      window.requirejs.config({'packages': {}, 'paths': {'tabulator': 'https://cdn.jsdelivr.net/npm/tabulator-tables@6.2.1/dist/js/tabulator.min', 'moment': 'https://cdn.jsdelivr.net/npm/luxon/build/global/luxon.min'}, 'shim': {}});
       require(["tabulator"], function(Tabulator) {
-    window.Tabulator = Tabulator
-    on_load()
+        window.Tabulator = Tabulator
+        on_load()
       })
       require(["moment"], function(moment) {
-    window.moment = moment
-    on_load()
+        window.moment = moment
+        on_load()
       })
       root._bokeh_is_loading = css_urls.length + 2;
     } else {
       root._bokeh_is_loading = css_urls.length + js_urls.length + js_modules.length + Object.keys(js_exports).length;
     }
 
-    var existing_stylesheets = []
-    var links = document.getElementsByTagName('link')
-    for (var i = 0; i < links.length; i++) {
-      var link = links[i]
+    const existing_stylesheets = []
+    const links = document.getElementsByTagName('link')
+    for (let i = 0; i < links.length; i++) {
+      const link = links[i]
       if (link.href != null) {
-    existing_stylesheets.push(link.href)
+        existing_stylesheets.push(link.href)
       }
     }
-    for (var i = 0; i < css_urls.length; i++) {
-      var url = css_urls[i];
-      if (existing_stylesheets.indexOf(url) !== -1) {
-    on_load()
-    continue;
+    for (let i = 0; i < css_urls.length; i++) {
+      const url = css_urls[i];
+      const escaped = encodeURI(url)
+      if (existing_stylesheets.indexOf(escaped) !== -1) {
+        on_load()
+        continue;
       }
       const element = document.createElement("link");
       element.onload = on_load;
@@ -339,32 +358,33 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
       console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
       document.body.appendChild(element);
     }    if (((window.Tabulator !== undefined) && (!(window.Tabulator instanceof HTMLElement))) || window.requirejs) {
-      var urls = ['https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/js/tabulator.min.js'];
+      var urls = ['https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/tabulator-tables@6.2.1/dist/js/tabulator.min.js'];
       for (var i = 0; i < urls.length; i++) {
-        skip.push(urls[i])
+        skip.push(encodeURI(urls[i]))
       }
     }    if (((window.moment !== undefined) && (!(window.moment instanceof HTMLElement))) || window.requirejs) {
-      var urls = ['https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/luxon/build/global/luxon.min.js'];
+      var urls = ['https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/luxon/build/global/luxon.min.js'];
       for (var i = 0; i < urls.length; i++) {
-        skip.push(urls[i])
+        skip.push(encodeURI(urls[i]))
       }
     }    var existing_scripts = []
-    var scripts = document.getElementsByTagName('script')
-    for (var i = 0; i < scripts.length; i++) {
+    const scripts = document.getElementsByTagName('script')
+    for (let i = 0; i < scripts.length; i++) {
       var script = scripts[i]
       if (script.src != null) {
-    existing_scripts.push(script.src)
+        existing_scripts.push(script.src)
       }
     }
-    for (var i = 0; i < js_urls.length; i++) {
-      var url = js_urls[i];
-      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
-    if (!window.requirejs) {
-      on_load();
-    }
-    continue;
+    for (let i = 0; i < js_urls.length; i++) {
+      const url = js_urls[i];
+      const escaped = encodeURI(url)
+      if (skip.indexOf(escaped) !== -1 || existing_scripts.indexOf(escaped) !== -1) {
+        if (!window.requirejs) {
+          on_load();
+        }
+        continue;
       }
-      var element = document.createElement('script');
+      const element = document.createElement('script');
       element.onload = on_load;
       element.onerror = on_error;
       element.async = false;
@@ -372,13 +392,14 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
       console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
       document.head.appendChild(element);
     }
-    for (var i = 0; i < js_modules.length; i++) {
-      var url = js_modules[i];
-      if (skip.indexOf(url) !== -1 || existing_scripts.indexOf(url) !== -1) {
-    if (!window.requirejs) {
-      on_load();
-    }
-    continue;
+    for (let i = 0; i < js_modules.length; i++) {
+      const url = js_modules[i];
+      const escaped = encodeURI(url)
+      if (skip.indexOf(escaped) !== -1 || existing_scripts.indexOf(escaped) !== -1) {
+        if (!window.requirejs) {
+          on_load();
+        }
+        continue;
       }
       var element = document.createElement('script');
       element.onload = on_load;
@@ -390,12 +411,13 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
       document.head.appendChild(element);
     }
     for (const name in js_exports) {
-      var url = js_exports[name];
-      if (skip.indexOf(url) >= 0 || root[name] != null) {
-    if (!window.requirejs) {
-      on_load();
-    }
-    continue;
+      const url = js_exports[name];
+      const escaped = encodeURI(url)
+      if (skip.indexOf(escaped) >= 0 || root[name] != null) {
+        if (!window.requirejs) {
+          on_load();
+        }
+        continue;
       }
       var element = document.createElement('script');
       element.onerror = on_error;
@@ -420,11 +442,11 @@ const MyFormatFunc = function (cell, formatterParams, onRendered){
     document.body.appendChild(element);
   }
 
-  var js_urls = ["https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/js/tabulator.min.js", "https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/luxon/build/global/luxon.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.4.1.min.js", "https://cdn.holoviz.org/panel/1.4.2/dist/panel.min.js"];
-  var js_modules = [];
-  var js_exports = {};
-  var css_urls = ["https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css?v=1.4.2"];
-  var inline_js = [    function(Bokeh) {
+  const js_urls = ["https://cdn.holoviz.org/panel/1.5.1/dist/bundled/reactiveesm/es-module-shims@^1.10.0/dist/es-module-shims.min.js", "https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/tabulator-tables@6.2.1/dist/js/tabulator.min.js", "https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/luxon/build/global/luxon.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-3.6.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.6.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.6.0.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.6.0.min.js", "https://cdn.holoviz.org/panel/1.5.1/dist/panel.min.js"];
+  const js_modules = [];
+  const js_exports = {};
+  const css_urls = ["https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/tabulator-tables@6.2.1/dist/css/tabulator_simple.min.css?v=1.5.1"];
+  const inline_js = [    function(Bokeh) {
       Bokeh.set_log_level("info");
     },
 function(Bokeh) {} // ensure no trailing comma for IE
@@ -432,26 +454,27 @@ function(Bokeh) {} // ensure no trailing comma for IE
 
   function run_inline_js() {
     if ((root.Bokeh !== undefined) || (force === true)) {
-      for (var i = 0; i < inline_js.length; i++) {
-    try {
+      for (let i = 0; i < inline_js.length; i++) {
+        try {
           inline_js[i].call(root, root.Bokeh);
-    } catch(e) {
-      if (!reloading) {
-        throw e;
-      }
-    }
+        } catch(e) {
+          if (!reloading) {
+            throw e;
+          }
+        }
       }
       // Cache old bokeh versions
       if (Bokeh != undefined && !reloading) {
-    var NewBokeh = root.Bokeh;
-    if (Bokeh.versions === undefined) {
-      Bokeh.versions = new Map();
-    }
-    if (NewBokeh.version !== Bokeh.version) {
-      Bokeh.versions.set(NewBokeh.version, NewBokeh)
-    }
-    root.Bokeh = Bokeh;
-      }} else if (Date.now() < root._bokeh_timeout) {
+        var NewBokeh = root.Bokeh;
+        if (Bokeh.versions === undefined) {
+          Bokeh.versions = new Map();
+        }
+        if (NewBokeh.version !== Bokeh.version) {
+          Bokeh.versions.set(NewBokeh.version, NewBokeh)
+        }
+        root.Bokeh = Bokeh;
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
       setTimeout(run_inline_js, 100);
     } else if (!root._bokeh_failed_load) {
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
@@ -469,8 +492,12 @@ function(Bokeh) {} // ensure no trailing comma for IE
     // that we do not start loading a newer (Panel>=1.0 and Bokeh>3) version
     // before older versions are fully initialized.
     if (root._bokeh_is_initializing && Date.now() > root._bokeh_timeout) {
+      // If the timeout and bokeh was not successfully loaded we reset
+      // everything and try loading again
+      root._bokeh_timeout = Date.now() + 5000;
       root._bokeh_is_initializing = false;
       root._bokeh_onload_callbacks = undefined;
+      root._bokeh_is_loading = 0
       console.log("Bokeh: BokehJS was loaded multiple times but one version failed to initialize.");
       load_or_wait();
     } else if (root._bokeh_is_initializing || (typeof root._bokeh_is_initializing === "undefined" && root._bokeh_onload_callbacks !== undefined)) {
@@ -478,13 +505,16 @@ function(Bokeh) {} // ensure no trailing comma for IE
     } else {
       root._bokeh_is_initializing = true
       root._bokeh_onload_callbacks = []
-      var bokeh_loaded = Bokeh != null && (Bokeh.version === py_version || (Bokeh.versions !== undefined && Bokeh.versions.has(py_version)));
+      const bokeh_loaded = root.Bokeh != null && (root.Bokeh.version === py_version || (root.Bokeh.versions !== undefined && root.Bokeh.versions.has(py_version)));
       if (!reloading && !bokeh_loaded) {
-    root.Bokeh = undefined;
+        if (root.Bokeh) {
+          root.Bokeh = undefined;
+        }
+        console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
       }
       load_libs(css_urls, js_urls, js_modules, js_exports, function() {
-    console.debug("Bokeh: BokehJS plotting callback run at", now());
-    run_inline_js();
+        console.debug("Bokeh: BokehJS plotting callback run at", now());
+        run_inline_js();
       });
     }
   }
@@ -739,44 +769,31 @@ if (window.Jupyter !== undefined) {
 </script>
 </div>
 <div class="cell-output cell-output-display">
-<style>*[data-root-id],
-*[data-root-id] > * {
-  box-sizing: border-box;
-  font-family: var(--jp-ui-font-family);
-  font-size: var(--jp-ui-font-size1);
-  color: var(--vscode-editor-foreground, var(--jp-ui-font-color1));
-}
-
-/* Override VSCode background color */
-.cell-output-ipywidget-background:has(
-    > .cell-output-ipywidget-background > .lm-Widget > *[data-root-id]
-  ),
-.cell-output-ipywidget-background:has(> .lm-Widget > *[data-root-id]) {
-  background-color: transparent !important;
-}
-</style>
-</div>
-<div class="cell-output cell-output-display">
-<div id="c15e43ff-ba6a-41a6-aa2e-11ceca9646c8">
-  <div id="fcdda226-0a04-498f-a9fe-573ad74f4be3" data-root-id="c15e43ff-ba6a-41a6-aa2e-11ceca9646c8" style="display: contents;"></div>
+<div id="1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9">
+  <div id="d2372ebe-897d-4397-ab1d-20e3e71af84b" data-root-id="1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"297270b9-abd9-4f30-89f1-cf02ea9635a5":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"c15e43ff-ba6a-41a6-aa2e-11ceca9646c8"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"51d03c72-2753-46d5-b8f2-14802229b2a9","attributes":{"plot_id":"c15e43ff-ba6a-41a6-aa2e-11ceca9646c8","comm_id":"061a827762dd4d48b70caf72c1fb1ac5","client_comm_id":"f07d55e1b8524e5491e9c02f5466d5bb"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"297270b9-abd9-4f30-89f1-cf02ea9635a5","roots":{"c15e43ff-ba6a-41a6-aa2e-11ceca9646c8":"fcdda226-0a04-498f-a9fe-573ad74f4be3"},"root_ids":["c15e43ff-ba6a-41a6-aa2e-11ceca9646c8"]}];
+  var docs_json = {"ec9f0381-7129-4ee2-b537-43ab2e42b48e":{"version":"3.6.0","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.browser.BrowserInfo","id":"1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9"},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"838f118f-f679-43fe-9dff-47897810d0d6","attributes":{"plot_id":"1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9","comm_id":"b7de81d2567d4c39a0183cd13f200bf2","client_comm_id":"3d4ad42a4ee64509b96a80b565b13dc0"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
+  var render_items = [{"docid":"ec9f0381-7129-4ee2-b537-43ab2e42b48e","roots":{"1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9":"d2372ebe-897d-4397-ab1d-20e3e71af84b"},"root_ids":["1dd6be4a-f1e6-4e8c-b62a-c4e307f2b6c9"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
   }
   const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  function embed_document(root) {
+  async function embed_document(root) {
     var Bokeh = get_bokeh(root)
-    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
     for (const render_item of render_items) {
       for (const root_id of render_item.root_ids) {
     const id_el = document.getElementById(root_id)
-    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
       const root_el = id_el.children[0]
       root_el.id = root_el.id + '-rendered'
+      for (const child of root_el.children) {
+            // Ensure JupyterLab does not capture keyboard shortcuts
+            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
+        child.setAttribute('data-lm-suppress-shortcuts', 'true')
+      }
     }
       }
     }
@@ -827,26 +844,31 @@ if (window.Jupyter !== undefined) {
 
 </div>
 <div class="cell-output cell-output-display" data-execution_count="1">
-<div id="f8c7934d-ec4d-4417-b880-361b2c81b842">
-  <div id="b7a8d3ba-bb97-4139-a8b8-a2e5df19514e" data-root-id="f8c7934d-ec4d-4417-b880-361b2c81b842" style="display: contents;"></div>
+<div id="95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975">
+  <div id="a73134a1-6f1f-47a4-a841-5d42e0e47555" data-root-id="95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975" style="display: contents;"></div>
 </div>
 <script type="application/javascript">(function(root) {
-  var docs_json = {"20fa3f60-d871-42bc-ae2f-112f320c80ea":{"version":"3.4.1","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"f8c7934d-ec4d-4417-b880-361b2c81b842","attributes":{"subscribed_events":{"type":"set","entries":["cell-click","table-edit","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"cbbf399e-7c66-463b-987c-a2cce69be379","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"bbfc367d-6b90-4aac-b0ce-0035bbd34f1a","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/font-awesome/css/all.min.css"}},{"type":"object","name":"ImportedStyleSheet","id":"09d1321a-9437-488e-8b06-6b74a9f2d190","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"fd52f2fe-f061-4215-af7f-e2a90b82b2a1","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/theme/native.css"}},{"type":"object","name":"ImportedStyleSheet","id":"a1411942-6a38-422b-b02b-90f0a037f803","attributes":{"url":"https://cdn.holoviz.org/panel/1.4.2/dist/bundled/datatabulator/tabulator-tables@5.5.0/dist/css/tabulator_simple.min.css"}}],"width":400,"height":200,"margin":[5,10],"sizing_mode":"fixed","align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","index"],["sorter","number"]]},{"type":"map","entries":[["field","Name"]]},{"type":"map","entries":[["field","Value1"],["formatter","progress"],["formatterParams",{"type":"map","entries":[["max","40"]]}],["sorter","number"]]},{"type":"map","entries":[["field","Value2"],["formatter","star"],["formatterParams",{"type":"map","entries":[["stars","5"]]}],["sorter","number"]]},{"type":"map","entries":[["field","Bar"],["formatter","html"],["formatterParams",{"type":"map"}]]}]],["dataTree",false],["height",200]]},"columns":[{"type":"object","name":"TableColumn","id":"d32e590d-e7d6-4ea9-83fb-bbc4372bfbb4","attributes":{"field":"index","title":"index","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"90935a60-01c3-4b25-ad52-bce0813a1b7c","attributes":{"text_align":{"type":"value","value":"left"}}},"editor":{"type":"object","name":"CellEditor","id":"bef411b6-e524-4ebd-9bf6-795ceec79ee9"}}},{"type":"object","name":"TableColumn","id":"cc3e0465-8d1e-43b4-8397-b8fb9f78edb2","attributes":{"field":"Name","title":"Name","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"5818c8f1-7fcf-4e53-8e97-dfb739f79ea2"},"editor":{"type":"object","name":"StringEditor","id":"1c7b118e-077c-4c73-9a5b-229f7bebdb33"}}},{"type":"object","name":"TableColumn","id":"01202c4c-50b2-4847-84ab-cf32f4b59e61","attributes":{"field":"Value1","title":"Value1","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"8ed7d772-3dcf-4563-94a8-f8592b49f7be","attributes":{"text_align":{"type":"value","value":"right"}}},"editor":{"type":"object","name":"IntEditor","id":"440b0a59-f639-4759-b465-618befeb8f5e"}}},{"type":"object","name":"TableColumn","id":"da113077-dba3-4a39-a01e-2f2d479c5caa","attributes":{"field":"Value2","title":"Value2","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"0f1448a0-30b6-4dab-8cab-c432c24be92d","attributes":{"text_align":{"type":"value","value":"right"}}},"editor":{"type":"object","name":"IntEditor","id":"e3ae43c2-5f5d-4b4e-acfd-fb73ab969ced"}}},{"type":"object","name":"TableColumn","id":"de05e013-a996-4a24-9382-1acd50b4deb9","attributes":{"field":"Bar","title":"Bar","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"add25033-34f0-4ffb-9bf5-7dd284f08f5e"},"editor":{"type":"object","name":"StringEditor","id":"4883055a-8667-4bd2-8c73-ee4524d7c630"}}}],"indexes":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"d40e2287-6c4a-45c4-89b1-229040cb8feb","attributes":{"selected":{"type":"object","name":"Selection","id":"563808bc-6991-429a-a009-567b0783168b","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"09616506-25bb-47f9-aecc-007caaeafb3e"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Name",{"type":"ndarray","array":["Alice","Bob","Charlie"],"shape":[3],"dtype":"object","order":"little"}],["Value1",{"type":"ndarray","array":{"type":"bytes","data":"CgAAABQAAAAeAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Value2",{"type":"ndarray","array":{"type":"bytes","data":"AwAAAAIAAAAFAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Bar",{"type":"ndarray","array":["\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 28.57142857142857%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 8.571428571428571%; background-color: red; height: 100%;\"></div>\n    </div>\n    ","\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 57.14285714285714%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 5.714285714285714%; background-color: red; height: 100%;\"></div>\n    </div>\n    ","\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 85.71428571428571%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 14.285714285714285%; background-color: red; height: 100%;\"></div>\n    </div>\n    "],"shape":[3],"dtype":"object","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","70006591c841458e81ac16c0738c8dd4"],["data",{"type":"map"}]]},"page":1,"page_size":20,"select_mode":true,"selectable_rows":null}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"7e31530f-fb5a-4b53-9071-ac309b45383b","attributes":{"plot_id":"f8c7934d-ec4d-4417-b880-361b2c81b842","comm_id":"647b5be8573b42a6a668f2ac58634a53","client_comm_id":"b22b9d2cc7844372b3ade776eaa1225a"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"copy_to_clipboard1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"value","kind":"Any","default":null}]}]}};
-  var render_items = [{"docid":"20fa3f60-d871-42bc-ae2f-112f320c80ea","roots":{"f8c7934d-ec4d-4417-b880-361b2c81b842":"b7a8d3ba-bb97-4139-a8b8-a2e5df19514e"},"root_ids":["f8c7934d-ec4d-4417-b880-361b2c81b842"]}];
+  var docs_json = {"83a8660d-5529-4716-8d0f-1cef5a73ff87":{"version":"3.6.0","title":"Bokeh Application","roots":[{"type":"object","name":"panel.models.tabulator.DataTabulator","id":"95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975","attributes":{"subscribed_events":{"type":"set","entries":["cell-click","table-edit","selection-change"]},"stylesheets":["\n:host(.pn-loading):before, .pn-loading:before {\n  background-color: #c3c3c3;\n  mask-size: auto calc(min(50%, 400px));\n  -webkit-mask-size: auto calc(min(50%, 400px));\n}",{"type":"object","name":"ImportedStyleSheet","id":"e6353e1b-1c9e-4f59-837d-ca1b14e38fff","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.1/dist/css/loading.css"}},{"type":"object","name":"ImportedStyleSheet","id":"51ce67e7-a0b7-4473-928f-8157edeb2f75","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.1/dist/bundled/font-awesome/css/all.min.css"}},{"type":"object","name":"ImportedStyleSheet","id":"d91a3a02-8362-4e8a-b967-8cb6d2364728","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.1/dist/bundled/theme/default.css"}},{"type":"object","name":"ImportedStyleSheet","id":"d73a4258-3813-4afe-92c2-a4b6c6bb68d0","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.1/dist/bundled/theme/native.css"}},{"type":"object","name":"ImportedStyleSheet","id":"4a1b5c0e-cc66-4cbd-b65e-6ae19c208b26","attributes":{"url":"https://cdn.holoviz.org/panel/1.5.1/dist/bundled/datatabulator/tabulator-tables@6.2.1/dist/css/tabulator_simple.min.css"}}],"width":400,"height":200,"margin":[5,10],"sizing_mode":"fixed","align":"start","configuration":{"type":"map","entries":[["selectable",true],["columns",[{"type":"map","entries":[["field","index"],["sorter","number"]]},{"type":"map","entries":[["field","Name"]]},{"type":"map","entries":[["field","Value1"],["formatter","progress"],["formatterParams",{"type":"map","entries":[["max","40"]]}],["sorter","number"]]},{"type":"map","entries":[["field","Value2"],["formatter","star"],["formatterParams",{"type":"map","entries":[["stars","5"]]}],["sorter","number"]]},{"type":"map","entries":[["field","Bar"],["formatter","html"],["formatterParams",{"type":"map"}]]}]],["dataTree",false],["height",200]]},"columns":[{"type":"object","name":"TableColumn","id":"c12afcc0-4759-4fe8-8cac-4a587a885b83","attributes":{"field":"index","title":"index","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"97b5220b-3a30-4797-91eb-5b5d50d6eb5b","attributes":{"text_align":{"type":"value","value":"left"}}},"editor":{"type":"object","name":"CellEditor","id":"d4eeecac-0454-48f3-a000-197d08a0ceba"}}},{"type":"object","name":"TableColumn","id":"f4453840-4a5b-48ad-96dd-06e136672ed2","attributes":{"field":"Name","title":"Name","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"678e6c8f-9e88-4e94-8899-6cda4249253a"},"editor":{"type":"object","name":"StringEditor","id":"5f8c631b-2084-407c-8293-415b6d8594eb"}}},{"type":"object","name":"TableColumn","id":"fad772f8-97d0-4ecd-8848-b2706e8ace4e","attributes":{"field":"Value1","title":"Value1","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"d2f295f5-da0c-4153-ba83-00d3a72b4aa0","attributes":{"text_align":{"type":"value","value":"right"}}},"editor":{"type":"object","name":"IntEditor","id":"cf6d077e-a235-41e8-8f0e-e40ec4fe26ad"}}},{"type":"object","name":"TableColumn","id":"33fe9554-0931-48c1-8845-13d0b6861cea","attributes":{"field":"Value2","title":"Value2","width":0,"formatter":{"type":"object","name":"NumberFormatter","id":"7d360991-c4b5-4a1d-9f90-5773f75389f7","attributes":{"text_align":{"type":"value","value":"right"}}},"editor":{"type":"object","name":"IntEditor","id":"b8c9c442-88bf-4942-81d6-1b8944ae272d"}}},{"type":"object","name":"TableColumn","id":"d35705e0-26e6-48f2-b023-6f863bf0106f","attributes":{"field":"Bar","title":"Bar","width":0,"formatter":{"type":"object","name":"StringFormatter","id":"3afebe52-6215-40df-badd-32bb0817862a"},"editor":{"type":"object","name":"StringEditor","id":"90dcd971-7ee8-4a7e-912f-21a12577ccdb"}}}],"indexes":["index"],"layout":"fit_data_table","source":{"type":"object","name":"ColumnDataSource","id":"20d15562-365f-4424-bae4-f5da0d8d2dda","attributes":{"selected":{"type":"object","name":"Selection","id":"762d5eb0-6402-4772-b992-71692f06d5bc","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"24a23ae0-4960-4b8a-a0cf-049f66456e6c"},"data":{"type":"map","entries":[["index",{"type":"ndarray","array":{"type":"bytes","data":"AAAAAAEAAAACAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Name",{"type":"ndarray","array":["Alice","Bob","Charlie"],"shape":[3],"dtype":"object","order":"little"}],["Value1",{"type":"ndarray","array":{"type":"bytes","data":"CgAAABQAAAAeAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Value2",{"type":"ndarray","array":{"type":"bytes","data":"AwAAAAIAAAAFAAAA"},"shape":[3],"dtype":"int32","order":"little"}],["Bar",{"type":"ndarray","array":["\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 28.57142857142857%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 8.571428571428571%; background-color: red; height: 100%;\"></div>\n    </div>\n    ","\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 57.14285714285714%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 5.714285714285714%; background-color: red; height: 100%;\"></div>\n    </div>\n    ","\n    <div style=\"width: 100%; display: flex; height: 100%; align-items: center;\">\n        <div style=\"width: 85.71428571428571%; background-color: blue; height: 100%;\"></div>\n        <div style=\"width: 14.285714285714285%; background-color: red; height: 100%;\"></div>\n    </div>\n    "],"shape":[3],"dtype":"object","order":"little"}]]}}},"cell_styles":{"type":"map","entries":[["id","47f5708b61d84aef8fd8a686bb865a6c"],["data",{"type":"map"}]]},"page":1,"select_mode":true,"selectable_rows":null}},{"type":"object","name":"panel.models.comm_manager.CommManager","id":"9a73b4ab-2bee-48f7-b0e1-031d85cbedc5","attributes":{"plot_id":"95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975","comm_id":"863ca8f06247435f804b7b49b2bf2b71","client_comm_id":"81833e829d744ea89928968e8cd10080"}}],"defs":[{"type":"model","name":"ReactiveHTML1"},{"type":"model","name":"FlexBox1","properties":[{"name":"align_content","kind":"Any","default":"flex-start"},{"name":"align_items","kind":"Any","default":"flex-start"},{"name":"flex_direction","kind":"Any","default":"row"},{"name":"flex_wrap","kind":"Any","default":"wrap"},{"name":"gap","kind":"Any","default":""},{"name":"justify_content","kind":"Any","default":"flex-start"}]},{"type":"model","name":"FloatPanel1","properties":[{"name":"config","kind":"Any","default":{"type":"map"}},{"name":"contained","kind":"Any","default":true},{"name":"position","kind":"Any","default":"right-top"},{"name":"offsetx","kind":"Any","default":null},{"name":"offsety","kind":"Any","default":null},{"name":"theme","kind":"Any","default":"primary"},{"name":"status","kind":"Any","default":"normalized"}]},{"type":"model","name":"GridStack1","properties":[{"name":"mode","kind":"Any","default":"warn"},{"name":"ncols","kind":"Any","default":null},{"name":"nrows","kind":"Any","default":null},{"name":"allow_resize","kind":"Any","default":true},{"name":"allow_drag","kind":"Any","default":true},{"name":"state","kind":"Any","default":[]}]},{"type":"model","name":"drag1","properties":[{"name":"slider_width","kind":"Any","default":5},{"name":"slider_color","kind":"Any","default":"black"},{"name":"value","kind":"Any","default":50}]},{"type":"model","name":"click1","properties":[{"name":"terminal_output","kind":"Any","default":""},{"name":"debug_name","kind":"Any","default":""},{"name":"clears","kind":"Any","default":0}]},{"type":"model","name":"FastWrapper1","properties":[{"name":"object","kind":"Any","default":null},{"name":"style","kind":"Any","default":null}]},{"type":"model","name":"NotificationAreaBase1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0}]},{"type":"model","name":"NotificationArea1","properties":[{"name":"js_events","kind":"Any","default":{"type":"map"}},{"name":"notifications","kind":"Any","default":[]},{"name":"position","kind":"Any","default":"bottom-right"},{"name":"_clear","kind":"Any","default":0},{"name":"types","kind":"Any","default":[{"type":"map","entries":[["type","warning"],["background","#ffc107"],["icon",{"type":"map","entries":[["className","fas fa-exclamation-triangle"],["tagName","i"],["color","white"]]}]]},{"type":"map","entries":[["type","info"],["background","#007bff"],["icon",{"type":"map","entries":[["className","fas fa-info-circle"],["tagName","i"],["color","white"]]}]]}]}]},{"type":"model","name":"Notification","properties":[{"name":"background","kind":"Any","default":null},{"name":"duration","kind":"Any","default":3000},{"name":"icon","kind":"Any","default":null},{"name":"message","kind":"Any","default":""},{"name":"notification_type","kind":"Any","default":null},{"name":"_destroyed","kind":"Any","default":false}]},{"type":"model","name":"TemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"BootstrapTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"TemplateEditor1","properties":[{"name":"layout","kind":"Any","default":[]}]},{"type":"model","name":"MaterialTemplateActions1","properties":[{"name":"open_modal","kind":"Any","default":0},{"name":"close_modal","kind":"Any","default":0}]},{"type":"model","name":"ReactiveESM1"},{"type":"model","name":"JSComponent1"},{"type":"model","name":"ReactComponent1"},{"type":"model","name":"AnyWidgetComponent1"},{"type":"model","name":"request_value1","properties":[{"name":"fill","kind":"Any","default":"none"},{"name":"_synced","kind":"Any","default":null},{"name":"_request_sync","kind":"Any","default":0}]}]}};
+  var render_items = [{"docid":"83a8660d-5529-4716-8d0f-1cef5a73ff87","roots":{"95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975":"a73134a1-6f1f-47a4-a841-5d42e0e47555"},"root_ids":["95ebde2c-bfc6-4d8b-a6fb-f2b34eedc975"]}];
   var docs = Object.values(docs_json)
   if (!docs) {
     return
   }
   const py_version = docs[0].version.replace('rc', '-rc.').replace('.dev', '-dev.')
-  function embed_document(root) {
+  async function embed_document(root) {
     var Bokeh = get_bokeh(root)
-    Bokeh.embed.embed_items_notebook(docs_json, render_items);
+    await Bokeh.embed.embed_items_notebook(docs_json, render_items);
     for (const render_item of render_items) {
       for (const root_id of render_item.root_ids) {
     const id_el = document.getElementById(root_id)
-    if (id_el.children.length && (id_el.children[0].className === 'bk-root')) {
+    if (id_el.children.length && id_el.children[0].hasAttribute('data-root-id')) {
       const root_el = id_el.children[0]
       root_el.id = root_el.id + '-rendered'
+      for (const child of root_el.children) {
+            // Ensure JupyterLab does not capture keyboard shortcuts
+            // see: https://jupyterlab.readthedocs.io/en/4.1.x/extension/notebook.html#keyboard-interaction-model
+        child.setAttribute('data-lm-suppress-shortcuts', 'true')
+      }
     }
       }
     }

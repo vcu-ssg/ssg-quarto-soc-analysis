@@ -127,7 +127,7 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
 }
 
 
-    summary_df = df.groupby(['instructor','ins_dept','ins_role']).agg({
+    summary_df = df.groupby(['instructor_name','ins_dept','ins_role']).agg({
     'sum_term_crse':'sum',
     'sum_term_crse_crn':'sum',
     'sum_term_crse_crn_mtg_students':'sum',
@@ -138,7 +138,7 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
     }).reset_index()
 
     summary_df = summary_df[[
-        'instructor','ins_dept','ins_role',
+        'instructor_name','ins_dept','ins_role',
         'sum_term_crse_wrkld_sample',
         'sum_term_crse_wrkld_sample_lec',
         'sum_term_crse_crn_hours_lec',
@@ -150,7 +150,7 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
 
     summary_df = summary_df.rename(columns={
         'TERM': 'Term',
-        'instructor':'Instructor',
+        'instructor_name':'Instructor',
         'ins_dept':'Dept',
         'ins_role': 'Role',
         'sum_term_crse': 'Crse',
@@ -164,7 +164,7 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
 
 
     def content_fn( row ):
-        ins_df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['instructor']==row["Instructor"])]
+        ins_df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['instructor_name']==row["Instructor"])]
         ins_df = ins_df.groupby(['period_name','CRN','COURSE','TITLE','wrkld_sample_type','wrkld_sample_note']).agg(
             {
             'sum_term_crse_crn':'sum',

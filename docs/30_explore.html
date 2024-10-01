@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.5.55">
+<meta name="generator" content="quarto-1.5.57">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -191,7 +191,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Significant effort was also invested in the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">corresponding google workbook</a>.</p>
 <section id="columns-in-the-dataframe" class="level2">
 <h2 class="anchored" data-anchor-id="columns-in-the-dataframe">Columns in the dataframe</h2>
-<div id="db0708cc" class="cell" data-execution_count="2">
+<div id="ea278906" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the CSV file into a pandas data frame.</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.read_csv(<span class="st">'stacked_df.csv'</span>)</span>
@@ -210,14 +210,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
        'sum_term_crse_wrkld_b', 'sum_term_crse_wrkld_b_lec', 'wrkld_b_note',
        'wrkld_c_type', 'sum_term_crse_wrkld_c', 'sum_term_crse_wrkld_c_lec',
        'wrkld_c_note'],
-      dtype='object', length=104)</code></pre>
+      dtype='object', length=112)</code></pre>
 </div>
 </div>
 </section>
 <section id="college-wide-measures-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="college-wide-measures-over-time">College-wide measures over time</h2>
 <p>This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.</p>
-<div id="989eb33c" class="cell" data-execution_count="3">
+<div id="3d0f43bb" class="cell" data-execution_count="3">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -275,71 +275,71 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">202230</td>
 <td style="text-align: left;">Summer 2022</td>
 <td style="text-align: right;">29</td>
-<td style="text-align: right;">105</td>
-<td style="text-align: right;">624</td>
-<td style="text-align: right;">1341</td>
+<td style="text-align: right;">107</td>
+<td style="text-align: right;">626</td>
+<td style="text-align: right;">1343</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202310</td>
 <td style="text-align: left;">Fall 2022</td>
 <td style="text-align: right;">159</td>
 <td style="text-align: right;">438</td>
-<td style="text-align: right;">8306</td>
-<td style="text-align: right;">18396</td>
+<td style="text-align: right;">8302</td>
+<td style="text-align: right;">18385</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202320</td>
 <td style="text-align: left;">Spring 2023</td>
 <td style="text-align: right;">146</td>
 <td style="text-align: right;">458</td>
-<td style="text-align: right;">7692</td>
-<td style="text-align: right;">17790</td>
+<td style="text-align: right;">7690</td>
+<td style="text-align: right;">17784</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202330</td>
 <td style="text-align: left;">Summer 2023</td>
 <td style="text-align: right;">25</td>
 <td style="text-align: right;">104</td>
-<td style="text-align: right;">564</td>
-<td style="text-align: right;">1213</td>
+<td style="text-align: right;">561</td>
+<td style="text-align: right;">1204</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202410</td>
 <td style="text-align: left;">Fall 2023</td>
 <td style="text-align: right;">157</td>
-<td style="text-align: right;">452</td>
-<td style="text-align: right;">9497</td>
-<td style="text-align: right;">21298</td>
+<td style="text-align: right;">454</td>
+<td style="text-align: right;">9473</td>
+<td style="text-align: right;">21222</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202420</td>
 <td style="text-align: left;">Spring 2024</td>
 <td style="text-align: right;">154</td>
 <td style="text-align: right;">466</td>
-<td style="text-align: right;">8735</td>
-<td style="text-align: right;">20358</td>
+<td style="text-align: right;">8730</td>
+<td style="text-align: right;">20339</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">202430</td>
 <td style="text-align: left;">Summer 2024</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">92</td>
-<td style="text-align: right;">552</td>
-<td style="text-align: right;">1317</td>
+<td style="text-align: right;">26</td>
+<td style="text-align: right;">93</td>
+<td style="text-align: right;">557</td>
+<td style="text-align: right;">1338</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">202510</td>
 <td style="text-align: left;">Fall 2024</td>
-<td style="text-align: right;">163</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
-<td style="text-align: right;">0</td>
+<td style="text-align: right;">164</td>
+<td style="text-align: right;">463</td>
+<td style="text-align: right;">10284</td>
+<td style="text-align: right;">23786</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="31ee4722" class="cell" data-execution_count="4">
+<div id="4adfd6c2" class="cell" data-execution_count="4">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -351,7 +351,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="teaching-for-fall-2023-by-subject" class="level2">
 <h2 class="anchored" data-anchor-id="teaching-for-fall-2023-by-subject">Teaching for Fall 2023 by subject</h2>
-<div id="44314dde" class="cell" data-execution_count="5">
+<div id="a4c3d813" class="cell" data-execution_count="5">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="5">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -368,49 +368,49 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">CMSC</td>
 <td style="text-align: right;">35</td>
 <td style="text-align: right;">95</td>
-<td style="text-align: right;">3552</td>
-<td style="text-align: right;">9235</td>
+<td style="text-align: right;">3536</td>
+<td style="text-align: right;">9184</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">EGRB</td>
 <td style="text-align: right;">31</td>
 <td style="text-align: right;">65</td>
 <td style="text-align: right;">994</td>
-<td style="text-align: right;">2287</td>
+<td style="text-align: right;">2280</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">EGRC</td>
 <td style="text-align: right;">14</td>
 <td style="text-align: right;">40</td>
-<td style="text-align: right;">432</td>
-<td style="text-align: right;">1021</td>
+<td style="text-align: right;">429</td>
+<td style="text-align: right;">1011</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">EGRE</td>
 <td style="text-align: right;">32</td>
 <td style="text-align: right;">70</td>
-<td style="text-align: right;">1488</td>
-<td style="text-align: right;">2803</td>
+<td style="text-align: right;">1483</td>
+<td style="text-align: right;">2792</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">EGRM</td>
 <td style="text-align: right;">32</td>
 <td style="text-align: right;">103</td>
-<td style="text-align: right;">2215</td>
-<td style="text-align: right;">4925</td>
+<td style="text-align: right;">2212</td>
+<td style="text-align: right;">4915</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ENGR</td>
 <td style="text-align: right;">13</td>
-<td style="text-align: right;">79</td>
-<td style="text-align: right;">816</td>
-<td style="text-align: right;">1027</td>
+<td style="text-align: right;">81</td>
+<td style="text-align: right;">819</td>
+<td style="text-align: right;">1040</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
-<div id="c70cde35" class="cell" data-execution_count="6">
+<div id="6da22fd8" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
