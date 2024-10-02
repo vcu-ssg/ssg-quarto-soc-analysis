@@ -1,5 +1,5 @@
 ---
-title: Instructor workloads - Fall 2023/Spring 2024
+title: Instructor workloads - Spring 2024/Fall 2024
 ---
 
 ```{python}
@@ -247,6 +247,8 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
     df_widget.disabled = True
 
     panel = pn.Row(df_widget)
+    df_widget.expanded = []
+
     return panel
 ```
 ::: {.column-screen-inset-right}
