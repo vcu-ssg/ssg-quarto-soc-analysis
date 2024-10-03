@@ -120,6 +120,7 @@ def generate_workload_bar_html(row, dataframe):
 def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
     """ load data """
     df = stacked_df[(stacked_df['TERM'].isin(terms)) & (stacked_df['ins_dept'].isin(dept))]
+    df = df.sort_values(by=["instructor_name", "term_code"], ascending=[True, True])
 
     if filters is None:
         filters = {
@@ -241,7 +242,9 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
             'Hour Bar': {'type':'html'}
         },
         row_content=content_fn,
-        embed_content=True
+        embed_content=True,
+        expanded = [],
+        selection = []
     )
 
     df_widget.disabled = True
