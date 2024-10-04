@@ -23,6 +23,8 @@ panel = "^1.5.1"
 jupyter-bokeh = "^3.0.7"
 watchfiles = "^0.21.0"
 pygments = "^2.17.2"
+bokeh = "^3.6.0"
+bokeh-sampledata = "^2024.2"
 
 [build-system]
 requires = ["poetry-core"]

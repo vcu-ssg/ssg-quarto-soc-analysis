@@ -231,6 +231,21 @@ tornado = ">=6.2"
 xyzservices = ">=2021.09.1"
 
 [[package]]
+name = "bokeh-sampledata"
+version = "2024.2"
+description = "Sample datasets for Bokeh examples"
+optional = false
+python-versions = ">=3.10"
+files = [
+    {file = "bokeh_sampledata-2024.2-py3-none-any.whl", hash = "sha256:b41f94472ea8ca9c8b8ee999de47236879b169034bb7b789421c6a20e10b7205"},
+    {file = "bokeh_sampledata-2024.2.tar.gz", hash = "sha256:e63daa96e79d563ec8b84f20672ffe94f905b21455fab8d83ee334e46da33624"},
+]
+
+[package.dependencies]
+icalendar = "*"
+pandas = ">=1.2"
+
+[[package]]
 name = "cachetools"
 version = "5.5.0"
 description = "Extensible memoizing collections and decorators"
@@ -873,6 +888,24 @@ cli = ["click (==8.*)", "pygments (==2.*)", "rich (>=10,<14)"]
 http2 = ["h2 (>=3,<5)"]
 socks = ["socksio (==1.*)"]
 zstd = ["zstandard (>=0.18.0)"]
+
+[[package]]
+name = "icalendar"
+version = "6.0.0"
+description = "iCalendar parser/generator"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "icalendar-6.0.0-py3-none-any.whl", hash = "sha256:567e718551d800362db04ca09777295336e1803f6fc6bc0a7a5e258917fa8ed0"},
+    {file = "icalendar-6.0.0.tar.gz", hash = "sha256:7ddf60d343f3c1f716de9b62f6e80ffd95d03cab62464894a0539feab7b5c76e"},
+]
+
+[package.dependencies]
+python-dateutil = "*"
+tzdata = "*"
+
+[package.extras]
+test = ["coverage", "hypothesis", "pytest", "pytz"]
 
 [[package]]
 name = "idna"
@@ -3384,4 +3417,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12.6"
-content-hash = "1c5d816cb35ec66910d6f17d30889158012a3507876ecd692194b2bd62a8a3b8"
+content-hash = "7e4c77e6857eb27bf2c380c262e825b53f33ab1111a14483cf95a0d819d83c50"
