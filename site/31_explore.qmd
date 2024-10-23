@@ -38,25 +38,6 @@ for col in ['TERM','COURSE','SECT']:
 
 ```
 
-The table below shows application of the workload model to the current academic year.  Relative
-workloads are also visualized.  Four major metrics are highlighted:
-
-1. Total workload (`Wrkld`), the cumulative workload for lectures, labs, seminar, capstones and VIP, with one `workload unit` equivelent to one standard lecture course per semester.
-1. Lecture workload (`W.Lec`), the cumulative workload associated with lecture classes.  This most closely corresponds to the traditional workload conversation (e.g., 1+1 would show as 2, 2+1 or 1+2 would show as 3, etc.)
-1. Lecture hours (`Hr.Lec`) the cumulative credit hours (number of students enrolled * course credit) for just lecture sections,
-1. Total Hours (`Hours`), the cumulative credit hours for all sections.  This value drives the VCU budget model, as a portion of each unit's budget is estimated on a per-credit hour basis for the academic year.
-
-The visualization on the right shows two horizontal, stacked bars, centered around an axis, showing
-workload extending to the left and credit hours extending to the right.  Bars represent lecture-only and non-lecture units so that the total bar length represents the total, either workload units or credit hours.
-
-Columns can be sorted using the triangle icon.  Holding <shift> permits sorting over multiple columns.
-
-The median (50th percentile across instructors) for total workload and total hours is also shown.
-
-Individual faculty rows can be expanded to explore the details of each computation.  The detail table shows each CRN, workload assignments, and the rule applied to derive the value.
-
-Note because of a limitation in way that these data are accessed, these tables only include courses taught under the College of Engineering.  For example, if a engineering faculty member coteaches a section OUTSIDE of engineering, the units associated with the non-engineering sections are not included in the analysis. This limitation can be removed, talk with me and I can tell you how.
-
 ```{python}
 #| echo: false
 
@@ -264,6 +245,39 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
 
 ::: {.panel-tabset}
 
+## All
+```{python}
+#| echo: false
+
+filters = {
+    'Instructor': {'type': 'input', 'func': 'like', 'placeholder': 'Enter name'},
+    'Dept':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True },
+    'Role':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True }
+}
+get_tabulator_table( stacked_df,TERMS,['EGRM','EGRE','EGRC','EGRB','CMSC'],filters=filters)
+```
+
+## Header descriptions
+
+The tables in the tabs show the workload model applied to each department for the period shown above.  Relative
+workloads are also visualized.  Four major metrics are highlighted:
+
+1. Total workload (`Wrkld`), the cumulative workload for lectures, labs, seminar, capstones and VIP, with one `workload unit` equivelent to one standard lecture course per semester.
+1. Lecture workload (`W.Lec`), the cumulative workload associated with lecture classes.  This most closely corresponds to the traditional workload conversation (e.g., 1+1 would show as 2, 2+1 or 1+2 would show as 3, etc.)
+1. Lecture hours (`Hr.Lec`) the cumulative credit hours (number of students enrolled * course credit) for just lecture sections,
+1. Total Hours (`Hours`), the cumulative credit hours for all sections.  This value drives the VCU budget model, as a portion of each unit's budget is estimated on a per-credit hour basis for the academic year.
+
+The visualization shows two horizontal, stacked bars, centered around an axis, showing
+workload extending to the left and credit hours extending to the right.  Bars represent lecture-only and non-lecture units so that the total bar length represents the total, either workload units or credit hours.
+
+Columns can be sorted by clicking the header triangle icons.  Holding `shift` while clicking permits sorting over multiple columns.
+
+The median (50th percentile across instructors) for total workload and total hours is also shown.
+
+Individual faculty rows can be expanded to explore the details of each computation.  The detail table shows each CRN, workload assignments, and the rule applied to derive the value.
+
+Note because of a limitation in way that these data are accessed, these tables only include courses taught under the College of Engineering.  For example, if a engineering faculty member coteaches a section OUTSIDE of engineering, the units associated with the non-engineering sections are not included in the analysis. This limitation can be removed, talk with me and I can tell you how.
+
 ## CMSC
 ```{python}
 #| echo: false
@@ -292,18 +306,6 @@ get_tabulator_table( stacked_df,TERMS,['EGRB'])
 ```{python}
 #| echo: false
 get_tabulator_table( stacked_df,TERMS,['EGRC'])
-```
-
-## All
-```{python}
-#| echo: false
-
-filters = {
-    'Instructor': {'type': 'input', 'func': 'like', 'placeholder': 'Enter name'},
-    'Dept':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True },
-    'Role':{'type':'list','func':'in', 'valuesLookup': True, 'sort': 'asc', 'multiselect': True }
-}
-get_tabulator_table( stacked_df,TERMS,['EGRM','EGRE','EGRC','EGRB','CMSC'],filters=filters)
 ```
 
 ## Model
