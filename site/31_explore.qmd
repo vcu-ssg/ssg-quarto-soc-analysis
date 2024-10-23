@@ -341,6 +341,24 @@ Individual faculty rows can be expanded to explore the details of each computati
 
 Note because of a limitation in way that these data are accessed, these tables only include courses taught under the College of Engineering.  For example, if a engineering faculty member coteaches a section OUTSIDE of engineering, the units associated with the non-engineering sections are not included in the analysis. This limitation can be removed, talk with me and I can tell you how.
 
+## Hey, my data are wrong!
+
+You can click on the triangle next to your name to see the courses that were aggregated to produce your line in the plot.
+
+As noted, these data need [cleaning](20_clean.qmd):
+
+* What was originally coded in Banner doesn't necessarily reflect what happened in the classroom.
+
+* Departments code courses differently and adjustments are required to permit consistent measurement across the college as a whole.
+
+* Courses may be misclassified as LEC, LAB, etc.  Adjustments can be made in my code as necessary.
+
+If you believe that your data are wrong, send me an email!  [John Leonard](mailto:jdleonard@vcu.edu) describing the situation.
+
+I'll implement the [fixes in the code](20_clean.qmd#fix-known-errors) and regenerate the reports with improved data.
+
+This is iterative process. The more eyes that look at these data the better - and the cleaner they will become!
+
 :::
 :::
 
