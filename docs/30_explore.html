@@ -6,6 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="John Leonard">
+<meta name="dcterms.date" content="2024-10-23">
 
 <title>Exploring the data – Analysis of Teaching</title>
 <style>
@@ -19,40 +21,6 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -128,7 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./10_download.html"> 
-<span class="menu-text">Download</span></a>
+<span class="menu-text">Sources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./20_clean.html"> 
@@ -136,11 +104,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./30_explore.html" aria-current="page"> 
-<span class="menu-text">Explore</span></a>
+<span class="menu-text">Dept measures</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./31_explore.html"> 
-<span class="menu-text">Workloads</span></a>
+<span class="menu-text">Faculty measures</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -158,9 +126,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#columns-in-the-dataframe" id="toc-columns-in-the-dataframe" class="nav-link active" data-scroll-target="#columns-in-the-dataframe">Columns in the dataframe</a></li>
-  <li><a href="#college-wide-measures-over-time" id="toc-college-wide-measures-over-time" class="nav-link" data-scroll-target="#college-wide-measures-over-time">College-wide measures over time</a></li>
-  <li><a href="#teaching-for-fall-2023-by-subject" id="toc-teaching-for-fall-2023-by-subject" class="nav-link" data-scroll-target="#teaching-for-fall-2023-by-subject">Teaching for Fall 2023 by subject</a></li>
+  <li><a href="#college-wide-measures-over-time" id="toc-college-wide-measures-over-time" class="nav-link active" data-scroll-target="#college-wide-measures-over-time">College-wide measures over time</a></li>
+  <li><a href="#teaching-for-fall-2024-by-subject" id="toc-teaching-for-fall-2024-by-subject" class="nav-link" data-scroll-target="#teaching-for-fall-2024-by-subject">Teaching for Fall 2024 by subject</a></li>
   </ul>
 </nav>
     </div>
@@ -176,7 +143,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>John Leonard <a href="mailto:jdleonard@vcu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 23, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -186,39 +165,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>For this analysis we’ll be using the <em>stacked_df</em> data frame from the cleaning process.</p>
+<p>For this analysis we’ll be using the <em>stacked_df</em> data frame from the previous cleaning process.</p>
 <p>I haven’t spend much time on this. My effort to date has been spent on developing and documenting the preparing of the data at the instructor level.</p>
 <p>Significant effort was also invested in the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377">corresponding google workbook</a>.</p>
-<section id="columns-in-the-dataframe" class="level2">
-<h2 class="anchored" data-anchor-id="columns-in-the-dataframe">Columns in the dataframe</h2>
-<div id="ea278906" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the CSV file into a pandas data frame.</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.read_csv(<span class="st">'stacked_df.csv'</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure that these 3 columns are treated as strings and not as numbers.</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> col <span class="kw">in</span> [<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>]:</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  stacked_df[col] <span class="op">=</span> stacked_df[col].astype(<span class="bu">str</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a list of columns</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>stacked_df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="2">
-<pre><code>Index(['TERM', 'PART_OF_TERM', 'COLLEGE', 'DEPT', 'COURSE', 'SECT', 'CRN',
-       'TYPE', 'MIN CREDITS', 'MAX CREDITS',
-       ...
-       'sum_term_crse_wrkld_a_lec', 'wrkld_a_note', 'wrkld_b_type',
-       'sum_term_crse_wrkld_b', 'sum_term_crse_wrkld_b_lec', 'wrkld_b_note',
-       'wrkld_c_type', 'sum_term_crse_wrkld_c', 'sum_term_crse_wrkld_c_lec',
-       'wrkld_c_note'],
-      dtype='object', length=112)</code></pre>
-</div>
-</div>
-</section>
 <section id="college-wide-measures-over-time" class="level2">
 <h2 class="anchored" data-anchor-id="college-wide-measures-over-time">College-wide measures over time</h2>
-<p>This table presents a summary of courses (e.g., CMSC 255, CMSC 355, etc.), sections (or CRN), and student enrollments by semester in our data file.</p>
-<div id="3d0f43bb" class="cell" data-execution_count="3">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="3">
+<p>This plot highlights the total credit hours over time for the college as a whole.</p>
+<div id="7e7e349a" class="cell" data-execution_count="3">
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="30_explore_files/figure-html/cell-4-output-1.png" width="610" height="513" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Below are the data used to create the plot above.</p>
+<div id="cc26e6d9" class="cell" data-execution_count="4">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="44">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
@@ -339,24 +303,27 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </table>
 </div>
 </div>
-<div id="4adfd6c2" class="cell" data-execution_count="4">
+</section>
+<section id="teaching-for-fall-2024-by-subject" class="level2">
+<h2 class="anchored" data-anchor-id="teaching-for-fall-2024-by-subject">Teaching for Fall 2024 by subject</h2>
+<p>This plot highlights the total credit hours taught by each department for Fall 2024.</p>
+<div id="1a62b00c" class="cell" data-execution_count="6">
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="30_explore_files/figure-html/cell-5-output-1.png" width="610" height="513" class="figure-img"></p>
+<p><img src="30_explore_files/figure-html/cell-7-output-1.png" width="610" height="474" class="figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-<section id="teaching-for-fall-2023-by-subject" class="level2">
-<h2 class="anchored" data-anchor-id="teaching-for-fall-2023-by-subject">Teaching for Fall 2023 by subject</h2>
-<div id="a4c3d813" class="cell" data-execution_count="5">
-<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="5">
+<p>Below are the data used to create the plot above.</p>
+<div id="666582af" class="cell" data-execution_count="7">
+<div class="cell-output cell-output-display cell-output-markdown" data-execution_count="47">
 <table class="caption-top table table-sm table-striped small">
 <thead>
 <tr class="header">
 <th style="text-align: left;">Dept</th>
+<th style="text-align: left;">Term Name</th>
 <th style="text-align: right;">Course Sum</th>
 <th style="text-align: right;">CRN Sum</th>
 <th style="text-align: right;">Student Sum</th>
@@ -366,57 +333,54 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">CMSC</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">3536</td>
-<td style="text-align: right;">9184</td>
+<td style="text-align: left;">Fall 2024</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">113</td>
+<td style="text-align: right;">4203</td>
+<td style="text-align: right;">11042</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">EGRB</td>
+<td style="text-align: left;">Fall 2024</td>
 <td style="text-align: right;">31</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">994</td>
-<td style="text-align: right;">2280</td>
+<td style="text-align: right;">63</td>
+<td style="text-align: right;">953</td>
+<td style="text-align: right;">2213</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">EGRC</td>
-<td style="text-align: right;">14</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">429</td>
-<td style="text-align: right;">1011</td>
+<td style="text-align: left;">Fall 2024</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: right;">402</td>
+<td style="text-align: right;">943</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">EGRE</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">1483</td>
+<td style="text-align: left;">Fall 2024</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">69</td>
+<td style="text-align: right;">1498</td>
 <td style="text-align: right;">2792</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">EGRM</td>
-<td style="text-align: right;">32</td>
-<td style="text-align: right;">103</td>
-<td style="text-align: right;">2212</td>
-<td style="text-align: right;">4915</td>
+<td style="text-align: left;">Fall 2024</td>
+<td style="text-align: right;">34</td>
+<td style="text-align: right;">101</td>
+<td style="text-align: right;">2180</td>
+<td style="text-align: right;">5088</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">ENGR</td>
-<td style="text-align: right;">13</td>
-<td style="text-align: right;">81</td>
-<td style="text-align: right;">819</td>
-<td style="text-align: right;">1040</td>
+<td style="text-align: left;">Fall 2024</td>
+<td style="text-align: right;">15</td>
+<td style="text-align: right;">86</td>
+<td style="text-align: right;">1048</td>
+<td style="text-align: right;">1708</td>
 </tr>
 </tbody>
 </table>
-</div>
-</div>
-<div id="6da22fd8" class="cell" data-execution_count="6">
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="30_explore_files/figure-html/cell-7-output-1.png" width="601" height="474" class="figure-img"></p>
-</figure>
-</div>
 </div>
 </div>
 

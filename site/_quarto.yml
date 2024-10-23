@@ -9,13 +9,13 @@ website:
       - href: index.qmd
         text: Home
       - href: 10_download.qmd
-        text: Download
+        text: Sources
       - href: 20_clean.qmd
         text: Clean
       - href: 30_explore.qmd
-        text: Explore
+        text: Dept measures
       - href: 31_explore.qmd
-        text: Workloads
+        text: Faculty measures
 
 format:
   html:

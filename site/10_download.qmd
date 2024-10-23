@@ -1,21 +1,17 @@
 ---
-title: Downloading the data
+title: Data Sources
+author:
+    - name: John Leonard
+      email: jdleonard@vcu.edu
+date: last-modified
 ---
 
-## Data sources
+## Semesters of available data
 
-Data were pulled from the VCU Reporting Center in the *Staff | Course Schedule Report* as shown below:
+The table below offers a summary of data available for analysis.  Refer to subsequent pages for
+details on the data included for those analysis.
 
-Reports are run by semester for the College of Engineering and stored in separate files.  Care should
-be taken to open each file after it's been saved and **RESAVE** the file into XLSX format.
-
-::: {layout-ncol=2}
-![](assets/reporting-center-report.png)
-
-![](assets/reporting-center-report-download.png)
-:::
-
-The files are named appropriately and stored in the *data* folder in this repository.
+Additional semesters can be downloaded from the VCU Reporting Center per the instructions below.
 
 ```{python}
 #| echo: false
@@ -62,5 +58,22 @@ Markdown(tabulate(
 ))
 
 ```
+
+## Download additional data
+
+Data were pulled from the VCU Reporting Center in the *Staff | Course Schedule Report* as shown below:
+
+Reports are run by semester for the College of Engineering and stored in separate files.  Care should
+be taken to open each file after it's been saved and **RESAVE** the file into XLSX format.
+
+::: {layout-ncol=2}
+![](assets/reporting-center-report.png)
+
+![](assets/reporting-center-report-download.png)
+:::
+
+The files are named appropriately and stored in the [*data* folder in this repository.](https://github.com/vcu-ssg/ssg-quarto-soc-analysis/tree/main/site/data)
+
+## Data Cleaning is Needed!
 
 These data are difficult to work in separate files and often contain incorrect or inconsistent data.  A significant process of [data cleaning](20_clean.qmd) was undertaken prior to computing workloads.

@@ -1,6 +1,10 @@
 ---
 title: Test of row_content
+format:
+    html:
+        theme: cosmos
 ---
+
 
 ```{python}
 import pandas as pd
@@ -33,4 +37,9 @@ sample_table = pn.widgets.Tabulator(
 )
 
 sample_table
+```
+
+```{python}
+print(f"Panel version: {pn.__version__}")
+
 ```

@@ -1,5 +1,9 @@
 ---
 title: Instructor workloads - Spring 2024/Fall 2024
+author:
+    - name: John Leonard
+      email: jdleonard@vcu.edu
+date: last-modified
 ---
 
 ```{python}
@@ -50,6 +54,8 @@ Columns can be sorted using the triangle icon.  Holding <shift> permits sorting 
 The median (50th percentile across instructors) for total workload and total hours is also shown.
 
 Individual faculty rows can be expanded to explore the details of each computation.  The detail table shows each CRN, workload assignments, and the rule applied to derive the value.
+
+Note because of a limitation in way that these data are accessed, these tables only include courses taught under the College of Engineering.  For example, if a engineering faculty member coteaches a section OUTSIDE of engineering, the units associated with the non-engineering sections are not included in the analysis. This limitation can be removed, talk with me and I can tell you how.
 
 ```{python}
 #| echo: false

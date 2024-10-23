@@ -1,17 +1,21 @@
 ---
 title: Cleaning the data
+author:
+    - name: John Leonard
+      email: jdleonard@vcu.edu
+date: last-modified
 ---
 
 This script describes the data and walks through a process of data cleaning.
 
 At completion of this script all the individual semester data files will be combined into a single dataframe for analysis, and the dataframe will be refactored for cleaner analysis.
 
-TLDR: Here is a link to the [cleaned dataframe](stacked_df.csv).  This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).
+TL;DR: Here is a link to the [cleaned dataframe](stacked_df.csv).  This dataframe contains one tuple per (TERM,CRN,INSTRUCTOR,MEETING_CODE).
 
-TLDR: Here is a link to the [google sheet](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377) with the cleaned data loaded 
+TL;DR: Here is a link to the [google sheet](https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=1484314377) with the cleaned data loaded 
 in the "source data" tab and other sheets referencing the source data.
 
-## Data sources
+## Data sources included in the cleaned data stack.
 
 The files are named appropriately and stored in the *data* folder in this repository.
 

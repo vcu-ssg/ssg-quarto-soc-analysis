@@ -1,13 +1,14 @@
 ---
 title: Analysis of Teaching
-author: John Leonard
+author:
+    - name: John Leonard
+      email: jdleonard@vcu.edu
 date: last-modified
 ---
 
-This web report presents an application of a sample model of faculty workload
-over the past two semesters (Spring 2023 and Fall 2023).
+This web report offers an analysis of teaching in the College of Engineering over time.
 
-This is intended to be a living analysis.  As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.
+This is a living analysis.  As additions and corrections are found please let me know and we can implement the necessary changes and re-render the report.
 
 This report was developed using [Quarto](https://quarto.org/), an open-source scientific and technical publishing designed with reproducibility in mind.  Analyses were performed using python.  The source code for the pages on this site are available in a [github repository](https://github.com/vcu-ssg/ssg-quarto-soc-analysis).
 

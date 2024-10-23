@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="John Leonard">
+<meta name="dcterms.date" content="2024-10-23">
 
-<title>Downloading the data – Analysis of Teaching</title>
+<title>Data Sources – Analysis of Teaching</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -94,7 +96,7 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link active" href="./10_download.html" aria-current="page"> 
-<span class="menu-text">Download</span></a>
+<span class="menu-text">Sources</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./20_clean.html"> 
@@ -102,11 +104,11 @@ ul.task-list li input[type="checkbox"] {
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./30_explore.html"> 
-<span class="menu-text">Explore</span></a>
+<span class="menu-text">Dept measures</span></a>
   </li>  
   <li class="nav-item">
     <a class="nav-link" href="./31_explore.html"> 
-<span class="menu-text">Workloads</span></a>
+<span class="menu-text">Faculty measures</span></a>
   </li>  
 </ul>
           </div> <!-- /navcollapse -->
@@ -124,7 +126,9 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#data-sources" id="toc-data-sources" class="nav-link active" data-scroll-target="#data-sources">Data sources</a></li>
+  <li><a href="#semesters-of-available-data" id="toc-semesters-of-available-data" class="nav-link active" data-scroll-target="#semesters-of-available-data">Semesters of available data</a></li>
+  <li><a href="#download-additional-data" id="toc-download-additional-data" class="nav-link" data-scroll-target="#download-additional-data">Download additional data</a></li>
+  <li><a href="#data-cleaning-is-needed" id="toc-data-cleaning-is-needed" class="nav-link" data-scroll-target="#data-cleaning-is-needed">Data Cleaning is Needed!</a></li>
   </ul>
 </nav>
     </div>
@@ -133,14 +137,26 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Downloading the data</h1>
+<h1 class="title">Data Sources</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>John Leonard <a href="mailto:jdleonard@vcu.edu" class="quarto-title-author-email"><i class="bi bi-envelope"></i></a> </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">October 23, 2024</p>
+    </div>
+  </div>
   
     
   </div>
@@ -150,25 +166,11 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="data-sources" class="level2">
-<h2 class="anchored" data-anchor-id="data-sources">Data sources</h2>
-<p>Data were pulled from the VCU Reporting Center in the <em>Staff | Course Schedule Report</em> as shown below:</p>
-<p>Reports are run by semester for the College of Engineering and stored in separate files. Care should be taken to open each file after it’s been saved and <strong>RESAVE</strong> the file into XLSX format.</p>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="assets/reporting-center-report.png" class="img-fluid"></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="assets/reporting-center-report-download.png" class="img-fluid"></p>
-</div>
-</div>
-</div>
-<p>The files are named appropriately and stored in the <em>data</em> folder in this repository.</p>
-<div id="45676bbe" class="cell" data-execution_count="1">
+<section id="semesters-of-available-data" class="level2">
+<h2 class="anchored" data-anchor-id="semesters-of-available-data">Semesters of available data</h2>
+<p>The table below offers a summary of data available for analysis. Refer to subsequent pages for details on the data included for those analysis.</p>
+<p>Additional semesters can be downloaded from the VCU Reporting Center per the instructions below.</p>
+<div id="b06706ce" class="cell" data-execution_count="1">
 <div class="cell-output cell-output-display cell-output-markdown" data-execution_count="1">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -276,6 +278,28 @@ ul.task-list li input[type="checkbox"] {
 </table>
 </div>
 </div>
+</section>
+<section id="download-additional-data" class="level2">
+<h2 class="anchored" data-anchor-id="download-additional-data">Download additional data</h2>
+<p>Data were pulled from the VCU Reporting Center in the <em>Staff | Course Schedule Report</em> as shown below:</p>
+<p>Reports are run by semester for the College of Engineering and stored in separate files. Care should be taken to open each file after it’s been saved and <strong>RESAVE</strong> the file into XLSX format.</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="assets/reporting-center-report.png" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="assets/reporting-center-report-download.png" class="img-fluid"></p>
+</div>
+</div>
+</div>
+<p>The files are named appropriately and stored in the <a href="https://github.com/vcu-ssg/ssg-quarto-soc-analysis/tree/main/site/data"><em>data</em> folder in this repository.</a></p>
+</section>
+<section id="data-cleaning-is-needed" class="level2">
+<h2 class="anchored" data-anchor-id="data-cleaning-is-needed">Data Cleaning is Needed!</h2>
 <p>These data are difficult to work in separate files and often contain incorrect or inconsistent data. A significant process of <a href="./20_clean.html">data cleaning</a> was undertaken prior to computing workloads.</p>
 
 
