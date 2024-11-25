@@ -1,0 +1,74 @@
+---
+title: Teaching activity for Gautham,Smitha
+date: last-modified
+---
+
+Below is a listing of teaching over time for department EGRE
+
+
+## Smitha Gautham
+
+<style type="text/css">
+#T_2c314 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#T_2c314 th {
+  text-align: center;
+  padding: 8px;
+}
+#T_2c314 td:nth-child(1) {
+  padding-right: 10px;
+  text-align: left;
+}
+#T_2c314 td:nth-child(2) {
+  padding-right: 5px;
+  text-align: left;
+}
+#T_2c314  td:nth-child(4) {
+  padding-right: 5px;
+  text-align: left;
+}
+#T_2c314 td:nth-child(3) {
+  text-align: center;
+}
+#T_2c314  td:nth-child(5) {
+  text-align: center;
+}
+#T_2c314 td:nth-child(6) {
+  text-align: right;
+}
+#T_2c314  td:nth-child(7) {
+  text-align: right;
+}
+#T_2c314_row0_col0, #T_2c314_row0_col1, #T_2c314_row0_col2, #T_2c314_row0_col3, #T_2c314_row0_col4, #T_2c314_row0_col5, #T_2c314_row0_col6 {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+</style>
+<table id="T_2c314">
+  <thead>
+    <tr>
+      <th id="T_2c314_level0_col0" class="col_heading level0 col0" >Term</th>
+      <th id="T_2c314_level0_col1" class="col_heading level0 col1" >Crse</th>
+      <th id="T_2c314_level0_col2" class="col_heading level0 col2" >Sect</th>
+      <th id="T_2c314_level0_col3" class="col_heading level0 col3" >Crse Title</th>
+      <th id="T_2c314_level0_col4" class="col_heading level0 col4" >W.Type</th>
+      <th id="T_2c314_level0_col5" class="col_heading level0 col5" >Stdnts</th>
+      <th id="T_2c314_level0_col6" class="col_heading level0 col6" >Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_2c314_row0_col0" class="data row0 col0" >Fall 2021</td>
+      <td id="T_2c314_row0_col1" class="data row0 col1" >EGRE428</td>
+      <td id="T_2c314_row0_col2" class="data row0 col2" >001</td>
+      <td id="T_2c314_row0_col3" class="data row0 col3" >INTRO TO INTEGRATED SYST DES</td>
+      <td id="T_2c314_row0_col4" class="data row0 col4" >LAB</td>
+      <td id="T_2c314_row0_col5" class="data row0 col5" >28</td>
+      <td id="T_2c314_row0_col6" class="data row0 col6" >28</td>
+    </tr>
+  </tbody>
+</table>
+
+

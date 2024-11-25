@@ -1,0 +1,8 @@
+---
+title: Instructor activity for departments
+date: last-modified
+---
+
+Use the menu on the left to select and review instructor teaching activity
+for departments in the College of Engineering.
+

@@ -1,5 +1,5 @@
 ---
-title: Instructor workloads
+title: Instructor activity
 author:
     - name: John Leonard
       email: jdleonard@vcu.edu

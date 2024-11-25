@@ -1,0 +1,63 @@
+---
+title: Instructor Teaching Activity - nan
+date: last-modified
+---
+
+Instructor teaching activity for nan.
+
+# Overview
+
+This report slices and dices instructor teaching activity several ways:
+
+* Recent academic years - a listing of instructor activity 
+for a recent academic year for instructors teaching during that academic year.
+
+* All instructors - a listing of instructor activity over time
+for all instructors in [the sample](/10_download.html).
+
+The page navigation on the right side of the display can help
+as you explore the data.
+
+**Issues and Errors**
+
+Banner doesn’t always reflect reality. Contact John Leonard if you find inconsistences and we'll
+incorporate them into the next iteration of the report.  See [this section](/20_clean.html#fix-known-errors) to learn more.
+
+
+# AY24-25
+
+This section list instructor activity for the academic year AY24-25 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
+# AY23-24
+
+This section list instructor activity for the academic year AY23-24 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
+# AY22-23
+
+This section list instructor activity for the academic year AY22-23 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
+# AY21-22
+
+This section list instructor activity for the academic year AY21-22 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
+# AY20-21
+
+This section list instructor activity for the academic year AY20-21 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
+# All Instructors
+

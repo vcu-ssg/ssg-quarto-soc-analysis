@@ -1,0 +1,118 @@
+---
+title: Teaching activity for Jensen,Cory
+date: last-modified
+---
+
+Below is a listing of teaching over time for department EGRC
+
+
+## Cory Jensen
+
+<style type="text/css">
+#T_65449 table {
+  width: 100%;
+  border-collapse: collapse;
+}
+#T_65449 th {
+  text-align: center;
+  padding: 8px;
+}
+#T_65449 td:nth-child(1) {
+  padding-right: 10px;
+  text-align: left;
+}
+#T_65449 td:nth-child(2) {
+  padding-right: 5px;
+  text-align: left;
+}
+#T_65449  td:nth-child(4) {
+  padding-right: 5px;
+  text-align: left;
+}
+#T_65449 td:nth-child(3) {
+  text-align: center;
+}
+#T_65449  td:nth-child(5) {
+  text-align: center;
+}
+#T_65449 td:nth-child(6) {
+  text-align: right;
+}
+#T_65449  td:nth-child(7) {
+  text-align: right;
+}
+#T_65449_row0_col0, #T_65449_row0_col1, #T_65449_row0_col2, #T_65449_row0_col3, #T_65449_row0_col4, #T_65449_row0_col5, #T_65449_row0_col6 {
+  background-color: #f0f0f0;
+  border-bottom: none;
+}
+#T_65449_row1_col0, #T_65449_row1_col1, #T_65449_row1_col2, #T_65449_row1_col3, #T_65449_row1_col4, #T_65449_row1_col5, #T_65449_row1_col6, #T_65449_row3_col0, #T_65449_row3_col1, #T_65449_row3_col2, #T_65449_row3_col3, #T_65449_row3_col4, #T_65449_row3_col5, #T_65449_row3_col6 {
+  background-color: #f0f0f0;
+  border-bottom: 1px solid #ccc;
+}
+#T_65449_row2_col0, #T_65449_row2_col1, #T_65449_row2_col2, #T_65449_row2_col3, #T_65449_row2_col4, #T_65449_row2_col5, #T_65449_row2_col6, #T_65449_row4_col0, #T_65449_row4_col1, #T_65449_row4_col2, #T_65449_row4_col3, #T_65449_row4_col4, #T_65449_row4_col5, #T_65449_row4_col6 {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc;
+}
+</style>
+<table id="T_65449">
+  <thead>
+    <tr>
+      <th id="T_65449_level0_col0" class="col_heading level0 col0" >Term</th>
+      <th id="T_65449_level0_col1" class="col_heading level0 col1" >Crse</th>
+      <th id="T_65449_level0_col2" class="col_heading level0 col2" >Sect</th>
+      <th id="T_65449_level0_col3" class="col_heading level0 col3" >Crse Title</th>
+      <th id="T_65449_level0_col4" class="col_heading level0 col4" >W.Type</th>
+      <th id="T_65449_level0_col5" class="col_heading level0 col5" >Stdnts</th>
+      <th id="T_65449_level0_col6" class="col_heading level0 col6" >Hours</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td id="T_65449_row0_col0" class="data row0 col0" >Spring 2022</td>
+      <td id="T_65449_row0_col1" class="data row0 col1" >CLSE115</td>
+      <td id="T_65449_row0_col2" class="data row0 col2" >902</td>
+      <td id="T_65449_row0_col3" class="data row0 col3" >INTRO TO PROGRAMMING</td>
+      <td id="T_65449_row0_col4" class="data row0 col4" >LAB</td>
+      <td id="T_65449_row0_col5" class="data row0 col5" >50</td>
+      <td id="T_65449_row0_col6" class="data row0 col6" >100</td>
+    </tr>
+    <tr>
+      <td id="T_65449_row1_col0" class="data row1 col0" >Spring 2022</td>
+      <td id="T_65449_row1_col1" class="data row1 col1" >CLSE115</td>
+      <td id="T_65449_row1_col2" class="data row1 col2" >902</td>
+      <td id="T_65449_row1_col3" class="data row1 col3" >INTRO TO PROGRAMMING</td>
+      <td id="T_65449_row1_col4" class="data row1 col4" >LEC</td>
+      <td id="T_65449_row1_col5" class="data row1 col5" >50</td>
+      <td id="T_65449_row1_col6" class="data row1 col6" >100</td>
+    </tr>
+    <tr>
+      <td id="T_65449_row2_col0" class="data row2 col0" >Summer 2022</td>
+      <td id="T_65449_row2_col1" class="data row2 col1" >ENGR591</td>
+      <td id="T_65449_row2_col2" class="data row2 col2" >002</td>
+      <td id="T_65449_row2_col3" class="data row2 col3" >SP: BREWING SCI, ENGR AND SOC</td>
+      <td id="T_65449_row2_col4" class="data row2 col4" >LAB</td>
+      <td id="T_65449_row2_col5" class="data row2 col5" >12</td>
+      <td id="T_65449_row2_col6" class="data row2 col6" >12</td>
+    </tr>
+    <tr>
+      <td id="T_65449_row3_col0" class="data row3 col0" >Spring 2023</td>
+      <td id="T_65449_row3_col1" class="data row3 col1" >CLSE403</td>
+      <td id="T_65449_row3_col2" class="data row3 col2" >L22</td>
+      <td id="T_65449_row3_col3" class="data row3 col3" >SENIOR DESIGN STUDIO</td>
+      <td id="T_65449_row3_col4" class="data row3 col4" >LAB</td>
+      <td id="T_65449_row3_col5" class="data row3 col5" >3</td>
+      <td id="T_65449_row3_col6" class="data row3 col6" >6</td>
+    </tr>
+    <tr>
+      <td id="T_65449_row4_col0" class="data row4 col0" >Spring 2024</td>
+      <td id="T_65449_row4_col1" class="data row4 col1" >CLSE403</td>
+      <td id="T_65449_row4_col2" class="data row4 col2" >L22</td>
+      <td id="T_65449_row4_col3" class="data row4 col3" >SENIOR DESIGN STUDIO</td>
+      <td id="T_65449_row4_col4" class="data row4 col4" >LAB</td>
+      <td id="T_65449_row4_col5" class="data row4 col5" >2</td>
+      <td id="T_65449_row4_col6" class="data row4 col6" >3</td>
+    </tr>
+  </tbody>
+</table>
+
+

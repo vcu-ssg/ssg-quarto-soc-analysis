@@ -4,22 +4,53 @@ project:
 
 website:
   title: "Analysis of Teaching"
+  back-to-top-navigation: true
   navbar:
     left:
       - href: index.qmd
         text: Home
       - href: 10_download.qmd
         text: Sources
-      - href: 20_clean.qmd
-        text: Clean
-      - href: 30_explore.qmd
-        text: Dept measures
+      - href: ./depts/index.qmd
+        text: Departments
       - href: 31_explore.qmd
-        text: Faculty measures
+        text: Instructors
+  sidebar:
+    id: dept_sidebar
+    style: "docked"
+    search: true
+    contents:
+      - section: "Activity by department"
+        href: ./depts/index.qmd
+        contents:
+        - text: "Biomedical"
+          href: ./depts/egrb-teaching.qmd
+        - text: "Computer Science"
+          href: ./depts/cmsc-teaching.qmd
+        - text: "Chemical and Life"
+          href: ./depts/egrc-teaching.qmd
+        - text: "Electrical"
+          href: ./depts/egre-teaching.qmd
+        - text: "Mechanical"
+          href: ./depts/egrm-teaching.qmd
+      - section: "Activity by instructor"
+        contents:
+        - text: "Biomedical"
+          href: ./depts/egrb-instructors.qmd
+        - text: "Computer Science"
+          href: ./depts/cmsc-instructors.qmd
+        - text: "Chemical and Life"
+          href: ./depts/egrc-instructors.qmd
+        - text: "Electrical"
+          href: ./depts/egre-instructors.qmd
+        - text: "Mechanical"
+          href: ./depts/egrm-instructors.qmd
 
 format:
   html:
     theme: cosmo
     css: styles.css
     toc: true
+    toc-location: right
+    toc-collapsed: true
   

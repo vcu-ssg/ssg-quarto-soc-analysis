@@ -1,0 +1,399 @@
+---
+title: Reviewing the data
+author:
+    - name: John Leonard
+      email: jdleonard@vcu.edu
+date: last-modified
+---
+
+The tables below highlight faculty teaching workloads for a two most recent semesters, Spring 2024 and Fall 2024.
+
+The tab `Header descriptions` for an explanation of the visualizations. The tab `model` describe the workload model itself. Other models can be proposed and then applied across all the faculty. The tab `All` combines faculty across all departments.  Departmental tabs group faculty by department.
+
+```{python}
+#| echo: false
+import os
+import re
+import pathlib
+import matplotlib.pyplot as plt
+from IPython.display import Markdown
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+
+from matplotlib import colormaps
+
+import panel as pn
+from bokeh.models.widgets.tables import NumberFormatter, StringFormatter
+pn.extension('tabulator')
+
+# Load the CSV file into a pandas data frame.
+
+stacked_df = pd.read_csv('stacked_df.csv')
+
+# Ensure that these 3 columns are treated as strings and not as numbers.
+for col in ['TERM','COURSE','SECT']:
+  stacked_df[col] = stacked_df[col].astype(str)
+
+def convert_role(value):
+    value_map = {
+        "TTT": "Tenured, Tenure Track Faculty",
+        "Term": "Term Faculty",
+        "Adjct": "Adjunct Faculty",
+        "staff": "Staff"
+    }
+    return value_map.get(value)
+
+def sanitize_to_filename(input_string):
+    """
+    Convert a string into a valid base filename by removing invalid characters.
+    """
+    sanitized = input_string.replace(",","-")
+
+    # Replace invalid characters with an underscore or remove them
+    sanitized = re.sub(r'[\/:*?"<>|]', '_', sanitized)
+    # Trim any leading/trailing whitespace and return
+    return sanitized.strip()
+
+def format_name( name ):
+    if name is None:
+        return "missing-name"
+    if "," not in name:
+        return name.strip()        
+    last_name, first_name = name.split(",")
+    formatted_name = f"{first_name.strip()} {last_name.strip()}"
+    return formatted_name
+
+def format_dept_instructors_filename( dept ):
+    return f"{dept.lower()}-instructors.qmd"
+
+def format_dept_activity_filename( dept ):
+    return f"{dept.lower()}-teaching.qmd"
+
+def format_dept_name( dept ):
+    dept_map = dict(CMSC="Computer Science",
+    EGRB="Biomedical",
+    EGRE="Electrical",
+    EGRM="Mechanical",
+    EGRC="Chem & Life Science",
+    INNO="Innovation")
+    return dept_map.get(dept,dept)
+
+def format_dept_sidebar( dept ):
+    text = format_dept_name( dept )
+    href = format_dept_instructors_filename( dept )
+    return f"""    - text: {text}
+      href: {href}
+"""
+
+def get_dept_courses_instructors_terms( depts, courses, terms ):
+    """ returns departments, courses, terms and instructors for a specific department or all departments and for a specific term or all terms """
+
+    ins_df = stacked_df.copy()
+
+    # filter stacked_data
+    if depts:
+        ins_df = ins_df[ ins_df['ins_dept'].isin(depts) ]
+
+    if terms:
+        ins_df = ins_df[ ins_df["TERM"].isin( terms ) ]
+    
+    if courses:
+        ins_df = ins_df[ ins_df["COURSE"].isin( courses ) ]
+
+    # Create aggregate measures
+    ins_df = ins_df.groupby(['DEPT','TERM','academic_year','period_name','CRN','COURSE','SECT','TITLE','wrkld_sample_type','wrkld_sample_note',
+    'instructor_id','instructor_name','ins_role','ins_dept','course_number','course_subject']).agg(
+        {
+        'sum_term_crse_crn':'sum',
+        'sum_term_crse_crn_mtg_students':'sum',
+        'sum_term_crse_crn_hours':'sum',
+        'sum_term_crse_crn_hours_lec' : 'sum',
+        'sum_term_crse_wrkld_sample':'sum',
+        'sum_term_crse_wrkld_sample_lec':'sum'}).reset_index()
+    
+    # Reorder departments
+    ins_df = ins_df[ ['DEPT','TERM','academic_year','period_name','CRN','COURSE','SECT','TITLE',
+    'wrkld_sample_type',
+    'sum_term_crse_wrkld_sample',
+    'sum_term_crse_wrkld_sample_lec',
+    'sum_term_crse_crn_hours',
+    'sum_term_crse_crn_hours_lec',
+    'sum_term_crse_crn_mtg_students',
+    'wrkld_sample_note',
+    'instructor_id','instructor_name','ins_role','ins_dept','course_number','course_subject'] ]
+
+    # Apply a sort order
+    ins_df = ins_df.sort_values(by=["DEPT","TERM", "COURSE","SECT","TITLE"]).reset_index(drop=True)
+    
+    # Rename columns
+    ins_df = ins_df.rename(columns={
+        'DEPT' : 'Dept',
+        'period_name' : 'Term',
+        'COURSE' : 'Crse',
+        'SECT' : 'Sect',
+        'TITLE' : 'Crse Title',
+        'wrkld_sample_type' : 'W.Type',
+        'wrkld_sample_note' : 'Wrkld note',
+        'sum_term_crse': 'Crse',
+        'sum_term_crse_crn': 'CRNs',
+        'sum_term_crse_crn_mtg_students': 'Stdnts',
+        'sum_term_crse_crn_hours': 'Hours',
+        'sum_term_crse_crn_hours_lec': 'Hr.Lec',
+        'sum_term_crse_wrkld_sample':'W.Tot',
+        'sum_term_crse_wrkld_sample_lec': 'W.Lec'
+    })
+    return ins_df
+
+def display_instructor( dept, name, terms ):
+    """ display all data for instructor """
+
+    ins_df = get_dept_courses_instructors_terms( [dept], None, terms )
+
+    ins_df = ins_df[ins_df['instructor_name']==name]
+    block = ins_df[ ["Term","Crse","Sect","Crse Title","W.Type","Stdnts","Hours"]]
+
+    numeric_cols = block.select_dtypes(include=["float64"]).columns
+    block = block.astype(object)  # eliminate future warning about incompatible types
+    block.loc[:, numeric_cols] = block.loc[:, numeric_cols].map(lambda x: f"{x:.0f}")
+
+    def row_border_style(row, term_colors):
+        """Assign styles to rows with different Term values."""
+#        is_last_row = row.name == block.index[-1] or block.loc[row.name, "Term"] != block.loc[row.name + 1, "Term"]
+        is_last_row = row.name == block.index[-1] or (row.name + 1 not in block.index) or \
+                  block.loc[row.name, "Term"] != block.loc[row.name + 1, "Term"]
+        border_style = "border-bottom: none;" if not is_last_row else "border-bottom: 1px solid #ccc;"
+        return [term_colors[row["Term"]] + border_style] * len(row)
+
+    # Get unique terms and assign alternating colors
+    unique_terms = block["Term"].unique()
+    term_colors = {term: "background-color: #f0f0f0;" if i % 2 == 0 else "background-color: #ffffff;"
+                for i, term in enumerate(unique_terms)}
+
+    # Apply styling for shading and row borders
+
+    styled_table = block.style.apply(lambda row: row_border_style(row, term_colors), axis=1)
+
+    # Add table-wide styles
+    if (0):
+        styled_table = styled_table.set_table_styles([
+            {"selector": "table", "props": [("width", "100%"), ("border-collapse", "collapse")]},
+            {"selector": "th", "props": [("text-align", "center"), ("padding", "8px")]},
+            # Right padding for Term, Crse, and Crse Title
+            {"selector": "td:nth-child(1)", "props": [("padding-right", "10px"), ("text-align", "left")]},
+            {"selector": "td:nth-child(2), td:nth-child(4)", "props": [("padding-right", "5px"), ("text-align", "left")]},
+            # Center-align W.Type
+            {"selector": "td:nth-child(3), td:nth-child(5)", "props": [("text-align", "center")]},
+            # Right-align Stdnts and Hours
+            {"selector": "td:nth-child(6), td:nth-child(7)", "props": [("text-align", "right")]}
+        ])
+
+    # Display as HTML
+
+    formatted_name = format_name( name )
+
+    header = f"""
+## {formatted_name}
+
+"""
+    footer = f"""
+
+"""
+
+    html_table = styled_table.hide(axis="index").to_html()
+
+    return header + html_table + footer
+
+```
+
+```{python}
+
+def generate_instructor_activity_by_dept():
+    # List of unique departments
+    dept_output_dir = "./depts"
+    instructor_output_dir = "./instructors"
+    os.makedirs(dept_output_dir, exist_ok=True)
+    os.makedirs(instructor_output_dir, exist_ok=True)
+
+    depts = stacked_df["ins_dept"].unique().astype(str)
+    for dept in depts:
+        dept_header = f"""---
+title: Instructor Teaching Activity - {format_dept_name(dept)}
+date: last-modified
+---
+
+Instructor teaching activity for {format_dept_name( dept )}.
+
+# Overview
+
+This report slices and dices instructor teaching activity several ways:
+
+* Recent academic years - a listing of instructor activity 
+for a recent academic year for instructors teaching during that academic year.
+
+* All instructors - a listing of instructor activity over time
+for all instructors in [the sample](/10_download.html).
+
+The page navigation on the right side of the display can help
+as you explore the data.
+
+**Issues and Errors**
+
+Banner doesn’t always reflect reality. Contact John Leonard if you find inconsistences and we'll
+incorporate them into the next iteration of the report.  See [this section](/20_clean.html#fix-known-errors) to learn more.
+
+"""
+
+        file_path = os.path.join(dept_output_dir,format_dept_instructors_filename( dept ))
+        with open(file_path, "w") as file:
+            file.write( dept_header )
+
+            recent_academic_years = sorted(stacked_df["academic_year"].unique().astype(str), reverse=True)
+            for ay in recent_academic_years:
+
+            # write 
+                recent_terms = sorted(stacked_df[ (stacked_df["ins_dept"]==dept) &(stacked_df["academic_year"]==ay)]["TERM"].unique().astype(str))
+                instructors = sorted(stacked_df[ (stacked_df["ins_dept"]==dept) &(stacked_df["academic_year"]==ay)]["instructor_name"].unique().astype(str))
+                file.write(f"""\n# {ay}
+
+This section list instructor activity for the academic year {ay} for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+""")
+
+                for instructor in instructors:
+                    file.write( display_instructor( dept, instructor, recent_terms ))
+
+            file.write("\n# All Instructors\n\n")
+            all_terms = sorted(stacked_df["TERM"].unique())
+            instructors = sorted(stacked_df[ (stacked_df["ins_dept"]==dept)]["instructor_name"].unique())
+            for instructor in instructors:
+                file.write( display_instructor( dept ,  instructor, all_terms ))
+
+generate_instructor_activity_by_dept()
+
+
+```
+
+```{python}
+def display_department( dept, term ):
+    ins_df = get_dept_courses_instructors_terms( [dept], None, [term] )
+
+    block = ins_df[ ["course_number","Term","Crse","Sect","Crse Title","W.Type","Stdnts","Hours","instructor_name"]]
+    
+    block = block[ (~block["W.Type"].isin(["IND","RES","LAB"]))]
+
+    numeric_cols = block.select_dtypes(include=["float64"]).columns
+    block = block.astype(object)  # eliminate future warning about incompatible types
+    block.loc[:, numeric_cols] = block.loc[:, numeric_cols].map(lambda x: f"{x:.0f}")
+
+    def row_border_style(row, course_colors):
+        """Assign styles to rows with different course_number groups."""
+        is_last_row = row.name == block.index[-1] or (row.name + 1 not in block.index) or \
+                    (block.loc[row.name, "course_number"] // 100 != block.loc[row.name + 1, "course_number"] // 100)
+#        border_style = "border-bottom: none;" if not is_last_row else "border-bottom: 1px solid #ccc;"
+        border_style = "border-bottom: none;" if not is_last_row else "border-bottom: none;"
+        return [course_colors[row["course_number"] // 100] + border_style] * len(row)
+
+    # Get unique course_number groups (first digit) and assign alternating colors
+    unique_course_groups = sorted(set(block["course_number"] // 100))
+    course_colors = {group: "background-color: #f0f0f0;" if i % 2 == 0 else "background-color: #ffffff;"
+                    for i, group in enumerate(unique_course_groups)}
+
+    # Apply styling for shading and row borders
+    styled_table = block.style.apply(lambda row: row_border_style(row, course_colors), axis=1)
+
+#    block = block.drop(columns=["course_number"])
+
+    # Modify instructor_name to drop everything after the first comma
+    block["instructor_name"] = block["instructor_name"].apply(lambda name: name.split(",")[0] if "," in name else name)
+
+    styled_table = styled_table.set_table_styles([
+        # set default table properties
+        {"selector": "table", "props": [("width", "100%"), ("border-collapse", "collapse")]},
+        {"selector": "th", "props": [("text-align", "center"), ("padding", "1px"),("border","0")]},
+        {"selector": "th", "props": [("border","0")]},
+        # Right padding for Term, Crse, and Crse Title
+
+        # hide course_number column header and data
+        {'selector': 'thead th.col_heading.level0:nth-child(1)','props': 'display: none;'},
+        {'selector': 'tbody td:nth-child(1)', 'props': 'display: none;'},
+
+        # hide Term column header and data
+        {'selector': 'thead th.col_heading.level0:nth-child(2)','props': 'display: none;'},
+        {'selector': 'tbody td:nth-child(2)', 'props': 'display: none;'},
+
+        {'selector': 'thead th.col_heading.level0:nth-child(8)','props': 'display: none;'},
+        {'selector': 'tbody td:nth-child(8)', 'props': 'display: none;'},
+
+
+        {"selector": "td:nth-child(3)", "props": [("padding-right", "5px"), ("text-align", "left")]}, # Crse
+        {"selector": "td:nth-child(4)", "props": [("padding-right", "5px"), ("text-align", "left")]}, # Sect
+        {"selector": "td:nth-child(5)", "props": [("padding-right", "0px"), ("text-align", "left")]}, # Crse Title
+        {"selector": "td:nth-child(6)", "props": [("padding-right", "0px"), ("text-align", "center")]}, # W.Type
+        {"selector": "td:nth-child(7)", "props": [("padding-right", "0px"), ("text-align", "right")]}, # Stdnts
+#        {"selector": "td:nth-child(8)", "props": [("padding-right", "0px"), ("text-align", "right")]}, # Hours
+
+        
+        {"selector": "td:nth-child(9)", "props": [("padding-left",  "10px"), ("text-align", "left")]}, # Ins. Name
+    ])
+
+    # Display as HTML
+
+    term_name = block["Term"].max()
+    formatted_name = term_name
+
+    header = f"""
+## {formatted_name}
+
+::: {{style="font-size:0.9em;"}}
+"""
+    footer = f"""
+:::
+"""
+
+    html_table = styled_table.hide(axis="index").to_html()
+
+    return header + html_table + footer
+
+
+```
+```{python}
+def generate_department_activity_by_dept():
+    # List of unique departments
+    dept_output_dir = "./depts"
+    os.makedirs(dept_output_dir, exist_ok=True)
+
+    depts = stacked_df["DEPT"].unique().astype(str)
+    for dept in depts:
+        dept_header = f"""---
+title: Department Teaching Activity - {format_dept_name(dept)}
+date: last-modified
+---
+
+"""
+
+        file_path = os.path.join(dept_output_dir,format_dept_activity_filename( dept ))
+        with open(file_path, "w") as file:
+            file.write( dept_header )
+
+            recent_academic_years = sorted(stacked_df["academic_year"].unique().astype(str), reverse=True)
+            for ay in recent_academic_years:
+
+            # write term info
+                recent_terms = sorted(stacked_df[ (stacked_df["ins_dept"]==dept) &(stacked_df["academic_year"]==ay)]["TERM"].unique().astype(str))
+                instructors = sorted(stacked_df[ (stacked_df["ins_dept"]==dept) &(stacked_df["academic_year"]==ay)]["instructor_name"].unique().astype(str))
+                file.write(f"""\n# {ay}
+
+This section list instructor activity for the academic year {ay} for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+""")
+                for term in recent_terms:
+                    file.write( display_department( dept, term ) )
+
+generate_department_activity_by_dept()
+
+```
