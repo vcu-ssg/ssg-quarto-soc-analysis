@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.37">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="John Leonard">
-<meta name="dcterms.date" content="2024-11-23">
+<meta name="dcterms.date" content="2025-07-09">
 
 <title>Cleaning the data – Analysis of Teaching</title>
 <style>
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-29e2c20b02301cfff04dc8050bf30c7e.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-d0a4806f0bdc33bcd40d16ea57488177.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-cfaf3fe5731f82967045f4ff8cdc6494.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -235,7 +235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">November 23, 2024</p>
+      <p class="date">July 9, 2025</p>
     </div>
   </div>
   
@@ -263,7 +263,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The following section combines each XLSX into a single data frame. The contents of the files are variable in length depending on the number of sections taught during any given semester.</p>
 <p>The appropriate block starts one row after the row with the keyword <em>TERM</em> in the first column, denoting the header row. The appropriate block ends with the row prior to the row with the keyword <em>N =</em>.</p>
 <p>We’re assuming that all xlsx workbooks share the same columns and names.</p>
-<div id="a4c6c29e" class="cell" data-execution_count="2">
+<div id="620e1c63" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize an empty list to store trimmed DataFrames</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>trimmed_dfs <span class="op">=</span> []</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -298,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="merge-in-the-term-and-period-data-from-the-xlsx_df-dataframe" class="level3">
 <h3 class="anchored" data-anchor-id="merge-in-the-term-and-period-data-from-the-xlsx_df-dataframe">Merge in the term and period data from the xlsx_df dataframe</h3>
 <p>The following code merges in the term and period data with the section data. First ensure that the key columns are strings, then merge away.</p>
-<div id="b727d688" class="cell" data-execution_count="3">
+<div id="3288ce78" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>sections_df[<span class="st">'SECT'</span>] <span class="op">=</span> sections_df[<span class="st">'SECT'</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>sections_df[<span class="st">'TERM'</span>] <span class="op">=</span> sections_df[<span class="st">'TERM'</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>xlsx_df[<span class="st">'term_code'</span>] <span class="op">=</span> xlsx_df[<span class="st">'term_code'</span>].astype(<span class="bu">str</span>)</span>
@@ -308,7 +308,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="clean-up-column-names" class="level3">
 <h3 class="anchored" data-anchor-id="clean-up-column-names">Clean up column names</h3>
 <p>The new VCU report added new-line characters to a few of the column names. This code cleans them up.</p>
-<div id="c23aa72e" class="cell" data-execution_count="4">
+<div id="0f390e66" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>sections_df.columns <span class="op">=</span> sections_df.columns.<span class="bu">str</span>.replace(<span class="st">'</span><span class="ch">\n</span><span class="st">'</span>, <span class="st">' '</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>sections_df[<span class="st">"TITLE"</span>] <span class="op">=</span> sections_df[<span class="st">"TITLE"</span>].<span class="bu">str</span>.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,<span class="st">" "</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>sections_df[<span class="st">"CROSS-LIST"</span>] <span class="op">=</span> sections_df[<span class="st">"CROSS-LIST"</span>].<span class="bu">str</span>.replace(<span class="st">"</span><span class="ch">\n</span><span class="st">"</span>,<span class="st">" "</span>)</span>
@@ -317,7 +317,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="remove-duplicate-instructor1-and-instructor2" class="level3">
 <h3 class="anchored" data-anchor-id="remove-duplicate-instructor1-and-instructor2">Remove duplicate instructor1 and instructor2</h3>
-<div id="b8126d9a" class="cell" data-execution_count="5">
+<div id="bc8a88ad" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> replace_matches(row):</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> row[<span class="st">"PRIMARY INSTRUCTOR ID"</span>] <span class="op">==</span> row[<span class="st">"SECONDARY INSTRUCTOR ID"</span>]:</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>        row[<span class="st">'SECONDARY INSTRUCTOR ID'</span>], row[<span class="st">'SECONDARY INSTRUCTOR LAST NAME'</span>] <span class="op">=</span> <span class="st">''</span>, <span class="st">''</span></span>
@@ -328,7 +328,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="add-instructor-first-name-columns-in-appropriate-spot" class="level3">
 <h3 class="anchored" data-anchor-id="add-instructor-first-name-columns-in-appropriate-spot">Add instructor first name columns in appropriate spot</h3>
 <p>These fields were dropped when the report changed layouts in Fall 2024. Instructor first name is good to have, so these fields were added back and can be remapped later.</p>
-<div id="b5783b0c" class="cell" data-execution_count="6">
+<div id="d45faf21" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>insert_position <span class="op">=</span> sections_df.columns.get_loc(<span class="st">"PRIMARY INSTRUCTOR LAST NAME"</span>) <span class="op">+</span> <span class="dv">1</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>sections_df.insert(insert_position, <span class="st">"PRIMARY INSTRUCTOR FIRST NAME"</span>, <span class="st">""</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>insert_position <span class="op">=</span> sections_df.columns.get_loc(<span class="st">"SECONDARY INSTRUCTOR LAST NAME"</span>) <span class="op">+</span> <span class="dv">1</span></span>
@@ -343,7 +343,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The purpose of this section is to demonstrate an auditable process for documenting changes to the source data.</p>
 <p>There is nothing magic about the changes below. As I shared the data with others, they found that the banner data did not reflect reality. For this workload analysis we want the data to reflect reality, so we fix it.</p>
 <p>Additional fixes are expected to be added as new eyes look at their data.</p>
-<div id="65d140c8" class="cell" data-execution_count="8">
+<div id="e1a7f6a1" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="dv">0</span>):</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Spring 2023: CMSC475 John Leonard taught for David Shepherd</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    fix_sections(<span class="dv">1</span>,<span class="st">'Swap Leonard for Shepherd'</span>,{<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'CRN'</span>:<span class="st">'43471'</span>},{<span class="st">'PRIMARY INSTRUCTOR FIRST NAME'</span>:<span class="st">'John'</span>,<span class="st">'PRIMARY INSTRUCTOR LAST NAME'</span>:<span class="st">'Leonard'</span>})</span>
@@ -381,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="reshape-the-data">Reshape the data</h3>
 <p>The current dataframe <a href="sections_df.csv">sections_df</a> contains one record per term-crn-meeting period tuple. Within each tuple there can be up to 2 instructors. We need to reshape the data with the instructors in a single column.</p>
 <p>While we’re here we can combine instructor first and last name, and drop verbose columns.</p>
-<div id="e25cf07f" class="cell" data-execution_count="9">
+<div id="a0ff2218" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> sections_df.columns</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>values_to_remove <span class="op">=</span> [<span class="st">'PRIMARY INSTRUCTOR ID'</span>,<span class="st">'PRIMARY INSTRUCTOR FIRST NAME'</span>,<span class="st">'PRIMARY INSTRUCTOR LAST NAME'</span>,<span class="st">'SECONDARY INSTRUCTOR ID'</span>,<span class="st">'SECONDARY INSTRUCTOR FIRST NAME'</span>,<span class="st">'SECONDARY INSTRUCTOR LAST NAME'</span>]</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cols <span class="op">=</span> [x <span class="cf">for</span> x <span class="kw">in</span> cols <span class="cf">if</span> x <span class="kw">not</span> <span class="kw">in</span> values_to_remove]</span>
@@ -399,7 +399,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>We’ve got two variable we’d like to stack: ins1_id and ins2_id into instructor_id and instructor_1 and instructor_2 into instructor_name.</p>
 <p>We do this by melting each individually, then concatenating the data frames.</p>
-<div id="08fd5a96" class="cell" data-execution_count="10">
+<div id="0ce8f8b1" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df1 <span class="op">=</span> pd.melt(sections_df,</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>cols,</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">'instructor_1'</span>,<span class="st">'instructor_2'</span>],</span>
@@ -407,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">'instructor_name_banner'</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="fa646a5b" class="cell" data-execution_count="11">
+<div id="689714b6" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>df2 <span class="op">=</span> pd.melt(sections_df,</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    id_vars<span class="op">=</span>cols,</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    value_vars<span class="op">=</span>[<span class="st">'ins1_id'</span>,<span class="st">'ins2_id'</span>],</span>
@@ -415,29 +415,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    value_name<span class="op">=</span><span class="st">'instructor_id'</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="44d38638" class="cell" data-execution_count="12">
+<div id="02b49dd8" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.concat([df2[cols<span class="op">+</span>[<span class="st">"instructor_id"</span>]], df1[[<span class="st">'instructor_name_banner'</span>,<span class="st">'instructor source'</span>]]], axis<span class="op">=</span><span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="clean-up-rows" class="level3">
 <h3 class="anchored" data-anchor-id="clean-up-rows">Clean up rows</h3>
 <p>The process above introduces records with missing instructor_2. This code removes records missing instructor_2.</p>
-<div id="e1bf4120" class="cell" data-execution_count="13">
+<div id="859b86fd" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># remove rows with empty instructor 2.  Keep rows with empty instructor 1.</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[ <span class="op">~</span> ((stacked_df[<span class="st">'instructor source'</span>]<span class="op">==</span><span class="st">'instructor_2'</span>) <span class="op">&amp;</span> (stacked_df[<span class="st">'instructor_id'</span>].isna() <span class="op">|</span> (stacked_df[<span class="st">'instructor_id'</span>]<span class="op">==</span><span class="st">''</span>))) ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>In some summer courses an instructor was not listed in the data. An instructor name is generated using the course and semester. This can be cleaned later.</p>
-<div id="b50553b9" class="cell" data-execution_count="14">
+<div id="26015495" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># replace any missing instructors with note</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">"instructor_id"</span>].isna(),<span class="st">"instructor_id"</span>] <span class="op">=</span> stacked_df[stacked_df[<span class="st">"instructor_id"</span>].isna()][<span class="st">'COURSE'</span>]<span class="op">+</span><span class="st">'-'</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor_id"</span>].isna()][<span class="st">'TERM'</span>]<span class="op">+</span><span class="st">'-'</span><span class="op">+</span>stacked_df[stacked_df[<span class="st">"instructor_id"</span>].isna()][<span class="st">'CRN'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Some sections, for example RES sections or cancelled sections have zero enrollments. These are removed, keeping only sections with positive enrollments.</p>
-<div id="7f6e5450" class="cell" data-execution_count="15">
+<div id="d57c3e43" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># drop rows with zero enrollments</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ACTUAL ENROLLMENT'</span>]<span class="op">&gt;</span><span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>While not necessary, the resulting dataframe can be sorted so that it looks pretty when saved to a CSV.</p>
-<div id="02b415a2" class="cell" data-execution_count="16">
+<div id="ee836744" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sort the data frame so it looks pretty in the output file.</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> stacked_df.sort_values([<span class="st">'TERM'</span>,<span class="st">'DEPT'</span>,<span class="st">'COURSE'</span>,<span class="st">'SECT'</span>,<span class="st">'instructor_name_banner'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -445,7 +445,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="add-additional-data-columns" class="level3">
 <h3 class="anchored" data-anchor-id="add-additional-data-columns">Add additional data columns</h3>
 <p>Here I’ll add a few buffer columns, in case the structure of the report changes, I can add or delete columns here to keep the spreadsheet from breaking.</p>
-<div id="5e5cbc7e" class="cell" data-execution_count="17">
+<div id="ec3534b1" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"buffer_1"</span>] <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"buffer_2"</span>] <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"buffer_3"</span>] <span class="op">=</span> <span class="st">""</span></span>
@@ -454,19 +454,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"buffer_6"</span>] <span class="op">=</span> <span class="st">""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We may need the subject and the course number in the workload model analysis.</p>
-<div id="c2881c4d" class="cell" data-execution_count="18">
+<div id="e106f5c0" class="cell" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_subject"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[:<span class="dv">4</span>]</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"course_number"</span>] <span class="op">=</span> stacked_df[<span class="st">"COURSE"</span>].<span class="bu">str</span>[<span class="dv">4</span>:]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For each section, add a new field with the count of instructors sharing this section. This helps with workload and other computations later.</p>
-<div id="118a998a" class="cell" data-execution_count="19">
+<div id="95d0cc2c" class="cell" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Number of instructors sharing a common CRN.</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"instructor_cnt"</span>] <span class="op">=</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>])[<span class="st">'CRN'</span>].transform(<span class="st">'count'</span>) <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'instructor_id'</span>])[<span class="st">'instructor_id'</span>].transform(<span class="st">'count'</span>) </span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"capstone_cnt"</span>] <span class="op">=</span> <span class="fl">0.0</span>  <span class="co"># used downstream to provide an actual capstone count rather than an estimated count of capstone sections.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>It’s getting old adding new columns, then having to rework the formuluas in the rather brittle google sheet. I’m adding a few spare columns here to be used as necessary. This is the best place to add the new columns, just prior to the calculation of the aggregate measures and workload attributes.</p>
-<div id="9917afe0" class="cell" data-execution_count="20">
+<div id="1b1dc005" class="cell" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"lec_only_course_list"</span>] <span class="op">=</span> <span class="st">""</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_crn_hours_lec"</span>] <span class="op">=</span> <span class="dv">0</span>  <span class="co"># used 4/27/2024. Search for "Store LEC-only workload", below, after workload calcs.</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"spare_col_3"</span>] <span class="op">=</span> <span class="dv">0</span></span>
@@ -477,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="save-instructor-names-to-file-for-later-use" class="level3">
 <h3 class="anchored" data-anchor-id="save-instructor-names-to-file-for-later-use">Save instructor names to file for later use</h3>
-<div id="265e30af" class="cell" data-execution_count="21">
+<div id="3370400d" class="cell" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="dv">0</span>):</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    unique_instructors <span class="op">=</span> stacked_df[[<span class="st">"instructor_id"</span>,<span class="st">"instructor_name_banner"</span>]].drop_duplicates().sort_values(by<span class="op">=</span><span class="st">"instructor_name_banner"</span>)</span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    unique_instructors.to_csv(<span class="st">"unique_instructors.csv"</span>,index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -488,7 +488,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>The Banner report that we’re using for this analysis does not include all the necessary data for a proper analysis. The report infers the offering department of the course (e.g., ENGR497 or CMSC475), but not the home department of the instructor. For example, capstone courses are coded ad ENGR497, but the record won’t include the home department of the instructor, making it difficult to roll up all the courses by home department of the instructor.</p>
 <p>We store persistent instructor and course data in a separate google sheet. As these persistent data are changed or corrected, this analysis should be regenerated to use these amended data.</p>
 <p>The code below merges the <a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=654840116">persistent instructor data</a> from the google sheet into the working dataframe.</p>
-<div id="7eef9928" class="cell" data-execution_count="22">
+<div id="ae6498a3" class="cell" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># define scope</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>scope <span class="op">=</span> [<span class="st">'https://spreadsheets.google.com/feeds'</span>, <span class="st">'https://www.googleapis.com/auth/drive'</span>]</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -508,10 +508,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>instructor_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c1e199be" class="cell" data-execution_count="23">
+<div id="6c8b8d49" class="cell" data-execution_count="23">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_df,left_on<span class="op">=</span><span class="st">'instructor_id'</span>,right_on<span class="op">=</span><span class="st">'instructor_id'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="e135af26" class="cell" data-execution_count="24">
+<div id="40bc0421" class="cell" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>missing_records <span class="op">=</span> stacked_df[stacked_df[<span class="st">'ins_dept'</span>].isna()]</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>missing_records[[<span class="st">'instructor_id'</span>,<span class="st">'COURSE'</span>,<span class="st">'TERM'</span>]].drop_duplicates(subset<span class="op">=</span><span class="st">'instructor_id'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="24">
@@ -530,21 +530,123 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tbody>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2351</td>
-<td>EGRB697-202230-10626</td>
+<td>EGRB697-202230-10626.0</td>
 <td>EGRB697</td>
 <td>202230</td>
 </tr>
 <tr class="even">
 <td data-quarto-table-cell-role="th">2354</td>
-<td>EGRB697-202230-35073</td>
+<td>EGRB697-202230-35073.0</td>
 <td>EGRB697</td>
 <td>202230</td>
 </tr>
 <tr class="odd">
 <td data-quarto-table-cell-role="th">5256</td>
-<td>EGRE697-202510-43183</td>
+<td>EGRE697-202510-43183.0</td>
 <td>EGRE697</td>
 <td>202510</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5589</td>
+<td>V00841183</td>
+<td>EGRB104</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5599</td>
+<td>V70330926</td>
+<td>EGRB307</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5612</td>
+<td>V00909572</td>
+<td>EGRB407</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5704</td>
+<td>V01139014</td>
+<td>EGRE206</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5792</td>
+<td>V70210763</td>
+<td>EGRE491</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5793</td>
+<td>V01148157</td>
+<td>EGRE491</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5804</td>
+<td>V01102210</td>
+<td>EGRE615</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5833</td>
+<td>V00707557</td>
+<td>EGMN102</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5896</td>
+<td>V70216958</td>
+<td>EGMN507</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6009</td>
+<td>V00637995</td>
+<td>ENGR591</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6094</td>
+<td>V00707336</td>
+<td>EGRE491</td>
+<td>202530</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6113</td>
+<td>V01113846</td>
+<td>EGMN691</td>
+<td>202530</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6204</td>
+<td>CMSC630-202610-50182.0</td>
+<td>CMSC630</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6209</td>
+<td>CMSC691-202610-50183.0</td>
+<td>CMSC691</td>
+<td>202610</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6451</td>
+<td>V00885786</td>
+<td>EGMN605</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6456</td>
+<td>EGMN697-202610-35265.0</td>
+<td>EGMN697</td>
+<td>202610</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6502</td>
+<td>V00689519</td>
+<td>ENGR591</td>
+<td>202610</td>
 </tr>
 </tbody>
 </table>
@@ -552,30 +654,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="8339a798" class="cell" data-execution_count="25">
+<div id="52e75340" class="cell" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Instructor notes"</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>instructor_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
 <span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>instructor_notes_df <span class="op">=</span> instructor_notes_df.dropna(subset<span class="op">=</span>[<span class="st">'instructor_id'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="2c633add" class="cell" data-execution_count="26">
+<div id="33f26df8" class="cell" data-execution_count="26">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,instructor_notes_df,left_on<span class="op">=</span><span class="st">'instructor_id'</span>,right_on<span class="op">=</span><span class="st">'instructor_id'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="merge-persistent-course-data" class="level3">
 <h3 class="anchored" data-anchor-id="merge-persistent-course-data">Merge persistent course data</h3>
 <p><a href="https://docs.google.com/spreadsheets/d/1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw/edit#gid=498592034">Persistent course data</a> is also stored in the google sheet and merged with the working dataframe.</p>
-<div id="1f1a1842" class="cell" data-execution_count="27">
+<div id="06c87785" class="cell" data-execution_count="27">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># spreadsheet_key = "1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw" from above!</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Course notes"</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>sheet <span class="op">=</span> client.open_by_key(spreadsheet_key).worksheet(worksheet_name)</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>course_notes_df <span class="op">=</span> get_as_dataframe(worksheet<span class="op">=</span>sheet, evaluate_formulas<span class="op">=</span><span class="va">True</span> )</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>course_notes_df <span class="op">=</span> course_notes_df.dropna(subset<span class="op">=</span>[<span class="st">'crse'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="7e991aff" class="cell" data-execution_count="28">
+<div id="c28ce433" class="cell" data-execution_count="28">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>stacked_df <span class="op">=</span> pd.merge( stacked_df,course_notes_df,left_on<span class="op">=</span><span class="st">'COURSE'</span>,right_on<span class="op">=</span><span class="st">'crse'</span>,how<span class="op">=</span><span class="st">'left'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="b5af1478" class="cell" data-execution_count="29">
+<div id="f520bc0e" class="cell" data-execution_count="29">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>missing_records <span class="op">=</span> stacked_df[stacked_df[<span class="st">'crse_url'</span>].isna()].drop_duplicates(subset<span class="op">=</span><span class="st">'COURSE'</span>)</span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>missing_records[[<span class="st">'COURSE'</span>,<span class="st">'TERM'</span>]]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="29">
@@ -596,6 +698,116 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>ENGR698</td>
 <td>202510</td>
 </tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5516</td>
+<td>CMSC427</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5518</td>
+<td>CMSC437</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5547</td>
+<td>CMSC606</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5548</td>
+<td>CMSC608</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5623</td>
+<td>EGRB525</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5624</td>
+<td>EGRB527</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5685</td>
+<td>CLSE544</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5688</td>
+<td>CLSE602</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5796</td>
+<td>EGRE512</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5803</td>
+<td>EGRE615</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5893</td>
+<td>EGMN427</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">5899</td>
+<td>EGMN535</td>
+<td>202520</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">5901</td>
+<td>EGMN583</td>
+<td>202520</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6141</td>
+<td>ENGR696</td>
+<td>202530</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6177</td>
+<td>CMSC357</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6182</td>
+<td>CMSC405</td>
+<td>202610</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6200</td>
+<td>CMSC535</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6443</td>
+<td>EGMN561</td>
+<td>202610</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6454</td>
+<td>EGMN661</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6465</td>
+<td>ENGR105</td>
+<td>202610</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">6479</td>
+<td>ENGR494</td>
+<td>202610</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">6509</td>
+<td>ENGR601</td>
+<td>202610</td>
+</tr>
 </tbody>
 </table>
 
@@ -607,7 +819,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="identify-shared-rooms">Identify shared rooms</h3>
 <p>Some CRN share the same classroom and instructor. Examples might include an UG and GR section sharing the same lecture, or multiple LEC/LAB combos sharing the same LEC with different LAB rooms and time.</p>
 <p>To properly identify shared lectures we need to identify unique combinations of days of week and rooms and assign store these values for later aggregation.</p>
-<div id="fadcf1a5" class="cell" data-execution_count="30">
+<div id="f86db7c3" class="cell" data-execution_count="30">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>time_cols <span class="op">=</span> [<span class="st">'MON-IND'</span>,<span class="st">'TUE-IND'</span>,<span class="st">'WED-IND'</span>,<span class="st">'THU-IND'</span>,<span class="st">'FRI-IND'</span>,<span class="st">'SAT-IND'</span>,<span class="st">'SUN-IND'</span>,<span class="st">'BEGIN TIME'</span>,<span class="st">'END TIME'</span>]</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>room_cols <span class="op">=</span> [<span class="st">'BUILDING'</span>,<span class="st">'ROOM'</span>]</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -645,7 +857,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="find-all-courses-taught-by-same-instructor-at-the-same-time" class="level3">
 <h3 class="anchored" data-anchor-id="find-all-courses-taught-by-same-instructor-at-the-same-time">Find all courses taught by same instructor at the same time</h3>
 <p>This code builds a list of separate courses taught by an instructor at the same time. This code is similar to the code above with the enhancement that it produces an explicit list of courses that share the same room and time.</p>
-<div id="c2ff9b14" class="cell" data-execution_count="31">
+<div id="2ce4874d" class="cell" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> concat_courses(group):</span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="st">','</span>.join(group[<span class="st">'COURSE'</span>])</span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -666,7 +878,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><a href="https://www.cardinaleducation.org/">Cardinal Education</a> (formally known as the <a href="https://cgep.vcu.edu/">Commonwealth Graduate Engineering Program (CGEP)</a>) is a collaborative effort among six participating universities and institutions throughout the Commonwealth of Virginia. It utilizes virtual learning classrooms and education technology in synchronous and asynchronous formats to provide working engineers the opportunity to earn a master’s degree in engineering from any of the six participating universities/institutions.</p>
 <p>CGEP courses hosted at VCU are coded as LEC in Banner and must be associated with a VCU instructor. This ensures that the student receives proper credit towards graduation. However, from a workload perspective, these courses do not require local instructor preparation or teaching effort.</p>
 <p>This section recodes CGEP courses to independent study (IND).</p>
-<div id="2242b7df" class="cell" data-execution_count="32">
+<div id="50a6967e" class="cell" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Function to set the 'TYPE' column based on a string search in 'TITLE'</span></span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> set_type_based_on_search(row):</span>
 <span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    title <span class="op">=</span> row[<span class="st">'TITLE'</span>]</span>
@@ -684,7 +896,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="compute-appropriate-aggregate-measures">Compute appropriate aggregate measures</h3>
 <p>These measures are used in later calculations for numbers of courses, sections, instructors, etc.</p>
 <p>These computations are normalized to the appropriate group so that they sum to the correct values when aggregated at the specified group level.</p>
-<div id="8cb25553" class="cell" data-execution_count="33">
+<div id="7573d379" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create various aggregate columns</span></span>
 <span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>])[<span class="st">'TERM'</span>].transform(<span class="st">'count'</span>)</span>
 <span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse'</span>] <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> stacked_df.groupby([<span class="st">'TERM'</span>,<span class="st">'COURSE'</span>])[<span class="st">'COURSE'</span>].transform(<span class="st">'count'</span>)</span>
@@ -702,7 +914,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><em>wrkld_</em>_type* containing the recoded course type. For example, some LEC sections that are actually labs are coded labs. Capstones are also highlighted.</li>
 <li><em>wrkld_note</em> containing a note about the specific workload assignment.</li>
 </ul>
-<div id="938aed53" class="cell" data-execution_count="34">
+<div id="b664f5f3" class="cell" data-execution_count="34">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'wrkld_sample_type'</span>] <span class="op">=</span> stacked_df[<span class="st">'TYPE'</span>]</span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample_lec'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
@@ -725,7 +937,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="sample-workload-model" class="level2">
 <h2 class="anchored" data-anchor-id="sample-workload-model">Sample workload model</h2>
 <p>This is the sample workload model. The assigned faculty workoad will be stored in the <em>sum_term_crse_wrklod_sample</em> field. Here is the model:</p>
-<div id="59f30c98" class="cell" data-execution_count="35">
+<div id="f51a777a" class="cell" data-execution_count="35">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>model_sample <span class="op">=</span> {</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">'base_lecture_value'</span>:<span class="fl">1.0</span>,</span>
 <span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">'labs_per_lecture'</span>:<span class="fl">3.0</span>,</span>
@@ -749,7 +961,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Assign base workload to all records. All sections independent of section type start with a base workload of 1.</p>
 <p>Adjust base workload for courses shared by multiple instructors.</p>
 <p>In some cases, a shared instructor was included in Banner so that the shared instructor could monitor the course in Canvas only, without offering additional teaching effort. In these cases, I recommend adding a “FIX” (listed above) to remove the secondary instructor from the workload data, ensuring that they don’t get credit for a class they aren’t actually co-teaching.</p>
-<div id="bbd75644" class="cell" data-execution_count="36">
+<div id="c4ab51d2" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign standard workload : One teaching course shared across multiple instructors</span></span>
 <span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">"sum_term_crse_wrkld_sample"</span>] <span class="op">=</span> model_sample[<span class="st">'base_lecture_value'</span>]</span>
 <span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Update note</span></span>
@@ -763,7 +975,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="adjust-for-courses-taught-at-same-time-by-same-instructor" class="level3">
 <h3 class="anchored" data-anchor-id="adjust-for-courses-taught-at-same-time-by-same-instructor">Adjust for courses taught at same time by same instructor</h3>
-<div id="44772051" class="cell" data-execution_count="38">
+<div id="c91642eb" class="cell" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># adjust workload for CRN sharing same teaching time</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">/</span> stacked_df.loc[(stacked_df[<span class="st">'shared_mtgs_cnt'</span>]<span class="op">&gt;</span><span class="dv">1</span>),<span class="st">'shared_mtgs_cnt'</span>] </span>
 <span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -780,7 +992,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>A list of capstone courses was assembled manually and then applied to convert the capstone sections to CAP.</p>
 <p>This code is applied in two steps with an opportunity to introduce adjustments to the estimate of capstones.</p>
 <p>In this sample workload model, estimates of the number of capstones are rounded up (CEIL) to the next highest integer number of capstones.</p>
-<div id="f5158626" class="cell" data-execution_count="39">
+<div id="ddef24cd" class="cell" data-execution_count="39">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign CAP workload</span></span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>capstones_per_lecture <span class="op">=</span> model_sample[<span class="st">'capstones_per_lecture'</span>]</span>
@@ -799,11 +1011,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb36-16"><a href="#cb36-16" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'capstone_cnt'</span>].<span class="bu">apply</span>( np.ceil )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, apply any necessary fixes.</p>
-<div id="52ff9e6f" class="cell" data-execution_count="40">
+<div id="d1157fe9" class="cell" data-execution_count="40">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co">## apply any fixes to number of capstone sections. Use TERM,CRN as keys</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now, actually compute the workload based on the capstone_cnt.</p>
-<div id="8de4772c" class="cell" data-execution_count="41">
+<div id="1f2a592c" class="cell" data-execution_count="41">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> course <span class="kw">in</span> senior_design_courses:</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Using the capstone count above, calculate the capstone workload</span></span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    stacked_df.loc[(stacked_df[<span class="st">'COURSE'</span>]<span class="op">==</span>course)<span class="op">&amp;</span>(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'CAP'</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>] <span class="op">=</span> (</span>
@@ -818,7 +1030,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="distinguish-vip-workloads">Distinguish VIP workloads</h3>
 <p><a href="https://vip.vcu.edu/">Vertically Integrated Programs (VIP)</a> provide undergraduate students the opportunity to participate in course-based, multiyear, multidisciplinary, team-based projects under the guidance of faculty and graduate students. These projects are in the faculty areas of expertise, with the main criterion for participation being that of mutual interest.</p>
 <p>Managing a VIP requires effort on the part of the faculty, yet at a lower rate than a standard class.</p>
-<div id="b2da6805" class="cell" data-execution_count="42">
+<div id="0147cbf4" class="cell" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign VIP workload</span></span>
 <span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>vips_per_lecture <span class="op">=</span> model_sample[<span class="st">'vips_per_lecture'</span>]</span>
@@ -836,7 +1048,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Identifying lab sections is tricky. The College often codes lab sections differently across departments. Some are coded properly as LAB sections.</p>
 <p>In other cases, LAB sections are coded as LEC because they share the same CRN as their owner lecture. To capture these cases a special logic is introduced. If a section is taught once per week (e.g., M or W or TH) and the CRN has more than one meeting period, then the section with one meeting period is designated a LAB section.</p>
 <p>In reviewing the data I found some really odd coding. To accomodate this, I added an override block to turn specific tuples into lab sections. This logic must be maintained manually until the College decides to rework the schedule.</p>
-<div id="a4557106" class="cell" data-execution_count="44">
+<div id="990d5ac7" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign LAB workload</span></span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>labs_per_lecture <span class="op">=</span> model_sample[<span class="st">'labs_per_lecture'</span>]</span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -871,7 +1083,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 <p>To do both would double-count the effort of RES, IND and FLD sections.</p>
 <p>For purposes of this workload model, we’ll zero these out and let research active faculty have reduced workloads.</p>
-<div id="7c8e8895" class="cell" data-execution_count="45">
+<div id="21bd963d" class="cell" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exclude teaching credit for research (RES), independent study (IND), and intern/coop (FLD).</span></span>
 <span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Credit is given for these activities in reduced teaching (research active) or summer pay.</span></span>
 <span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[stacked_df[<span class="st">'wrkld_sample_type'</span>].isin([<span class="st">'RES'</span>,<span class="st">'IND'</span>,<span class="st">'FLD'</span>]),<span class="st">'wrkld_sample_note'</span>] <span class="op">=</span> <span class="st">"RULE: [wrkld]=0.00 for INS, RES and FLD"</span></span>
@@ -882,7 +1094,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="distinguish-sem-workloads">Distinguish SEM workloads</h3>
 <p>The seminar class is an important part of our curriculum and requires effort of those organizing the course.</p>
 <p>In this workload model, the seminar counts as a full workload course.</p>
-<div id="260d148e" class="cell" data-execution_count="46">
+<div id="b8c1398f" class="cell" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign SEM workload</span></span>
 <span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Ensure that SEM get full credit because we want to reward the faculty member for doing it!</span></span>
 <span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -896,7 +1108,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="adjust-for-large-lectures" class="level3">
 <h3 class="anchored" data-anchor-id="adjust-for-large-lectures">Adjust for large lectures</h3>
 <p>Larger lectures require more effort. The code blocks below adjust the base workload for large classes.</p>
-<div id="a9b4ad95" class="cell" data-execution_count="47">
+<div id="663e8939" class="cell" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co">#  Process large classes using thresholds and weights in model_sample parameters.</span></span>
 <span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> threshhold,weight <span class="kw">in</span> model_sample[<span class="st">'large_classes'</span>]:</span>
@@ -907,7 +1119,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="store-lec-only-workload-in-separate-column." class="level3">
 <h3 class="anchored" data-anchor-id="store-lec-only-workload-in-separate-column.">Store LEC-only workload in separate column.</h3>
-<div id="56fa072b" class="cell" data-execution_count="48">
+<div id="6ddbe983" class="cell" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>stacked_df[<span class="st">'sum_term_crse_wrkld_sample_lec'</span>] <span class="op">=</span> <span class="fl">0.0</span></span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'sum_term_crse_wrkld_sample_lec'</span>] <span class="op">=</span> stacked_df.loc[(stacked_df[<span class="st">'wrkld_sample_type'</span>]<span class="op">==</span><span class="st">'LEC'</span>),<span class="st">'sum_term_crse_wrkld_sample'</span>]</span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -919,7 +1131,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="store-list-of-lect-only-courses" class="level3">
 <h3 class="anchored" data-anchor-id="store-list-of-lect-only-courses">Store list of LECT-only courses</h3>
-<div id="c54b5d2e" class="cell" data-execution_count="49">
+<div id="213511d1" class="cell" data-execution_count="49">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> list_courses( x ):</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> x.unique().tolist()</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    l <span class="op">=</span> <span class="bu">list</span>(<span class="bu">filter</span>(<span class="kw">lambda</span> item: item <span class="op">!=</span> <span class="st">""</span>, l))</span>
@@ -949,7 +1161,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In this example, a lecture/lab course was coded as 3 separate CRN. Each CRN has a main lecture and a single-meeting-period lab.</p>
 <p>All three lectures share the same meeting time and are combined into a single workload LECT. Each lab section is assigned 1/3 workload.</p>
 <p>However, two of the lab sections share a common meeting time, so they are combined into a single 1/3 workload section.</p>
-<div id="3ff4c760" class="cell" data-execution_count="50">
+<div id="222b70e8" class="cell" data-execution_count="50">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> show_block( df,keys,cols):</span>
 <span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>    tdf <span class="op">=</span> df</span>
 <span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key <span class="kw">in</span> keys.keys():</span>
@@ -991,7 +1203,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4067</td>
 <td>EGMN416</td>
-<td>45899</td>
+<td>45899.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1007,7 +1219,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4068</td>
 <td>EGMN416</td>
-<td>45899</td>
+<td>45899.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1023,7 +1235,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4069</td>
 <td>EGMN416</td>
-<td>32709</td>
+<td>32709.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1039,7 +1251,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4070</td>
 <td>EGMN416</td>
-<td>32709</td>
+<td>32709.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1055,7 +1267,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4071</td>
 <td>EGMN416</td>
-<td>46922</td>
+<td>46922.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1071,7 +1283,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">4072</td>
 <td>EGMN416</td>
-<td>46922</td>
+<td>46922.0</td>
 <td>LEC</td>
 <td>MECHATRONICS</td>
 <td>V00768493</td>
@@ -1099,7 +1311,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-lect-sharing-a-common-time" class="level3">
 <h3 class="anchored" data-anchor-id="example-lect-sharing-a-common-time">Example: LECT sharing a common time</h3>
 <p>In this example, two CRN are sharing a common teaching time and their workloads are split across the two CRN.</p>
-<div id="3476e877" class="cell" data-execution_count="51">
+<div id="01184e43" class="cell" data-execution_count="51">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor_name'</span>:<span class="st">"Heise,Rebecca"</span>},</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor_id'</span>,<span class="st">'instructor_name'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
@@ -1128,7 +1340,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3079</td>
 <td>EGRB111</td>
-<td>43476</td>
+<td>43476.0</td>
 <td>LEC</td>
 <td>INTRO TO BIOL SYS ENGINEERING</td>
 <td>V00541480</td>
@@ -1141,7 +1353,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3101</td>
 <td>EGRB411</td>
-<td>40539</td>
+<td>40539.0</td>
 <td>LEC</td>
 <td>CELL MECHANICS &amp; MECHANOBIOL</td>
 <td>V00541480</td>
@@ -1154,7 +1366,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3105</td>
 <td>EGRB491</td>
-<td>45797</td>
+<td>45797.0</td>
 <td>LEC</td>
 <td>ST: PULMONARY LAB RESEARCH</td>
 <td>V00541480</td>
@@ -1167,7 +1379,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3107</td>
 <td>EGRB517</td>
-<td>40540</td>
+<td>40540.0</td>
 <td>LEC</td>
 <td>CELL MECHANICS &amp; MECHANOBIOLOG</td>
 <td>V00541480</td>
@@ -1180,7 +1392,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3119</td>
 <td>EGRB697</td>
-<td>45891</td>
+<td>45891.0</td>
 <td>RES</td>
 <td>DIRECTED RES IN BIOMEDICAL EGR</td>
 <td>V00541480</td>
@@ -1193,7 +1405,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3127</td>
 <td>EGRB697</td>
-<td>28930</td>
+<td>28930.0</td>
 <td>RES</td>
 <td>DIRECTED RES IN BIOMEDICAL EGR</td>
 <td>V00541480</td>
@@ -1206,7 +1418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3128</td>
 <td>EGRB697</td>
-<td>28934</td>
+<td>28934.0</td>
 <td>RES</td>
 <td>DIRECTED RES IN BIOMEDICAL EGR</td>
 <td>V00541480</td>
@@ -1219,7 +1431,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3129</td>
 <td>EGRB697</td>
-<td>45890</td>
+<td>45890.0</td>
 <td>RES</td>
 <td>DIRECTED RES IN BIOMEDICAL EGR</td>
 <td>V00541480</td>
@@ -1232,7 +1444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3130</td>
 <td>EGRB697</td>
-<td>28942</td>
+<td>28942.0</td>
 <td>RES</td>
 <td>DIRECTED RES IN BIOMEDICAL EGR</td>
 <td>V00541480</td>
@@ -1245,7 +1457,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3526</td>
 <td>ENGR701</td>
-<td>43901</td>
+<td>43901.0</td>
 <td>RES</td>
 <td>POST-CANDIDACY DOCT RESEARCH</td>
 <td>V00541480</td>
@@ -1265,7 +1477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-miscode" class="level3">
 <h3 class="anchored" data-anchor-id="example-miscode">Example: Miscode?</h3>
 <p>This record shows two CRN overlapping in teaching time, but not exactly matching teaching times. Is this for real? Is this a miscode? My initial guess is that this is a miscode and the times should be corrected. This can be accomplished with a FIX record above.</p>
-<div id="71ad7f73" class="cell" data-execution_count="52">
+<div id="27613d0d" class="cell" data-execution_count="52">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202310'</span>,<span class="st">'instructor_name'</span>:<span class="st">"Ferri,James"</span>},</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor_name'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
@@ -1294,7 +1506,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2636</td>
 <td>CLSE301</td>
-<td>42633</td>
+<td>42633.0</td>
 <td>LEC</td>
 <td>TRANSPORT PHENOMENA I</td>
 <td>Ferri,James</td>
@@ -1307,7 +1519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">2648</td>
 <td>CLSE585</td>
-<td>44879</td>
+<td>44879.0</td>
 <td>LEC</td>
 <td>INTERFACIAL PHENOMENA</td>
 <td>Ferri,James</td>
@@ -1320,7 +1532,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2657</td>
 <td>CLSE697</td>
-<td>37073</td>
+<td>37073.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Ferri,James</td>
@@ -1333,7 +1545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">2664</td>
 <td>CLSE697</td>
-<td>37469</td>
+<td>37469.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Ferri,James</td>
@@ -1346,7 +1558,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2941</td>
 <td>ENGR591</td>
-<td>44935</td>
+<td>44935.0</td>
 <td>LEC</td>
 <td>TOP: SYSTEMS ENGINEERING I</td>
 <td>Ferri,James</td>
@@ -1359,7 +1571,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">2949</td>
 <td>ENGR691</td>
-<td>44989</td>
+<td>44989.0</td>
 <td>LEC</td>
 <td>ST:ADV TOP IN INTERFACIAL PHEN</td>
 <td>Ferri,James</td>
@@ -1372,7 +1584,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">2956</td>
 <td>ENGR701</td>
-<td>43323</td>
+<td>43323.0</td>
 <td>RES</td>
 <td>POST-CANDIDACY DOCT RESEARCH</td>
 <td>Ferri,James</td>
@@ -1392,7 +1604,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-singleton-rond" class="level3">
 <h3 class="anchored" data-anchor-id="example-singleton-rond">Example: Singleton ROND</h3>
 <p>This shows a singleton ROND sections. Synchronous on-line sections (ROND) should always be taught with an in-person section. In this case I can only imagine that no students enrolled in the RINP/face-to-face section and it was dropped during earlier data cleaning.</p>
-<div id="c1dfde69" class="cell" data-execution_count="53">
+<div id="df37e1fc" class="cell" data-execution_count="53">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
 <span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202320'</span>,<span class="st">'instructor_name'</span>:<span class="st">"Manic,Milos"</span>},</span>
 <span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor_name'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
@@ -1421,7 +1633,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3036</td>
 <td>CMSC636</td>
-<td>44831</td>
+<td>44831.0</td>
 <td>LEC</td>
 <td>NEURAL NETS AND DEEP LEARNING</td>
 <td>Manic,Milos</td>
@@ -1434,7 +1646,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3052</td>
 <td>CMSC697</td>
-<td>36849</td>
+<td>36849.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Manic,Milos</td>
@@ -1447,7 +1659,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3053</td>
 <td>CMSC697</td>
-<td>36851</td>
+<td>36851.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Manic,Milos</td>
@@ -1460,7 +1672,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3510</td>
 <td>ENGR497</td>
-<td>45526</td>
+<td>45526.0</td>
 <td>LAB</td>
 <td>VERTICALLY INTEGRATED PROJECTS</td>
 <td>Manic,Milos</td>
@@ -1473,7 +1685,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3511</td>
 <td>ENGR497</td>
-<td>45527</td>
+<td>45527.0</td>
 <td>LAB</td>
 <td>VERTICALLY INTEGRATED PROJECTS</td>
 <td>Manic,Milos</td>
@@ -1493,7 +1705,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-doubleton-rondrinp" class="level3">
 <h3 class="anchored" data-anchor-id="example-doubleton-rondrinp">Example: Doubleton ROND+RINP</h3>
 <p>This second example shows a doubleton ROND+RINP section.</p>
-<div id="2d5eeec1" class="cell" data-execution_count="54">
+<div id="66820f6b" class="cell" data-execution_count="54">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor_name'</span>:<span class="st">"Ghosh,Preetam"</span>},</span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor_name'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'sum_term_crse_wrkld_sample'</span>,<span class="st">'wrkld_sample_type'</span>,<span class="st">'wrkld_sample_note'</span>]</span>
@@ -1522,7 +1734,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3703</td>
 <td>CMSC441</td>
-<td>43750</td>
+<td>43750.0</td>
 <td>LAB</td>
 <td>SR DESIGN STUDIO I (LAB/PROJ)</td>
 <td>Ghosh,Preetam</td>
@@ -1535,7 +1747,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3725</td>
 <td>CMSC502</td>
-<td>37708</td>
+<td>37708.0</td>
 <td>LEC</td>
 <td>PARALLEL ALGORITHMS</td>
 <td>Ghosh,Preetam</td>
@@ -1548,7 +1760,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3726</td>
 <td>CMSC502</td>
-<td>37709</td>
+<td>37709.0</td>
 <td>LEC</td>
 <td>PARALLEL ALGORITHMS</td>
 <td>Ghosh,Preetam</td>
@@ -1561,7 +1773,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3739</td>
 <td>CMSC697</td>
-<td>37384</td>
+<td>37384.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Ghosh,Preetam</td>
@@ -1574,7 +1786,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3740</td>
 <td>CMSC697</td>
-<td>37385</td>
+<td>37385.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Ghosh,Preetam</td>
@@ -1587,7 +1799,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3741</td>
 <td>CMSC697</td>
-<td>37386</td>
+<td>37386.0</td>
 <td>RES</td>
 <td>DIRECTED RESEARCH</td>
 <td>Ghosh,Preetam</td>
@@ -1600,7 +1812,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">4192</td>
 <td>ENGR701</td>
-<td>46939</td>
+<td>46939.0</td>
 <td>RES</td>
 <td>POST-CANDIDACY DOCT RESEARCH</td>
 <td>Ghosh,Preetam</td>
@@ -1620,7 +1832,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="example-odd-counting" class="level3">
 <h3 class="anchored" data-anchor-id="example-odd-counting">Example: odd counting</h3>
 <p>Verifying actual enrollment vs sum_term_crse_wrkld_sample</p>
-<div id="a167665a" class="cell" data-execution_count="55">
+<div id="68c60809" class="cell" data-execution_count="55">
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a>show_block(stacked_df,</span>
 <span id="cb51-2"><a href="#cb51-2" aria-hidden="true" tabindex="-1"></a>    {<span class="st">'TERM'</span>:<span class="st">'202410'</span>,<span class="st">'instructor_name'</span>:<span class="st">"Duke,Debra"</span>,<span class="st">'COURSE'</span>:<span class="st">'CMSC256'</span>},</span>
 <span id="cb51-3"><a href="#cb51-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">'COURSE'</span>,<span class="st">'CRN'</span>,<span class="st">'TYPE'</span>,<span class="st">'TITLE'</span>,<span class="st">'instructor_name'</span>,<span class="st">'time_code'</span>,<span class="st">'MODALITY CODE'</span>,<span class="st">'ACTUAL ENROLLMENT'</span>,<span class="st">'MAX CREDITS'</span>,<span class="st">'time_code'</span>,<span class="st">'sum_term_crse_crn_mtg_students'</span>,<span class="st">'sum_term_crse_crn_hours'</span>,</span>
@@ -1655,13 +1867,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3670</td>
 <td>CMSC256</td>
-<td>36067</td>
+<td>36067.0</td>
 <td>LEC</td>
 <td>DATA STRUCTURE &amp; OBJECT PROG</td>
 <td>Duke,Debra</td>
 <td>..W....1300.01450.0</td>
 <td>RONB</td>
-<td>83</td>
+<td>83.0</td>
 <td>4.0</td>
 <td>..W....1300.01450.0</td>
 <td>83.0</td>
@@ -1673,13 +1885,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3671</td>
 <td>CMSC256</td>
-<td>36067</td>
+<td>36067.0</td>
 <td>LEC</td>
 <td>DATA STRUCTURE &amp; OBJECT PROG</td>
 <td>Duke,Debra</td>
 <td>.T.R...1230.01345.0</td>
 <td>RONB</td>
-<td>83</td>
+<td>83.0</td>
 <td>4.0</td>
 <td>.T.R...1230.01345.0</td>
 <td>83.0</td>
@@ -1691,13 +1903,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td data-quarto-table-cell-role="th">3672</td>
 <td>CMSC256</td>
-<td>41689</td>
+<td>41689.0</td>
 <td>LEC</td>
 <td>DATA STRUCTURE &amp; OBJECT PROG</td>
 <td>Duke,Debra</td>
 <td>..W....1600.01750.0</td>
 <td>ROND</td>
-<td>31</td>
+<td>31.0</td>
 <td>4.0</td>
 <td>..W....1600.01750.0</td>
 <td>31.0</td>
@@ -1709,13 +1921,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="even">
 <td data-quarto-table-cell-role="th">3673</td>
 <td>CMSC256</td>
-<td>41689</td>
+<td>41689.0</td>
 <td>LEC</td>
 <td>DATA STRUCTURE &amp; OBJECT PROG</td>
 <td>Duke,Debra</td>
 <td>.T.R...1600.01715.0</td>
 <td>ROND</td>
-<td>31</td>
+<td>31.0</td>
 <td>4.0</td>
 <td>.T.R...1600.01715.0</td>
 <td>31.0</td>
@@ -1737,7 +1949,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’re storing both the stacked and unstacked data. Note that the aggregate measures are stored with the stacked data only.</p>
 <section id="store-to-a-local-csv-file" class="level3">
 <h3 class="anchored" data-anchor-id="store-to-a-local-csv-file">Store to a local CSV file</h3>
-<div id="24e5a180" class="cell" data-execution_count="56">
+<div id="5c05aeca" class="cell" data-execution_count="56">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Store as CSV files</span></span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>sections_df.to_csv(<span class="st">'sections_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
 <span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>stacked_df.to_csv(<span class="st">'stacked_df.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1745,7 +1957,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="store-the-data-in-google-sheets" class="level3">
 <h3 class="anchored" data-anchor-id="store-the-data-in-google-sheets">Store the data in google sheets</h3>
-<div id="9c484c8d" class="cell" data-execution_count="57">
+<div id="6fc898d8" class="cell" data-execution_count="57">
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Open the worksheet </span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>spreadsheet_key <span class="op">=</span> <span class="st">"1ZK7k8M85CXLof6FdeJYJuGFbfjsOXrCv5mc7OgUInWw"</span></span>
 <span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>worksheet_name <span class="op">=</span> <span class="st">"Source data"</span></span>
@@ -1784,7 +1996,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="freshen-persistent-instructor-data">Freshen persistent instructor data</h3>
 <p>This block identifies any instructors not found in the persistent instructor data and adds them to the list with default values.</p>
 <p><strong>This code is not working yet.</strong> It should be fixed when a new semester is added and new instructors and courses are discovered in the imported worksheets.</p>
-<div id="425a44d7" class="cell" data-execution_count="58">
+<div id="024c8e56" class="cell" data-execution_count="58">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="co">#worksheet_name = "Instructor data"</span></span>
 <span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = stacked_df.groupby('instructor')[['COLLEGE','DEPT']].apply(lambda x: x.mode().iloc[0]).#reset_index()</span></span>
 <span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co">#summary_df = summary_df.sort_values(by=['COLLEGE','DEPT','instructor'])</span></span>

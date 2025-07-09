@@ -24,6 +24,13 @@ Banner doesn’t always reflect reality. Contact John Leonard if you find incons
 incorporate them into the next iteration of the report.  See [this section](/20_clean.html#fix-known-errors) to learn more.
 
 
+# AY25-26
+
+This section list instructor activity for the academic year AY25-26 for faculty teaching during that academic year.
+
+The current / most recent academic year might not be complete and will only show data from the terms that have been taught.
+
+
 # AY24-25
 
 This section list instructor activity for the academic year AY24-25 for faculty teaching during that academic year.

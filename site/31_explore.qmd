@@ -6,7 +6,7 @@ author:
 date: last-modified
 ---
 
-The tables below highlight faculty teaching workloads for a two most recent semesters, Spring 2024 and Fall 2024.
+The tables below highlight faculty teaching workloads for a two most recent semesters, Spring 2025 and Fall 2025.
 
 The tab `Header descriptions` for an explanation of the visualizations. The tab `model` describe the workload model itself. Other models can be proposed and then applied across all the faculty. The tab `All` combines faculty across all departments.  Departmental tabs group faculty by department.
 
@@ -26,7 +26,7 @@ import panel as pn
 from bokeh.models.widgets.tables import NumberFormatter, StringFormatter
 pn.extension('tabulator')
 
-TERMS = ['202420','202510']
+TERMS = ['202520','202610']
 
 ```
 

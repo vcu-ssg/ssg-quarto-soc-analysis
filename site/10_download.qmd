@@ -50,6 +50,7 @@ xlsx_df['period_name'] = xlsx_df['period_code'].apply(convert_period)
 
 xlsx_df["file_name"] = "<a href='data/"+xlsx_df["file_name"]+"'>"+xlsx_df["file_name"]+"</a>"
 
+xlsx_df = xlsx_df.sort_values(by="term_code",ascending=False)
 Markdown(tabulate(
   xlsx_df, 
   headers=['File name','Term Code','Acad Year','Period Code','Period Name'],

@@ -11,8 +11,8 @@ files := 10_download.qmd 20_clean.qmd 25_review.qmd 30_explore.qmd 31_explore.qm
 # Example targets
 .PHONY: build
 build:
-	$(foreach file,$(files),quarto render $(file);)
-	@quarto render depts
+	$(foreach file,$(files),poetry run quarto render $(file);)
+	poetry run quarto render depts
 	
 
 .PHONY: test
