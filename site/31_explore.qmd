@@ -10,6 +10,8 @@ The tables below highlight faculty teaching workloads for a two most recent seme
 
 The tab `Header descriptions` for an explanation of the visualizations. The tab `model` describe the workload model itself. Other models can be proposed and then applied across all the faculty. The tab `All` combines faculty across all departments.  Departmental tabs group faculty by department.
 
+The black vertical line across all rows represents the median value for the associated metric.
+
 ```{python}
 #| echo: false
 import os
@@ -213,9 +215,10 @@ def get_tabulator_table(stacked_df, terms=TERMS, dept=['CMSC'], filters=None ):
     df_widget = pn.widgets.Tabulator(
         summary_df,
         show_index = False,
+        ## Change this to sort tabulator
         sorters=[
-            {'field':'Wrkld','dir': 'desc'},
             {'field':'Hours','dir': 'desc'},
+            {'field':'Wrkld','dir': 'desc'},
         ],
         widths={'Hour Bar':'20px','Wrkld Bar':'15px'},
         titles={'Hour Bar':'Lecture/total hours','Wrkld Bar':'Total/Lecture wrkld'},
